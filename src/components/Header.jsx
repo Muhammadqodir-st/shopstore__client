@@ -11,12 +11,18 @@ import { Search, User, Heart, ShoppingCart, House, Store, ShoppingBasket, Circle
 // logo
 import logo from '../assets/logo.svg'
 
+// redux
+import { useSelector } from "react-redux"
+
 
 export default function Header() {
 
     // use state
     const [openSearch, setOpenSearch] = useState(false);
 
+
+    // /redux
+    const { user } = useSelector((state) => state.user);
 
 
     return (
@@ -56,12 +62,16 @@ export default function Header() {
 
 
                     {/* sign account */}
-                    <Link className="max-[850px]:hidden" to={'/auth/login'}>
+                    <Link className="max-[850px]:hidden" to={user ? '/' : '/auth/login'}>
                         <div className="flex items-center gap-3 cursor-pointer">
                             <User size={24} />
                             <p className="flex flex-col">
-                                <span className="text-[11px] text-gray-600">Sign In</span>
-                                <span className="text-[11px] text-black">Account</span>
+                                <span className="text-[11px] text-gray-600">
+                                    {user ? '' : 'Sign In'}
+                                </span>
+                                <span className=" text-[11px] text-black truncate">
+                                    {user ? '' : "Account"}
+                                </span>
                             </p>
                         </div>
                     </Link>

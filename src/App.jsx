@@ -6,15 +6,11 @@ import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } 
 import MainLayout from "./layout/MainLayout"
 import Home from "./pages/Home"
 import Login from './pages/Login'
-import Regiter from './pages/Register'
-
-
-// redux
-import { Provider } from "react-redux"
-import store from './store/store'
+import Register from './pages/Register'
 
 
 function App() {
+
 
   const router = createBrowserRouter(
     createRoutesFromElements(
@@ -22,17 +18,16 @@ function App() {
         <Route path="/" element={<MainLayout />}>
           <Route index={true} element={<Home />} />
           <Route path="/auth/login" element={<Login />} />
-          <Route path="/auth/register" element={<Regiter />} />
+          <Route path="/auth/register" element={<Register />} />
         </Route>
       </Route>
     )
   )
 
   return (
+
     <>
-      <Provider store={store}>
-        <RouterProvider router={router} />
-      </Provider>
+      <RouterProvider router={router} />
     </>
   )
 }
