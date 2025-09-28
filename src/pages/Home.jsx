@@ -11,6 +11,10 @@ import img1 from '../assets/swiperimg.png'
 import img2 from '../assets/swiperimg2.png'
 
 
+// react router dom
+import { Link } from "react-router-dom"
+
+
 export default function Home() {
 
     // swiper data 
@@ -24,9 +28,9 @@ export default function Home() {
         },
         {
             image: img2,
-            title: 'Shopping with us for better quality and the best price',
-            desc: 'We have prepared special discounts for you on grocery products. Don\'t miss these opportunities...',
-            price: '26.67',
+            title: 'Get the best quality products at the lowest prices',
+            desc: 'We have prepared special discounts for you on organic breakfast products.',
+            price: '59.99',
             salePrice: '21.67'
         }
     ]
@@ -34,16 +38,38 @@ export default function Home() {
 
     return (
         <div className="max-w-[998px] w-[90%] mx-auto">
-            <Swiper className="w-full h-auto rounded-lg"
+
+            {/* hero swiper */}
+            <Swiper className="w-full h-auto rounded-lg"    
                 modules={[Pagination]}
                 spaceBetween={50}
                 slidesPerView={1}
                 loop={true}
                 pagination={{ clickable: true }}
             >
+                {/* swiper slide */}
                 {swiper.map((i) => (
-                    <SwiperSlide key={i.id} className="w-full h-full">
+                    <SwiperSlide key={i.id} className="w-full h-full relative flex items-center justify-center">
                         <img className="w-full h-120 object-cover rounded-lg" src={i.image} alt="" />
+                        <div className="w-full h-full absolute top-0 left-0 flex items-center justify-start px-8">
+                            <div className="flex flex-col gap-4">
+                                <div className="w-fit px-4 py-1 rounded-lg bg-gradient-to-r from-green-500 to-transparent text-green-800 font-semibold text-sm">
+                                    Weekend Discount
+                                </div> 
+                                <p className="max-w-120 text-5xl font-semibold text-[#39245F]">{i.title}</p>
+                                <p className="max-w-100 text-sm text-[#030712]">{i.desc}</p>
+                                <div className="flex items-center gap-4">
+                                    <Link className="py-3 px-7 bg-[#634C9F] rounded-lg text-white text-sm ">Shop Now</Link>
+                                    <div className="flex flex-col items-start">
+                                        <div className="flex items-end justify-center gap-1">
+                                            <p className="text-2xl text-[#DC2626] font-bold">${i.salePrice}</p>
+                                            <p className="text-md text-[#111827] text-bold line-through">${i.price}</p>
+                                        </div>
+                                        <p className="text-[12px] text-[#030712]">Don't miss this limited time offer.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </SwiperSlide>
                 ))}
             </Swiper>

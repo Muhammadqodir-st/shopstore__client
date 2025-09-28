@@ -52,7 +52,7 @@ export default function Header() {
 
                     {/* search */}
                     {openSearch && (
-                        <div className={`absolute top-full left-0 z-100 w-full transition-all duration-500 ease-in-out max-[850px]:static ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
+                        <div className={`absolute top-full left-0 z-1 w-full transition-all duration-500 ease-in-out max-[850px]:static ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
                             <input type="text" placeholder="Search..." className="w-full px-4 py-2 rounded-lg border shadow focus:outline-none" />
                         </div>
                     )}
