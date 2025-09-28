@@ -9,6 +9,11 @@ import Login from './pages/Login'
 import Regiter from './pages/Register'
 
 
+// redux
+import { Provider } from "react-redux"
+import store from './store/store'
+
+
 function App() {
 
   const router = createBrowserRouter(
@@ -25,7 +30,9 @@ function App() {
 
   return (
     <>
-      <RouterProvider router={router} />
+      <Provider store={store}>
+        <RouterProvider router={router} />
+      </Provider>
     </>
   )
 }

@@ -1,8 +1,11 @@
 // react router dom
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 
 // react
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+// axios
+import axios from "axios";
 
 
 export default function Register() {
@@ -10,8 +13,85 @@ export default function Register() {
     // location
     const location = useLocation();
 
-    // state
+    // navigate
+    const navigate = useNavigate();
+
+
+    // states
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [role, setRole] = useState('customer');
+    const [message, setMessage] = useState('')
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+    // message
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage('')
+            }, 2500);
+
+            return () => clearTimeout(timer)
+        }
+    }, [message]);
+
+
+    // error message
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError('')
+            }, 2500)
+
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
+
+
+
+    // register
+    const handleRegister = async (e) => {
+        // refresh oldini olish 
+        e.preventDefault();
+        setLoading(true)
+
+        // xatolarni tutub olish 
+        try {
+            const res = await axios.post('http://localhost:8000/register', {
+                name: name,
+                email: email,
+                password: password,
+                role: role
+            }, { withCredentials: true });
+
+            setMessage(res.data.message);
+
+            if (res.data.success) {
+                setTimeout(() => {
+                    setLoading(false)
+                    navigate('/')
+                }, 2500);
+            } else {
+                setLoading(false);
+            }
+        } catch (error) {
+            console.log(error)
+            if (error.response && error.response.data) {
+                setError(error.response.data.message || 'error!')
+            } else {
+                setError("Server error!")
+            }
+            setLoading(false);
+        }
+    }
+
+
+
+
+
 
 
     return (
@@ -24,22 +104,22 @@ export default function Register() {
                 </div>
 
                 {/* form data */}
-                <form className="flex flex-col gap-4 w-[60%] max-[850px]:w-[90%]">
+                <form onSubmit={handleRegister} className="flex flex-col gap-4 w-[60%] max-[850px]:w-[90%]">
                     <p className=" text-[#030712] text-center py-2 max-[850px]:text-sm">There are many advantages to creating an account: the payment process is faster, shipment tracking is possible and much more.</p>
                     {/* username */}
                     <label className="flex flex-col gap-1">
                         <p className="max-[850px]:text-sm">Username *</p>
-                        <input className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="text" autoFocus required />
+                        <input onChange={(e) => setName(e.target.value)} className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="text" autoFocus required />
                     </label>
                     {/* email */}
                     <label className="flex flex-col gap-1">
                         <p className="max-[850px]:text-sm">Email address *</p>
-                        <input className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="email" required />
+                        <input onChange={(e) => setEmail(e.target.value)} className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="email" required />
                     </label>
                     {/* password */}
                     <label className="flex flex-col gap-1">
                         <p className="max-[850px]:text-sm">Password *</p>
-                        <input className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="password" required />
+                        <input onChange={(e) => setPassword(e.target.value)} className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="password" required />
                     </label>
 
                     {/* role */}
@@ -59,9 +139,27 @@ export default function Register() {
                         website, to manage access to your account, and for other purposes described in our <Link className="text-[#634C9F]">privacy policy</Link>.</p>
 
                     {/* submit btn */}
-                    <button type="submit" className="py-3 rounded-lg bg-[#634C9F] text-white cursor-pointer">Register</button>
+                    <button type="submit" className="py-3 rounded-lg bg-[#634C9F] text-white cursor-pointer flex items-center justify-center">
+                        {loading ? (
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        ) : "Register"}
+                    </button>
                 </form>
             </div>
+
+            {/* message */}
+            {message && (
+                <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
+                    {message}
+                </div>
+            )};
+
+            {/* error */}
+            {error && (
+                <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
+                    {error}
+                </div>
+            )}
         </div>
     )
 }

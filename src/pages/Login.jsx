@@ -1,11 +1,92 @@
 // react router dom
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
+
+// axios
+import axios from "axios";
+
+// react
+import { useEffect, useState, } from "react";
 
 
 export default function Login() {
 
+    // navigate
+    const navigate = useNavigate();
+
     // location
     const location = useLocation();
+
+    // states
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [message, setMessage] = useState('')
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+    // message
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage('')
+            }, 2500);
+
+            return () => clearTimeout(timer)
+        }
+    }, [message]);
+
+
+    // error
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError('')
+            }, 2500);
+
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
+
+
+
+    // login
+    const handleLogin = async (e) => {
+        // refresh oldini olish 
+        e.preventDefault();
+        setLoading(true)
+
+        // xatoni tutib olish
+        try {
+            const res = await axios.post('http://localhost:8000/login', {
+                email: email,
+                password: password
+            }, { withCredentials: true });
+
+            setMessage(res.data.message);
+
+            if (res.data.success) {
+                setTimeout(() => {
+                    setLoading(false)
+                    navigate('/')
+                }, 2500)
+            } else {
+                setLoading(false)
+            }
+        } catch (error) {
+            console.log(error);
+            if (error.response && error.response.data) {
+                setError(error.response.data.message || "error!");
+            } else {
+                setError("Server error!")
+            }
+            setLoading(false);
+        }
+    }
+
+
+
+
+
 
     return (
         <div className="max-w-[998px] w-[90%] h-170 mx-auto flex items-center justify-center">
@@ -17,22 +98,41 @@ export default function Login() {
                 </div>
 
                 {/* form data */}
-                <form className="flex flex-col gap-4 w-[60%] max-[850px]:w-[90%]">
+                <form onSubmit={handleLogin} className="flex flex-col gap-4 w-[60%] max-[850px]:w-[90%]">
                     <p className=" text-[#030712] text-center py-2">If you have an account, sign in with your username or email address.</p>
                     {/* username */}
                     <label className="flex flex-col gap-1">
-                        <p>Username or email address *</p>
-                        <input className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="text" autoFocus required />
+                        <p>Email address *</p>
+                        <input onChange={(e) => setEmail(e.target.value)} className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="text" autoFocus required />
                     </label>
                     {/* password */}
                     <label className="flex flex-col gap-1">
                         <p>Password *</p>
-                        <input className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="password" required />
+                        <input onChange={(e) => setPassword(e.target.value)} className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="password" required />
                     </label>
                     <Link to={'/auth/register'} className="text-[#1D4ED8] text-end">Lost your password?</Link>
-                    <button type="submit" className="py-3 rounded-lg bg-[#634C9F] text-white cursor-pointer">Log in</button>
+                    {/*  */}
+                    <button type="submit" className="py-3 rounded-lg bg-[#634C9F] text-white cursor-pointer flex items-center justify-center">
+                        {loading ? (
+                            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                        ) : "Login"}
+                    </button>
                 </form>
             </div>
+
+            {/* message */}
+            {message && (
+                <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
+                    {message}
+                </div>
+            )};
+
+            {/* error */}
+            {error && (
+                <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
+                    {error}
+                </div>
+            )}
         </div>
     )
 }
