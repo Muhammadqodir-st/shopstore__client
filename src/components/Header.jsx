@@ -1,5 +1,5 @@
 // react router dom
-import { Link } from "react-router-dom"
+import { Link, useLocation } from "react-router-dom"
 
 // react
 import { useState } from "react"
@@ -24,10 +24,13 @@ export default function Header() {
     // /redux
     const { user } = useSelector((state) => state.user);
 
+    // location
+    const location = useLocation();
+
 
     return (
         <div>
-            <div className="sticky top-0 left-0 max-w-[998px] w-[90%] mx-auto py-5 flex justify-between gap-5">
+            <div className="sticky top-0 left-0 z-999 max-w-[998px] w-[90%] mx-auto py-5 flex justify-between gap-5">
 
                 {/* logo */}
                 <Link to={'/'}>
@@ -40,10 +43,10 @@ export default function Header() {
 
                 {/* navigation */}
                 <ul className="flex items-center justify-center gap-8 max-[850px]:hidden">
-                    <Link to={'/'} className="text-lg text-[#030712]">Home</Link>
-                    <Link to={'/'} className="text-lg text-[#030712]">Shop</Link>
-                    <Link to={'/'} className="text-lg text-[#030712]">Blog</Link>
-                    <Link to={'/'} className="text-lg text-[#030712]">Contact</Link>
+                    <Link to={'/'} className={location.pathname === '/' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712]'}>Home</Link>
+                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712]'}>Shop</Link>
+                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712]'}>Blog</Link>
+                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712]'}>Contact</Link>
                 </ul>
 
 
@@ -52,7 +55,7 @@ export default function Header() {
 
                     {/* search */}
                     {openSearch && (
-                        <div className={`absolute top-full left-0 z-1 w-full transition-all duration-500 ease-in-out max-[850px]:static ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
+                        <div className={`absolute top-full left-0 z-100 w-full transition-all duration-500 ease-in-out max-[850px]:static ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
                             <input type="text" placeholder="Search..." className="w-full px-4 py-2 rounded-lg border shadow focus:outline-none" />
                         </div>
                     )}
