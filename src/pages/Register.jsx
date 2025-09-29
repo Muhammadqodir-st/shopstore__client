@@ -72,7 +72,8 @@ export default function Register() {
             if (res.data.success) {
                 setTimeout(() => {
                     setLoading(false)
-                    navigate('/')
+                    navigate('/');
+                    window.location.reload();
                 }, 2500);
             } else {
                 setLoading(false);
@@ -149,14 +150,14 @@ export default function Register() {
 
             {/* message */}
             {message && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
+                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
                     {message}
                 </div>
             )};
 
             {/* error */}
             {error && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
+                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
                     {error}
                 </div>
             )}

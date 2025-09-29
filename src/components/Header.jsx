@@ -43,10 +43,10 @@ export default function Header() {
 
                 {/* navigation */}
                 <ul className="flex items-center justify-center gap-8 max-[850px]:hidden">
-                    <Link to={'/'} className={location.pathname === '/' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712]'}>Home</Link>
-                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712]'}>Shop</Link>
-                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712]'}>Blog</Link>
-                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712]'}>Contact</Link>
+                    <Link to={'/'} className={location.pathname === '/' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Home</Link>
+                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Shop</Link>
+                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Blog</Link>
+                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Contact</Link>
                 </ul>
 
 
@@ -69,11 +69,11 @@ export default function Header() {
                         <div className="flex items-center gap-3 cursor-pointer">
                             <User size={24} />
                             <p className="flex flex-col">
-                                <span className="text-[11px] text-gray-600">
+                                <span className="text-[10px] text-gray-600">
                                     {user ? '' : 'Sign In'}
                                 </span>
-                                <span className=" text-[11px] text-black truncate">
-                                    {user ? '' : "Account"}
+                                <span className={user ? 'text-[14px] text-black truncate' : 'text-[11px] text-black truncate'}>
+                                    {user ? user.user.name : "Account"}
                                 </span>
                             </p>
                         </div>
