@@ -44,9 +44,9 @@ export default function Header() {
                 {/* navigation */}
                 <ul className="flex items-center justify-center gap-8 max-[850px]:hidden">
                     <Link to={'/'} className={location.pathname === '/' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Home</Link>
-                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Shop</Link>
-                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Blog</Link>
-                    <Link to={'/'} className={location.pathname === '' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Contact</Link>
+                    <Link to={'/shop'} className={location.pathname === '/shop' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Shop</Link>
+                    <Link to={'/blog'} className={location.pathname === '/blog' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Blog</Link>
+                    <Link to={'/contact'} className={location.pathname === '/contact' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Contact</Link>
                 </ul>
 
 
@@ -80,7 +80,7 @@ export default function Header() {
                     </Link>
 
                     {/* wishlist */}
-                    <Link className="max-[850px]:hidden" to={'/'}>
+                    <Link className="max-[850px]:hidden" to={'/wishlist'}>
                         <div className="relative cursor-pointer">
                             <Heart size={24} />
                             <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">0</span>
@@ -88,7 +88,7 @@ export default function Header() {
                     </Link>
 
                     {/* shopping cart */}
-                    <Link className="max-[850px]:hidden" to={'/'}>
+                    <Link className="max-[850px]:hidden" to={'/cart'}>
                         <div className="relative cursor-pointer">
                             <ShoppingCart size={24} />
                             <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">0</span>
