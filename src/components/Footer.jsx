@@ -21,29 +21,29 @@ export default function Footer() {
                 {/* top  */}
                 <div className="w-full flex items-center justify-between pb-5">
                     {/* text */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 max-[870px]:hidden">
                         <p className="text-2xl font-semibold">Join our newsletter for £10 offs</p>
                         <p className="text-sm text-[#6B7280] max-w-90">Register now to get latest updates on promotions & coupons.Don’t worry, we not spam!</p>
                     </div>
 
                     {/* contact  */}
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 max-[400px]:w-full">
                         <form className="flex items-center justify-between gap-3 bg-white border border-[#D1D5DB] rounded-lg overflow-hidden">
                             <label className="flex items-center gap-2 bg-white px-3 flex-1">
                                 <Mail className="text-[#9CA3AF] cursor-pointer" />
-                                <input className="outline-0 flex-1" type="text" placeholder="Enter your email address" required />
+                                <input className="outline-0  w-full" type="text" placeholder="Enter your email address" required />
                             </label>
                             <button className="p-3 bg-[#634C9F] text-white cursor-pointer hover:bg-[#7356ba]" type="submit">SEND</button>
                         </form>
-                        <p className="text-[12px]">By subscribing you agree to our <Link className="text-[#634C9F]">Terms & Conditions and Privacy & Cookies Policy.</Link></p>
+                        <p className="text-[12px] text-center">By subscribing you agree to our <Link className="text-[#634C9F]">Terms & Conditions and Privacy & Cookies Policy.</Link></p>
                     </div>
                 </div>
 
                 {/* body */}
-                <div className="flex justify-between py-10 border-t border-b border-[#D1D5DB]">
+                <div className="flex justify-between py-10 border-t border-b border-[#D1D5DB] max-[400px]:hidden">
 
                     {/* left */}
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-3 max-[980px]:hidden">
                         <p className="text-lg font-semibold">Do You Need Help ?</p>
                         <p className="text-sm text-[#6B7280] max-w-70">Autoseligen syr. Nek diarask fröbomba. Nör antipol kynoda nynat. Pressa fåmoska.</p>
                         <div className="flex items-center gap-3">
@@ -63,7 +63,7 @@ export default function Footer() {
                     </div>
 
                     {/* center */}
-                    <ul className="flex items-center justify-between gap-5">
+                    <ul className="flex items-center justify-between gap-5 max-[670px]:w-full">
                         <li className="flex flex-col gap-2">
                             <p className="font-semibold">Make Money with Us</p>
                             <ul className="flex flex-col gap-1">
@@ -95,7 +95,7 @@ export default function Footer() {
                     </ul>
 
                     {/* right */}
-                    <div className="flex flex-col gap-3">
+                    <div className="flex flex-col gap-4 max-[670px]:hidden">
                         <p className="font-semibold">Download our app</p>
                         <div className="flex items-center gap-3">
                             <img className="cursor-pointer" src={g} alt="" />
@@ -119,12 +119,12 @@ export default function Footer() {
                 </div>
 
                 {/* bottom */}
-                <div className="flex items-center justify-between pt-5">
-                    <p className="text-sm text-[12px]">Copyright 2025 © Shopstore WooCommerce WordPress Theme. All right reserved. Powered by <Link className="text-indigo-500 ">BlackRise Themes</Link>.</p>
-                    <div className="flex items-center gap-3">
-                        <p className="text-sm underline">Terms and Conditions</p>
-                        <p className="text-sm underline">Privacy Policy</p>
-                        <p className="text-sm underline">Order Tracking</p>
+                <div className="flex items-center justify-between pt-5 max-[1070px]:flex-col-reverse gap-2">
+                    <p className="text-sm text-[12px] text-center">Copyright 2025 © Shopstore WooCommerce WordPress Theme. All right reserved. Powered by <Link className="text-indigo-500 ">BlackRise Themes</Link>.</p>
+                    <div className="flex items-center gap-3 max-[400px]:hidden">
+                        <p className="text-sm underline cursor-pointer text-[12px]">Terms and Conditions</p>
+                        <p className="text-sm underline cursor-pointer text-[12px]">Privacy Policy</p>
+                        <p className="text-sm underline cursor-pointer text-[12px]">Order Tracking</p>
                     </div>
                 </div>
             </div>
