@@ -50,7 +50,7 @@ export default function UserLayout() {
                         <div className="bg-gray-200 p-4 rounded-full text-gray-800"><CircleUser /></div>
                         <div className="flex flex-col">
                             <p className="text-sm text-[#9CA3AF]">Welcome back,</p>
-                            <p className="text-sm font-semibold">{user ? user.user.email : 'null'}</p>
+                            <p className="text-sm font-semibold">{user?.user?.email || 'Account'}</p>
                         </div>
                     </div>
                 </div>
@@ -74,16 +74,16 @@ export default function UserLayout() {
                         <Link to={'wishist'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
                             Wishlist
                         </Link>
-                        {user.user.role === "admin" ? (
+                        {user?.user?.role === "admin" && (
                             <Link to={'addproduct'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
                                 Add product
                             </Link>
-                        ) : null}
-                        {user.user.role === "admin" ? (
+                        )}
+                        {user?.user?.role === "admin" && (
                             <Link to={'addcategory'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
                                 Add category
                             </Link>
-                        ) : null}
+                        )}
                         <button onClick={() => setModal(true)} className="p-3 border-b border-[#E5E7EB] font-semibold cursor-pointer text-red-500">
                             Log out
                         </button>
