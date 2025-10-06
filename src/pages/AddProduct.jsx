@@ -43,7 +43,6 @@ export default function AddProduct() {
 
 
 
-
     return (
         <div className="w-[66%]">
             <form className="flex items-start justify-between gap-5">
@@ -116,8 +115,19 @@ export default function AddProduct() {
                     <div>
                         <p className="text-sm font-semibold text-gray-700 mb-2">Category</p>
 
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                            {category.length > 0 ? (
+                                category.map((c) => (
+                                    <button type="button" className={`py-1 px-3  rounded-lg text-white text-[14px] cursor-pointer ${selectedCategory === c._id ? 'bg-[#0b1f85]' : 'bg-[#4c64d9]'}`} key={c._id} onClick={() => setSelectedCategory(c._id)}>{c.name}</button>
+                                ))
+                            ) : (
+                                <p>Loading ....</p>
+                            )}
+                        </div>
                     </div>
 
+                    {/* submit buttn */}
+                    <button className="py-2 px-4 bg-[#0b1f85] hover:bg-[#041050] rounded-lg text-white cursor-pointer" type="submit">create product</button>
                 </div>
 
             </form>
