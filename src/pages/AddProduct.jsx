@@ -7,9 +7,15 @@ import axios from "axios";
 // redux 
 import { useSelector } from "react-redux";
 
+// react router dom
+import { useNavigate } from "react-router-dom";
+
 
 
 export default function AddProduct() {
+
+    // navigate
+    const navigate = useNavigate();
 
     // user id
     const { user } = useSelector((state) => state.user);
@@ -87,17 +93,21 @@ export default function AddProduct() {
         setLoading(true);
 
         try {
+            // form data
             const formData = new FormData()
             formData.append('title', title)
             formData.append('description', description)
             formData.append('price', price)
             formData.append('stock', stock)
-            formData.append('discont', discount)
+            formData.append('discountPercent', discount)
             formData.append('category', selectedCategory)
             formData.append('createdBy', user.user._id);
-            formData.append('images', selectedCategory);
+            
+            images.forEach((file) => {
+                formData.append("images", file)
+            })
 
-            const res = await axios.post('http://localhost:8000/products', formData, { withCredentials: true })
+            const res = await axios.post('http://localhost:8000/products', formData, { withCredentials: true , headers:{'Content-Type' : 'multipart/form-data'}})
 
             setMessage(res.data.message);
 
@@ -139,8 +149,8 @@ export default function AddProduct() {
                             </div>
                         ) : (
                             <div className="w-full h-full rounded-lg overflow-hidden cursor-pointer">
-                                {images.map((i) => (
-                                    <img className="w-full h-full object-cover cursor-pointer" src={URL.createObjectURL(i)} alt="" />
+                                {images.map((i, key) => (
+                                    <img key={key} className="w-full h-full object-cover cursor-pointer" src={URL.createObjectURL(i)} alt="" />
                                 ))}
                             </div>
                         )}
@@ -149,8 +159,8 @@ export default function AddProduct() {
 
                     {/* product images */}
                     <div className={` ${images.length === 0 ? 'hidden' : 'flex items-center justify-between gap-2 p-2 border border-[#bababa] rounded-lg'}`}>
-                        {images.map((i) => (
-                            <img className="w-14 h-14 rounded-md border cursor-pointer object-cover" src={URL.createObjectURL(i)} alt="" />
+                        {images.map((i, key) => (
+                            <img key={key} className="w-14 h-14 rounded-md border cursor-pointer object-cover" src={URL.createObjectURL(i)} alt="" />
                         ))}
                     </div>
                 </div>

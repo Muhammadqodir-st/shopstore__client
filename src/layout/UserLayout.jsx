@@ -59,7 +59,7 @@ export default function UserLayout() {
                         <Link to={'/'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
                             Dashboard
                         </Link>
-                        <Link to={'orders'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
+                        <Link to={'/profile'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
                             Orders
                         </Link>
                         <Link to={'dowloads'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
@@ -68,7 +68,7 @@ export default function UserLayout() {
                         <Link to={'addresses'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
                             Addresses
                         </Link>
-                        <Link to={'/profile'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
+                        <Link to={'accound'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
                             Account details
                         </Link>
                         <Link to={'wishist'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">

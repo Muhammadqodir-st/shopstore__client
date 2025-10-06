@@ -39,8 +39,8 @@ function App() {
           <Route path="/cart" element={<Cart />} />
           {/* user layout */}
           <Route path="/profile" element={<UserLayout />}>
-            <Route index={true} element={<AccountDetails />} />
-            <Route path="orders" element={<Orders />} />
+            <Route path="accound" element={<AccountDetails />} />
+            <Route index={true} element={<Orders />} />
             <Route path="dowloads" element={<Dowloads />} />
             <Route path="addresses" element={<Addresses />} />
             <Route path="wishist" element={<UserWishlist />} />
