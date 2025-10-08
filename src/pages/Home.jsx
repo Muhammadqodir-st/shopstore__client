@@ -41,7 +41,7 @@ export default function Home() {
     return (
         <div className="max-w-[998px] w-[90%] mx-auto">
 
-            {/* hero swiper */}
+            {/* ==================== hero swiper ===================== */}
             <Swiper className="w-full h-auto rounded-lg"    
                 modules={[Pagination]}
                 spaceBetween={50}

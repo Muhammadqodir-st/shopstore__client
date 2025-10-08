@@ -2,7 +2,7 @@
 import { MapPin } from "lucide-react"
 
 // data
-import cardSlice from '../data/data'
+import { cardSlice } from '../data/data'
 
 
 export default function Contact() {
