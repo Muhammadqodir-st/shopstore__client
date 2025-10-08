@@ -1,6 +1,16 @@
 // react router dom
 import { createBrowserRouter, createRoutesFromElements, RouterProvider, Route } from "react-router-dom"
 
+// react
+import { useEffect } from "react"
+
+// cookie
+import Cookies from "js-cookie";
+
+// redux
+import { setUser } from './store/feature/userSlice'
+import { useDispatch } from "react-redux";
+
 
 //pages 
 import MainLayout from "./layout/MainLayout"
@@ -20,32 +30,48 @@ import Dowloads from './pages/Dowloads'
 import Addresses from './pages/Addresses'
 import UserWishlist from './pages/UserWishlist'
 import AddCategory from './pages/AddCategory'
+import ProtectedRoute from './components/ProtectedRoute'
 
 
 function App() {
+
+  // dispatch
+  const dispatch = useDispatch()
+
+
+  // get user token
+  useEffect(() => {
+    const savedUser = Cookies.get("token")
+    if (savedUser) {
+      dispatch(setUser(JSON.parse(savedUser)));
+    }
+  }, []);
 
 
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route>
         <Route path="/" element={<MainLayout />}>
+          {/* ochiq routerlar */}
           <Route index={true} element={<Home />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
-          <Route path="/shop" element={<Shop />} />
-          <Route path="/blog" element={<Blog />} />
-          <Route path="/contact" element={<Contact />} />
-          <Route path="/wishlist" element={<Wishlist />} />
-          <Route path="/cart" element={<Cart />} />
+
+          {/* yopiq routerlar */}
+          <Route path="/shop" element={<ProtectedRoute> <Shop /> </ProtectedRoute>} />
+          <Route path="/blog" element={<ProtectedRoute> <Blog /> </ProtectedRoute>} />
+          <Route path="/contact" element={<ProtectedRoute> <Contact /> </ProtectedRoute>} />
+          <Route path="/wishlist" element={<ProtectedRoute> <Wishlist /> </ProtectedRoute>} />
+          <Route path="/cart" element={<ProtectedRoute> <Cart /> </ProtectedRoute>} />
           {/* user layout */}
-          <Route path="/profile" element={<UserLayout />}>
-            <Route path="accound" element={<AccountDetails />} />
-            <Route index={true} element={<Orders />} />
-            <Route path="dowloads" element={<Dowloads />} />
-            <Route path="addresses" element={<Addresses />} />
-            <Route path="wishist" element={<UserWishlist />} />
-            <Route path="addproduct" element={<AddProduct />} />
-            <Route path="addcategory" element={<AddCategory />} />
+          <Route path="/profile" element={<ProtectedRoute> <UserLayout /> </ProtectedRoute>}>
+            <Route path="accound" element={<ProtectedRoute> <AccountDetails /> </ProtectedRoute>} />
+            <Route index={true} element={<ProtectedRoute> <Orders /> </ProtectedRoute>} />
+            <Route path="dowloads" element={<ProtectedRoute> <Dowloads /> </ProtectedRoute>} />
+            <Route path="addresses" element={<ProtectedRoute> <Addresses /> </ProtectedRoute>} />
+            <Route path="wishist" element={<ProtectedRoute> <UserWishlist /> </ProtectedRoute>} />
+            <Route path="addproduct" element={<ProtectedRoute> <AddProduct /> </ProtectedRoute>} />
+            <Route path="addcategory" element={<ProtectedRoute> <AddCategory /> </ProtectedRoute>} />
           </Route>
         </Route>
       </Route>
@@ -53,7 +79,6 @@ function App() {
   )
 
   return (
-
     <>
       <RouterProvider router={router} />
     </>
