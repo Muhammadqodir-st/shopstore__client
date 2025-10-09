@@ -15,9 +15,33 @@ import img2 from '../assets/swiperimg2.png'
 import { Link } from "react-router-dom"
 
 
+// react
+import { useEffect, useState } from "react"
+
+
+// axios
+import axios from "axios"
+
+
 export default function Home() {
 
-    
+    // states
+    const [category, setCategory] = useState([]);
+
+
+    // get all category
+    useEffect(() => {
+        const getAllCAtegory = async () => {
+            try {
+                const res = await axios.get('http://localhost:8000/categories');
+                setCategory(res.data.categories);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getAllCAtegory()
+    }, []);
+
 
     // swiper data 
     const swiper = [
@@ -42,7 +66,7 @@ export default function Home() {
         <div className="max-w-[998px] w-[90%] mx-auto">
 
             {/* ==================== hero swiper ===================== */}
-            <Swiper className="w-full h-auto rounded-lg"    
+            <Swiper className="w-full h-auto rounded-lg"
                 modules={[Pagination]}
                 spaceBetween={50}
                 slidesPerView={1}
@@ -57,7 +81,7 @@ export default function Home() {
                             <div className="flex flex-col gap-4">
                                 <div className="w-fit px-4 py-1 rounded-lg bg-gradient-to-r from-green-500 to-transparent text-green-800 font-semibold text-sm max-[450px]:px-3 max-[450px]:">
                                     Weekend Discount
-                                </div> 
+                                </div>
                                 <p className="max-w-120 text-5xl font-semibold text-[#39245F] max-[750px]:text-3xl max-[450px]:text-2xl">{i.title}</p>
                                 <p className="max-w-100 text-sm text-[#030712] max-[750px]:text-[12px] max-[600px]:hidden">{i.desc}</p>
                                 <div className="flex items-center gap-4">
@@ -75,6 +99,12 @@ export default function Home() {
                     </SwiperSlide>
                 ))}
             </Swiper>
+
+
+            {/* ============= TOP CATEGRY =============== */}
+            <div className="w-full">
+
+            </div>
         </div>
     )
 }
