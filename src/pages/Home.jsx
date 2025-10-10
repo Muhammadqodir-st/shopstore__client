@@ -23,6 +23,9 @@ import { useEffect, useState } from "react"
 import axios from "axios"
 
 
+// lucide react 
+import { ArrowRight } from 'lucide-react'
+
 export default function Home() {
 
     // states
@@ -102,8 +105,26 @@ export default function Home() {
 
 
             {/* ============= TOP CATEGRY =============== */}
-            <div className="w-full">
+            <div className="w-full py-7 flex flex-col gap-5">
 
+                {/* top texts */}
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <p className="text-xl font-semibold">Top Categories</p>
+                        <span className="text-sm text-[9CA3AF]">New products with updated stocks.</span>
+                    </div>
+                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900">View All <ArrowRight size={18} /></button>
+                </div>
+
+                {/* categories */}
+                <div className="flex items-center justify-between border border-[#E5E7EB] rounded-lg">
+                    {category.slice(2).map((i) => (
+                        <div key={i._id} className="flex-1 flex items-center justify-center flex-col gap-1 border-r border-[#E5E7EB] py-3 cursor-pointer">
+                            <img className="w-30 h-30" src={i.image} alt="" />
+                            <p className="text-sm font-semibold flex flex-nowrap">{i.name}</p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )

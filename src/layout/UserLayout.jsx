@@ -41,7 +41,7 @@ export default function UserLayout() {
 
 
     return (
-        <div className="max-w-[998px] w-[90%] mx-auto py-8">
+        <div className="max-w-[998px] w-[90%] mx-auto py-10">
 
             {/* sidebar */}
             <div className="flex flex-col gap-5">

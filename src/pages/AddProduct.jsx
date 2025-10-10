@@ -208,7 +208,7 @@ export default function AddProduct() {
                         <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                             {category.length > 0 ? (
                                 category.map((c) => (
-                                    <button type="button" className={`py-1 px-3  rounded-lg text-white text-[14px] cursor-pointer ${selectedCategory === c._id ? 'bg-[#0b1f85]' : 'bg-[#4c64d9]'}`} key={c._id} onClick={() => setSelectedCategory(c._id)}>{c.name}</button>
+                                    <button type="button" className={`py-1 px-3  rounded-lg text-white text-[14px] cursor-pointer truncate ${selectedCategory === c._id ? 'bg-[#0b1f85]' : 'bg-[#4c64d9]'}`} key={c._id} onClick={() => setSelectedCategory(c._id)}>{c.name}</button>
                                 ))
                             ) : (
                                 <p>Loading ....</p>
