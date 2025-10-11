@@ -12,6 +12,12 @@ import c1 from '../assets/c1.png'
 import c2 from '../assets/c2.png'
 import c3 from '../assets/c3.png'
 import c4 from '../assets/c4.png'
+import c5 from '../assets/c5.png'
+import c6 from '../assets/c6.png'
+import c7 from '../assets/c7.png'
+import c8 from '../assets/c8.png'
+import c9 from '../assets/c9.png'
+import c10 from '../assets/c10.png'
 
 
 
@@ -107,6 +113,36 @@ const cart = [
         image: c4,
         title: 'Where flavor meets affordability',
         descripton: 'Only this week. Don’t miss'
+    },
+    {
+        image: c5,
+        title: 'Provides you the quality that’s you expected',
+        descripton: 'Feed your family the best'
+    },
+    {
+        image: c6,
+        title: 'Grocery store at the center of the city',
+        descripton: 'Only this week. Don’t miss'
+    },
+    {
+        image: c7,
+        title: 'A smart store for every people',
+        descripton: 'Feed your family the best'
+    },
+    {
+        image: c8,
+        title: 'We are here for shopping lovers',
+        descripton: 'Eat one every day'
+    },
+    {
+        image: c9,
+        title: 'Get pocket-friendly products with us',
+        descripton: 'Only this week. Don’t miss'
+    },
+    {
+        image: c10,
+        title: 'Grocery store at the center of the city',
+        descripton: 'Feed your family the best'
     },
 ]
 
