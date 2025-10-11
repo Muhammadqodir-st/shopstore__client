@@ -31,6 +31,7 @@ export default function Home() {
 
     // states
     const [category, setCategory] = useState([]);
+    const [products, setProducts] = useState([]);
 
 
     // get all category
@@ -44,6 +45,20 @@ export default function Home() {
             }
         }
         getAllCAtegory()
+    }, []);
+
+
+    // get products
+    useEffect(() => {
+        const getProducts = async () => {
+            try {
+                const res = await axios.get('http://localhost:8000/products')
+                setProducts(res.data.products);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getProducts()
     }, []);
 
 
@@ -112,7 +127,7 @@ export default function Home() {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <p className="text-xl font-semibold">Top Categories</p>
-                        <span className="text-sm text-[9CA3AF] max-[600px]:hidden">New products with updated stocks.</span>
+                        <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">New products with updated stocks.</span>
                     </div>
                     <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
                 </div>
@@ -137,6 +152,41 @@ export default function Home() {
                 </div>
                 <p className="text-8xl font-semibold  absolute -top-7 left-[50%] z-2 bg-gradient-to-r from-[#ea580c66] to-[#ea580c00] bg-clip-text text-transparent">%50</p>
                 <img className="absolute right-0 w-100 h-full z-11 object-cover max-[900px]:hidden" src={b} alt="" />
+            </div>
+
+
+            {/* =============== NEW PRODUCTS ============= */}
+            <div className="w-full flex flex-col gap-3  py-8">
+
+                {/*  top texts */}
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <p className="text-xl font-semibold">NEW PRODUCTS</p>
+                        <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">Some of the new products arriving this weeks</span>
+                    </div>
+                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
+                </div>
+
+
+                {/* products */}
+                <div className="grid grid-cols-4 border border-[#E5E7EB] rounded-lg max-[900px]:grid-cols-2">
+                    {products.slice(0, 4).map((i) => (
+                        <div key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
+                            <div className="w-full relative">
+                                <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
+                            </div>
+                            <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>
+                            <div className="w-full flex items-end gap-3 border-b border-[#E5E7EB] py-2">
+                                <p className="text-3xl text-red-600 font-bold max-[500px]:text-xl">${i.discountedPrice}</p>
+                                <p className="font-semibold line-through max-[500px]:text-sm">${i.price}</p>
+                            </div>
+                            <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">This product is about to run out</p>
+                            <div className="w-full py-1 bg-gradient-to-r from-[#FFD200] to-[#DC2626]"></div>
+                            <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">available only: <span className="text-xl font-bold text-black">{i.stock}</span></p>
+                        </div>
+                    ))}
+                </div>
             </div>
         </div>
     )

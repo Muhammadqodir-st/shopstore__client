@@ -39,7 +39,7 @@ export default function AddProduct() {
     const handleImage = (e) => {
         const files = Array.from(e.target.files)
 
-        if (files.length > 5) {
+        if (files.length > 3) {
             alert("You can only take up to 5 pictures!")
             e.target.value = ""
             return;
@@ -145,7 +145,7 @@ export default function AddProduct() {
                         {images.length === 0 ? (
                             <div className="w-full h-full flex flex-col items-center justify-center text-center text-gray-500">
                                 <p className="text-base font-medium">Upload product photos</p>
-                                <p className="text-sm text-gray-400">You can upload up to 5 images</p>
+                                <p className="text-sm text-gray-400">You can upload up to 3 images</p>
                             </div>
                         ) : (
                             <div className="w-full h-full rounded-lg overflow-hidden cursor-pointer">
