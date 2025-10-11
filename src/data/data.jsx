@@ -11,6 +11,8 @@ import b3 from '../assets/b3.png'
 import c1 from '../assets/c1.png'
 import c2 from '../assets/c2.png'
 import c3 from '../assets/c3.png'
+import c4 from '../assets/c4.png'
+
 
 
 
@@ -100,6 +102,11 @@ const cart = [
         image: c3,
         title: 'The one supermarket that saves your money',
         descripton: 'Eat one every day'
+    },
+    {
+        image: c4,
+        title: 'Where flavor meets affordability',
+        descripton: 'Only this week. Don’t miss'
     },
 ]
 

@@ -196,16 +196,69 @@ export default function Home() {
 
             {/* =================== CART ================= */}
             <div className="w-full flex items-center justify-between gap-4 max-[800px]:flex-col py-4">
-                {cart.slice(0, 4).map((i) => (
-                    <div className="relative flex items-center justify-start rounded-lg overflow-hidden max-[800px]:w-full">
+                {cart.slice(0, 3).map((i, key) => (
+                    <div key={key} className="relative flex items-center justify-start rounded-lg overflow-hidden max-[800px]:w-full">
                         <img className="w-full h-full object-cover" src={i.image} alt="" />
-                        <div className="absolute w-full px-3 flex flex-col gap-2">
+                        <div className="absolute w-full p-3 flex flex-col gap-2">
                             <p className="text-[12px] text-[#EA580C] max-[800px]:text-xl max-[500px]:text-[12px]">Only This Week</p>
                             <p className="w-50 font-bold max-[800px]:text-4xl max-[800px]:w-100 max-[500px]:text-lg max-[500px]:w-50">{i.title}</p>
                             <button className="w-fit py-1 px-3 flex items-center justify-center gap-2 rounded-full text-[14px] bg-white cursor-pointer">Shop Now <ArrowRight size={16} /></button>
                         </div>
                     </div>
                 ))}
+            </div>
+
+
+            {/* ================ NEW ARRIVALS ============ */}
+            <div className="w-full flex flex-col gap-4 py-4">
+
+                {/*  top texts */}
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-3">
+                        <p className="text-xl font-semibold">NEW PRODUCTS</p>
+                        <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">Some of the new products arriving this weeks</span>
+                    </div>
+                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
+                </div>
+
+
+                {/* datas */}
+                <div className="grid grid-cols-4 border border-[#E5E7EB] rounded-lg max-[900px]:grid-cols-2 max-[400px]:grid-cols-1">
+
+                    {/* carts */}
+                    <div className="flex flex-col justify-between">
+                        {cart.slice(0, 2).map((i, key) => (
+                            <div key={key} className="flex-1 relative flex items-center justify-start overflow-hidden max-[800px]:w-full">
+                                <img className="w-full h-full object-cover" src={i.image} alt="" />
+                                <div className="absolute w-full p-3 flex flex-col gap-2">
+                                    <p className="text-[12px] text-[#EA580C] max-[800px]:text-xl max-[500px]:text-[12px]">Only This Week</p>
+                                    <p className="w-50 font-bold max-[800px]:text-4xl max-[800px]:w-100 max-[500px]:text-lg max-[500px]:w-50">{i.title}</p>
+                                    <p className="max-w-30 text-[12px] text-[#6B7280]">{i.descripton}</p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+
+                    {/* prodicts */}
+                    {products.slice(0, 3).map((i) => (
+                        <div key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
+                            <div className="w-full relative">
+                                <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
+                            </div>
+                            <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>
+                            <div className="w-full flex items-end gap-3">
+                                <p className="text-3xl text-red-600 font-bold max-[500px]:text-xl">${i.discountedPrice}</p>
+                                <p className="font-semibold line-through max-[500px]:text-sm">${i.price}</p>
+                            </div>
+                            <p className="font-semibold text-[#16A34A]">IN STOCK</p>
+
+                        </div>
+                    ))}
+
+                </div>
+
+
             </div>
         </div>
     )
