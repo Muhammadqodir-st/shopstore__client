@@ -27,6 +27,10 @@ import axios from "axios"
 // lucide react 
 import { ArrowRight } from 'lucide-react'
 
+
+// cart data
+import { cart } from '../data/data'
+
 export default function Home() {
 
     // states
@@ -187,6 +191,21 @@ export default function Home() {
                         </div>
                     ))}
                 </div>
+            </div>
+
+
+            {/* =================== CART ================= */}
+            <div className="w-full flex items-center justify-between gap-4 max-[800px]:flex-col py-4">
+                {cart.slice(0, 4).map((i) => (
+                    <div className="relative flex items-center justify-start rounded-lg overflow-hidden max-[800px]:w-full">
+                        <img className="w-full h-full object-cover" src={i.image} alt="" />
+                        <div className="absolute w-full px-3 flex flex-col gap-2">
+                            <p className="text-[12px] text-[#EA580C] max-[800px]:text-xl max-[500px]:text-[12px]">Only This Week</p>
+                            <p className="w-50 font-bold max-[800px]:text-4xl max-[800px]:w-100 max-[500px]:text-lg max-[500px]:w-50">{i.title}</p>
+                            <button className="w-fit py-1 px-3 flex items-center justify-center gap-2 rounded-full text-[14px] bg-white cursor-pointer">Shop Now <ArrowRight size={16} /></button>
+                        </div>
+                    </div>
+                ))}
             </div>
         </div>
     )

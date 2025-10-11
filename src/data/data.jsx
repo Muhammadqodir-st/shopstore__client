@@ -8,6 +8,12 @@ import b1 from '../assets/b1.png'
 import b2 from '../assets/b2.png'
 import b3 from '../assets/b3.png'
 
+import c1 from '../assets/c1.png'
+import c2 from '../assets/c2.png'
+import c3 from '../assets/c3.png'
+
+
+
 const cardSlice = [
     {
         image: i1,
@@ -78,5 +84,23 @@ const blog = [
     }
 ]
 
+// home cart data
+const cart = [
+    {
+        image: c1,
+        title: 'We provide you the best quality products',
+        descripton: 'Only this week. Don’t miss...'
+    },
+    {
+        image: c2,
+        title: 'We make your grocery shopping more exciting',
+        descripton: 'Feed your family the best'
+    },
+    {
+        image: c3,
+        title: 'The one supermarket that saves your money',
+        descripton: 'Eat one every day'
+    },
+]
 
-export { cardSlice, blog };
+export { cardSlice, blog, cart };
