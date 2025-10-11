@@ -9,6 +9,7 @@ import 'swiper/css/pagination'
 // img
 import img1 from '../assets/swiperimg.png'
 import img2 from '../assets/swiperimg2.png'
+import b from '../assets/b.png'
 
 
 // react router dom
@@ -68,7 +69,7 @@ export default function Home() {
     return (
         <div className="max-w-[998px] w-[90%] mx-auto">
 
-            {/* ==================== hero swiper ===================== */}
+            {/* ============== hero swiper =============== */}
             <Swiper className="w-full h-auto rounded-lg"
                 modules={[Pagination]}
                 spaceBetween={50}
@@ -104,27 +105,38 @@ export default function Home() {
             </Swiper>
 
 
-            {/* ============= TOP CATEGRY =============== */}
+            {/* ============== TOP CATEGRY ================ */}
             <div className="w-full py-7 flex flex-col gap-5">
 
                 {/* top texts */}
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
                         <p className="text-xl font-semibold">Top Categories</p>
-                        <span className="text-sm text-[9CA3AF]">New products with updated stocks.</span>
+                        <span className="text-sm text-[9CA3AF] max-[600px]:hidden">New products with updated stocks.</span>
                     </div>
-                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900">View All <ArrowRight size={18} /></button>
+                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
                 </div>
 
                 {/* categories */}
-                <div className="flex items-center justify-between border border-[#E5E7EB] rounded-lg">
+                <div className="flex items-center justify-between border border-[#E5E7EB] rounded-lg max-[1100px]:overflow-x-auto">
                     {category.slice(2).map((i) => (
-                        <div key={i._id} className="flex-1 flex items-center justify-center flex-col gap-1 border-r border-[#E5E7EB] py-3 cursor-pointer">
+                        <div key={i._id} className="shrink-0 w-[140px] flex items-center justify-center flex-col gap-1 border-r border-[#E5E7EB] py-3 cursor-pointer">
                             <img className="w-30 h-30" src={i.image} alt="" />
                             <p className="text-sm font-semibold flex flex-nowrap">{i.name}</p>
                         </div>
                     ))}
                 </div>
+            </div>
+
+
+            {/* =============== BANNER =================== */}
+            <div className="w-full rounded-lg bg-[#FFF7ED] py-3 px-4 flex items-center justify-between relative overflow-hidden cursor-pointer">
+                <div className="flex flex-col z-20">
+                    <p className="text-xl font-semibold text-[#EA580C]">In store or online your health & safety is our top priority</p>
+                    <p className="text-[13px] text-[#6B7280]">The only supermarket that makes your life easier, makes you enjoy life and makes it better</p>
+                </div>
+                <p className="text-8xl font-semibold  absolute -top-7 left-[50%] z-2 bg-gradient-to-r from-[#ea580c66] to-[#ea580c00] bg-clip-text text-transparent">%50</p>
+                <img className="absolute right-0 w-100 h-full z-11 object-cover max-[900px]:hidden" src={b} alt="" />
             </div>
         </div>
     )
