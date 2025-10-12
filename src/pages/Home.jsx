@@ -25,7 +25,7 @@ import axios from "axios"
 
 
 // lucide react 
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Heart, Plus, ShoppingBasket } from 'lucide-react'
 
 
 // cart data
@@ -343,7 +343,7 @@ export default function Home() {
 
 
             {/* ============= DEALS OF THE DAY ============ */}
-            <div className="w-full">
+            <div className="w-full flex flex-col gap-4 py-4">
 
                 {/*  top texts */}
                 <div className="flex items-center justify-between">
@@ -355,8 +355,54 @@ export default function Home() {
                 </div>
 
                 {/* dada */}
-                <div className="w-full">
+                <div className="w-full flex gap-3 ">
+                    <div className="w-[40%] border border-[#E5E7EB] rounded-lg">
+                        {products.slice(0, 2).map((i) => (
+                            <div key={i._id} className="flex items-start gap-3 p-3 border-b border-[#E5E7EB]">
+                                <div className="relative flex items-center justify-center">
+                                    <img src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                    <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
+                                    <button className="absolute top-2 right-0 cursor-pointer"><Heart size={22} /></button>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    <p className="max-w-60 text-lg font-semibold">{i.title}</p>
+                                    <div className="w-full flex items-center gap-3 ">
+                                        <p className="text-2xl font-bold text-red-600 ">${i.discountedPrice}</p>
+                                        <p className="font-semibold line-through">${i.price}</p>
+                                    </div>
+                                    <button className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer"> Add to cart <Plus className="text-[#634C9F]" size={20} /> </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
 
+                    <div className="flex-1 border-3 p-4 border-[#DC2626] rounded-lg">
+                        {products.slice(4, 5).map((i) => (
+                            <div key={i._id} className="w-full h-full flex items-center gap-3">
+                                <div className="w-[55%] h-full relative flex items-center justify-center">
+                                    <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                    <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
+                                    <button className="absolute top-2 right-0 cursor-pointer"><Heart size={22} /></button>
+                                </div>
+                                <div className="w-[45%] flex flex-col gap-2">
+                                    <p className="max-w-70 text-2xl font-bold">{i.title}</p>
+                                    <div className="border-b border-[#E5E7EB] py-3 flex flex-col gap-1">
+                                        <div className="w-full flex items-center gap-3 ">
+                                            <p className="text-3xl font-bold text-red-600 ">${i.discountedPrice}</p>
+                                            <p className="font-semibold line-through text-lg">${i.price}</p>
+                                        </div>
+                                        <p className="max-w-full text-sm text-[#4B5563]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam </p>
+                                    </div>
+                                    <div className="py-1">
+                                        <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">This product is about to run out</p>
+                                        <div className="w-full py-1 bg-gradient-to-r from-[#FFD200] to-[#DC2626]"></div>
+                                        <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">available only: <span className="text-xl font-bold text-black">{i.stock}</span></p>
+                                    </div>
+                                    <button className="w-full py-2 px-3 bg-[#16A34A] rounded-lg flex items-center text-white gap-2 cursor-pointer"><ShoppingBasket size={21} /> Add to Cart</button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

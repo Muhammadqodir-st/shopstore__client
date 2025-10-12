@@ -15,7 +15,7 @@ import l from '../assets/l.svg'
 
 export default function Footer() {
     return (
-        <footer className="w-full bg-[#f3f4f6] py-10">
+        <footer className="w-full bg-[#f3f4f6] py-10 mt-5">
             <div className="max-w-[998px] w-[90%] mx-auto">
 
                 {/* top  */}
