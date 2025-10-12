@@ -13,7 +13,7 @@ import b from '../assets/b.png'
 
 
 // react router dom
-import { Link } from "react-router-dom"
+import { data, Link } from "react-router-dom"
 
 
 // react
@@ -31,11 +31,50 @@ import { ArrowRight, Heart, Plus, ShoppingBasket } from 'lucide-react'
 // cart data
 import { cart } from '../data/data'
 
+
+// redux
+import { useDispatch, useSelector } from "react-redux"
+import { setUser } from '../store/feature/userSlice'
+
+
 export default function Home() {
+
+    // redux
+    const { user } = useSelector((state) => state.user);
+    const dispatch = useDispatch();
+
 
     // states
     const [category, setCategory] = useState([]);
     const [products, setProducts] = useState([]);
+    const [wishlist, setWishlist] = useState(false);
+    const [message, setMessage] = useState('')
+    const [error, setError] = useState('');
+    const [loading, setLoading] = useState(false);
+
+
+    // message
+    useEffect(() => {
+        if (message) {
+            const timer = setTimeout(() => {
+                setMessage('')
+            }, 2500);
+
+            return () => clearTimeout(timer)
+        }
+    }, [message]);
+
+
+    // error message
+    useEffect(() => {
+        if (error) {
+            const timer = setTimeout(() => {
+                setError('')
+            }, 2500)
+
+            return () => clearTimeout(timer);
+        }
+    }, [error]);
 
 
     // get all category
@@ -64,6 +103,36 @@ export default function Home() {
         }
         getProducts()
     }, []);
+
+
+    //  wishlist 
+    const handleWishlist = async (productId) => {
+        try {
+            setLoading(true)
+
+            const isWishlesed = user.wishlist.some(item => item === productId)
+
+            if (!isWishlesed) {
+                const res = await axios.post('http://localhost:8000/wishlists', {
+                    userId: user.user._id,
+                    productId
+                }, { withCredentials: true });
+
+                setMessage(res.data.message || 'Add to  wishlist')
+            } else {
+                const res = await axios.delete('http:/localhost:8000/wishlists', {
+                    data: { userId: user.user._id, productId },
+                    withCredentials: true
+                })
+
+                setMessage(res.data.message || "Remeved form wishlist")
+            }
+
+            const updateUser = await axios.get()
+        } catch (error) {
+
+        }
+    }
 
 
     // swiper data 
@@ -108,7 +177,7 @@ export default function Home() {
                                 <p className="max-w-120 text-5xl font-semibold text-[#39245F] max-[750px]:text-3xl max-[450px]:text-2xl">{i.title}</p>
                                 <p className="max-w-100 text-sm text-[#030712] max-[750px]:text-[12px] max-[600px]:hidden">{i.desc}</p>
                                 <div className="flex items-center gap-4">
-                                    <Link className="py-3 px-7 bg-[#634C9F] rounded-lg text-white text-sm max-[500px]:py-2 max-[500px]:px-5">Shop Now</Link>
+                                    <Link to={user ? '/shop' : '/auth/login'} className="py-3 px-7 bg-[#634C9F] rounded-lg text-white text-sm max-[500px]:py-2 max-[500px]:px-5">Shop Now</Link>
                                     <div className="flex flex-col items-start">
                                         <div className="flex items-end justify-center gap-1">
                                             <p className="text-2xl text-[#DC2626] font-bold">${i.salePrice}</p>
@@ -133,7 +202,7 @@ export default function Home() {
                         <p className="text-xl font-semibold">Top Categories</p>
                         <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">New products with updated stocks.</span>
                     </div>
-                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
+                    <Link to={user ? '/shop' : '/auth/login'} className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></Link>
                 </div>
 
                 {/* categories */}
@@ -149,14 +218,14 @@ export default function Home() {
 
 
             {/* =============== BANNER =================== */}
-            <div className="w-full rounded-lg bg-[#FFF7ED] py-3 px-4 flex items-center justify-between relative overflow-hidden cursor-pointer">
+            <Link to={user ? '/shop' : '/auth/login'} className="w-full rounded-lg bg-[#FFF7ED] py-3 px-4 flex items-center justify-between relative overflow-hidden cursor-pointer">
                 <div className="flex flex-col z-20">
                     <p className="text-xl font-semibold text-[#EA580C]">In store or online your health & safety is our top priority</p>
                     <p className="text-[13px] text-[#6B7280]">The only supermarket that makes your life easier, makes you enjoy life and makes it better</p>
                 </div>
                 <p className="text-8xl font-semibold  absolute -top-7 left-[50%] z-2 bg-gradient-to-r from-[#ea580c66] to-[#ea580c00] bg-clip-text text-transparent">%50</p>
                 <img className="absolute right-0 w-100 h-full z-11 object-cover max-[900px]:hidden" src={b} alt="" />
-            </div>
+            </Link>
 
 
             {/* =============== NEW PRODUCTS ============= */}
@@ -168,7 +237,7 @@ export default function Home() {
                         <p className="text-xl font-semibold">NEW PRODUCTS</p>
                         <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">Some of the new products arriving this weeks</span>
                     </div>
-                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
+                    <Link to={user ? '/shop' : '/auth/login'} className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></Link>
                 </div>
 
 
@@ -357,23 +426,32 @@ export default function Home() {
                 {/* dada */}
                 <div className="w-full flex gap-3 ">
                     <div className="w-[40%] border border-[#E5E7EB] rounded-lg">
-                        {products.slice(0, 2).map((i) => (
-                            <div key={i._id} className="flex items-start gap-3 p-3 border-b border-[#E5E7EB]">
-                                <div className="relative flex items-center justify-center">
-                                    <img src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
-                                    <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
-                                    <button className="absolute top-2 right-0 cursor-pointer"><Heart size={22} /></button>
-                                </div>
-                                <div className="flex flex-col gap-2">
-                                    <p className="max-w-60 text-lg font-semibold">{i.title}</p>
-                                    <div className="w-full flex items-center gap-3 ">
-                                        <p className="text-2xl font-bold text-red-600 ">${i.discountedPrice}</p>
-                                        <p className="font-semibold line-through">${i.price}</p>
+                        {products.slice(0, 2).map((i) => {
+                            const isWishlesed = user.user.wishlist.some(item => item === i._id);
+
+
+                            return (
+                                < div key={i._id} className="flex items-start gap-3 p-3 border-b border-[#E5E7EB]" >
+                                    <div className="relative flex items-center justify-center">
+                                        <img src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                        <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
+                                        <button onClick={() => handleWishlist(i._id)} className={`absolute top-2 right-0 cursor-pointer`}>
+                                            {loading ? (
+                                                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
+                                            ) : <Heart className={`${isWishlesed ? 'text-red-500' : ''}`} size={22} />}
+                                        </button>
                                     </div>
-                                    <button className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer"> Add to cart <Plus className="text-[#634C9F]" size={20} /> </button>
+                                    <div className="flex flex-col gap-2">
+                                        <p className="max-w-60 text-lg font-semibold">{i.title}</p>
+                                        <div className="w-full flex items-center gap-3 ">
+                                            <p className="text-2xl font-bold text-red-600 ">${i.discountedPrice}</p>
+                                            <p className="font-semibold line-through">${i.price}</p>
+                                        </div>
+                                        <button className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer"> Add to cart <Plus className="text-[#634C9F]" size={20} /> </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            )
+                        })}
                     </div>
 
                     <div className="flex-1 border-3 p-4 border-[#DC2626] rounded-lg">
@@ -405,6 +483,27 @@ export default function Home() {
                     </div>
                 </div>
             </div>
-        </div>
+
+
+            {/* message */}
+            {
+                message && (
+                    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
+                        {message}
+                    </div>
+                )
+            }
+
+            {/* error */}
+            {
+                error && (
+                    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
+                        {error}
+                    </div>
+                )
+            }
+
+
+        </div >
     )
 }
