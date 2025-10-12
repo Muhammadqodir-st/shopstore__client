@@ -13,7 +13,7 @@ import b from '../assets/b.png'
 
 
 // react router dom
-import { data, Link } from "react-router-dom"
+import { useNavigate, Link } from "react-router-dom"
 
 
 // react
@@ -25,7 +25,7 @@ import axios from "axios"
 
 
 // lucide react 
-import { ArrowRight, Heart, Plus, ShoppingBasket } from 'lucide-react'
+import { ArrowRight, Heart, Plus, ShoppingBasket, Eye } from 'lucide-react'
 
 
 // cart data
@@ -39,6 +39,9 @@ import { setUser } from '../store/feature/userSlice'
 
 export default function Home() {
 
+    // navigate
+    const navigate = useNavigate();
+
     // redux
     const { user } = useSelector((state) => state.user);
     const dispatch = useDispatch();
@@ -50,7 +53,6 @@ export default function Home() {
     const [wishlist, setWishlist] = useState(false);
     const [message, setMessage] = useState('')
     const [error, setError] = useState('');
-    const [loading, setLoading] = useState(false);
 
 
     // message
@@ -108,29 +110,34 @@ export default function Home() {
     //  wishlist 
     const handleWishlist = async (productId) => {
         try {
-            setLoading(true)
-
-            const isWishlesed = user.wishlist.some(item => item === productId)
+            const isWishlesed = user?.wishlist?.some(item => item === productId)
 
             if (!isWishlesed) {
                 const res = await axios.post('http://localhost:8000/wishlists', {
-                    userId: user.user._id,
+                    userId: user?.user?._id,
                     productId
                 }, { withCredentials: true });
 
-                setMessage(res.data.message || 'Add to  wishlist')
+                setMessage(res.data.message || 'Add to  wishlist');
+                window.location.reload();
             } else {
                 const res = await axios.delete('http:/localhost:8000/wishlists', {
-                    data: { userId: user.user._id, productId },
+                    data: { userId: user?.user?._id, productId },
                     withCredentials: true
                 })
 
                 setMessage(res.data.message || "Remeved form wishlist")
             }
 
-            const updateUser = await axios.get()
+            const updateUser = await axios.get(`http://localhost:8000/register/${user.user._id}`, { withCredentials: true })
+            dispatch(setUser({ user: updateUser.data }));
         } catch (error) {
-
+            console.log(error)
+            if (error.response && error.response.data) {
+                setError(error.response.data.message || 'error!')
+            } else {
+                setError("Server error!")
+            }
         }
     }
 
@@ -244,7 +251,7 @@ export default function Home() {
                 {/* products */}
                 <div className="grid grid-cols-4 border border-[#E5E7EB] rounded-lg max-[900px]:grid-cols-2">
                     {products.slice(0, 4).map((i) => (
-                        <div key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
+                        <Link to={`/product/${i._id}`} key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
                             <div className="w-full relative">
                                 <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
@@ -257,7 +264,7 @@ export default function Home() {
                             <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">This product is about to run out</p>
                             <div className="w-full py-1 bg-gradient-to-r from-[#FFD200] to-[#DC2626]"></div>
                             <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">available only: <span className="text-xl font-bold text-black">{i.stock}</span></p>
-                        </div>
+                        </Link>
                     ))}
                 </div>
             </div>
@@ -284,8 +291,8 @@ export default function Home() {
                 {/*  top texts */}
                 <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3">
-                        <p className="text-xl font-semibold">NEW PRODUCTS</p>
-                        <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">Some of the new products arriving this weeks</span>
+                        <p className="text-xl font-semibold">NEW ARRIVALS</p>
+                        <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">Do not miss the current offers until the end of month.</span>
                     </div>
                     <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
                 </div>
@@ -310,7 +317,7 @@ export default function Home() {
 
                     {/* prodicts */}
                     {products.slice(2, 5).map((i) => (
-                        <div key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
+                        <Link to={`/product/${i._id}`} key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
                             <div className="w-full relative">
                                 <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
@@ -322,7 +329,7 @@ export default function Home() {
                             </div>
                             <p className="font-semibold text-[#16A34A]">IN STOCK</p>
 
-                        </div>
+                        </Link>
                     ))}
 
                 </div>
@@ -379,7 +386,7 @@ export default function Home() {
 
                     {/* prodicts */}
                     {products.slice(4, 7).map((i) => (
-                        <div key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
+                        <Link to={`/product/${i._id}`} key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
                             <div className="w-full relative">
                                 <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
@@ -389,7 +396,7 @@ export default function Home() {
                                 <p className="text-3xl text-red-600 font-bold max-[500px]:text-xl">${i.discountedPrice}</p>
                                 <p className="font-semibold line-through max-[500px]:text-sm">${i.price}</p>
                             </div>
-                        </div>
+                        </Link>
                     ))}
 
                 </div>
@@ -424,29 +431,31 @@ export default function Home() {
                 </div>
 
                 {/* dada */}
-                <div className="w-full flex gap-3 ">
-                    <div className="w-[40%] border border-[#E5E7EB] rounded-lg">
+                <div className="w-full flex gap-3 max-[950px]:flex-col">
+                    <div className="w-[40%] border border-[#E5E7EB] rounded-lg max-[950px]:w-full">
                         {products.slice(0, 2).map((i) => {
-                            const isWishlesed = user.user.wishlist.some(item => item === i._id);
+                            const isWishlesed = user?.user?.wishlist?.some(item => item === i._id);
 
 
                             return (
-                                < div key={i._id} className="flex items-start gap-3 p-3 border-b border-[#E5E7EB]" >
-                                    <div className="relative flex items-center justify-center">
-                                        <img src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                <div key={i._id} className="flex items-start gap-3 p-3 border-b border-[#E5E7EB] max-[700px]:flex-col" >
+                                    <div className="relative flex items-center justify-center max-[700px]:w-full">
+                                        <Link to={`/product/${i._id}`}>
+                                            <img src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                        </Link>
                                         <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
-                                        <button onClick={() => handleWishlist(i._id)} className={`absolute top-2 right-0 cursor-pointer`}>
-                                            {loading ? (
-                                                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin"></div>
-                                            ) : <Heart className={`${isWishlesed ? 'text-red-500' : ''}`} size={22} />}
+                                        <button onClick={() => handleWishlist(i._id)} className={`absolute top-2 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>
+                                            {isWishlesed ? <Eye onClick={() => navigate('/wishlist')} className="text-red-500" size={22} /> : (
+                                                <Heart className={`${isWishlesed ? 'text-red-500' : ''}`} size={22} />
+                                            )}
                                         </button>
                                     </div>
-                                    <div className="flex flex-col gap-2">
-                                        <p className="max-w-60 text-lg font-semibold">{i.title}</p>
-                                        <div className="w-full flex items-center gap-3 ">
+                                    <div className="flex flex-col gap-2 max-[700px]:w-full">
+                                        <Link to={`/product/${i._id}`} className="max-w-60 text-lg font-semibold">{i.title}</Link>
+                                        <Link to={`/product/${i._id}`} className="w-full flex items-center gap-3 ">
                                             <p className="text-2xl font-bold text-red-600 ">${i.discountedPrice}</p>
                                             <p className="font-semibold line-through">${i.price}</p>
-                                        </div>
+                                        </Link>
                                         <button className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer"> Add to cart <Plus className="text-[#634C9F]" size={20} /> </button>
                                     </div>
                                 </div>
@@ -455,31 +464,42 @@ export default function Home() {
                     </div>
 
                     <div className="flex-1 border-3 p-4 border-[#DC2626] rounded-lg">
-                        {products.slice(4, 5).map((i) => (
-                            <div key={i._id} className="w-full h-full flex items-center gap-3">
-                                <div className="w-[55%] h-full relative flex items-center justify-center">
-                                    <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
-                                    <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
-                                    <button className="absolute top-2 right-0 cursor-pointer"><Heart size={22} /></button>
-                                </div>
-                                <div className="w-[45%] flex flex-col gap-2">
-                                    <p className="max-w-70 text-2xl font-bold">{i.title}</p>
-                                    <div className="border-b border-[#E5E7EB] py-3 flex flex-col gap-1">
-                                        <div className="w-full flex items-center gap-3 ">
-                                            <p className="text-3xl font-bold text-red-600 ">${i.discountedPrice}</p>
-                                            <p className="font-semibold line-through text-lg">${i.price}</p>
+                        {products.slice(4, 5).map((i) => {
+                            const isWishlesed = user?.user?.wishlist?.some(item => item === i._id);
+
+                            return (
+                                <div key={i._id} className="w-full h-full flex items-center gap-3 max-[700px]:flex-col">
+                                    <div className="w-[55%] h-full relative flex items-center justify-center max-[700px]:w-full">
+                                        <Link to={`/product/${i._id}`} className="w-full h-full">
+                                            <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                        </Link>
+                                        <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
+                                        <button onClick={() => handleWishlist(i._id)} className={`absolute top-2 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>
+                                            {isWishlesed ? <Eye onClick={() => navigate('/wishlist')} className="text-red-500" size={22} /> : (
+                                                <Heart className={`${isWishlesed ? 'text-red-500' : ''}`} size={22} />
+                                            )}
+                                        </button>
+                                    </div>
+                                    <div className="w-[45%] flex flex-col gap-2 max-[700px]:w-full">
+                                        <p className="max-w-70 text-2xl font-bold">{i.title}</p>
+                                        <div className="border-b border-[#E5E7EB] py-3 flex flex-col gap-1">
+                                            <div className="w-full flex items-center gap-3 ">
+                                                <p className="text-3xl font-bold text-red-600 ">${i.discountedPrice}</p>
+                                                <p className="font-semibold line-through text-lg">${i.price}</p>
+                                            </div>
+                                            <p className="max-w-full text-sm text-[#4B5563]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam </p>
                                         </div>
-                                        <p className="max-w-full text-sm text-[#4B5563]">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Magnam </p>
+                                        <div className="py-1">
+                                            <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">This product is about to run out</p>
+                                            <div className="w-full py-1 bg-gradient-to-r from-[#FFD200] to-[#DC2626]"></div>
+                                            <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">available only: <span className="text-xl font-bold text-black">{i.stock}</span></p>
+                                        </div>
+                                        <button className="w-full py-2 px-3 bg-[#16A34A] rounded-lg flex items-center text-white gap-2 cursor-pointer"><ShoppingBasket size={21} /> Add to Cart</button>
                                     </div>
-                                    <div className="py-1">
-                                        <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">This product is about to run out</p>
-                                        <div className="w-full py-1 bg-gradient-to-r from-[#FFD200] to-[#DC2626]"></div>
-                                        <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">available only: <span className="text-xl font-bold text-black">{i.stock}</span></p>
-                                    </div>
-                                    <button className="w-full py-2 px-3 bg-[#16A34A] rounded-lg flex items-center text-white gap-2 cursor-pointer"><ShoppingBasket size={21} /> Add to Cart</button>
                                 </div>
-                            </div>
-                        ))}
+                            )
+
+                        })}
                     </div>
                 </div>
             </div>

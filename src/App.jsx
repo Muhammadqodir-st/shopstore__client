@@ -31,6 +31,7 @@ import Addresses from './pages/Addresses'
 import UserWishlist from './pages/UserWishlist'
 import AddCategory from './pages/AddCategory'
 import ProtectedRoute from './components/ProtectedRoute'
+import Product from "./pages/Product";
 
 
 function App() {
@@ -56,12 +57,13 @@ function App() {
           <Route index={true} element={<Home />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
+          <Route path="/wishlist" element={<Wishlist />} />
+          <Route path="/product/:id" element={<Product />} />
 
           {/* yopiq routerlar */}
           <Route path="/shop" element={<ProtectedRoute> <Shop /> </ProtectedRoute>} />
           <Route path="/blog" element={<ProtectedRoute> <Blog /> </ProtectedRoute>} />
           <Route path="/contact" element={<ProtectedRoute> <Contact /> </ProtectedRoute>} />
-          <Route path="/wishlist" element={<ProtectedRoute> <Wishlist /> </ProtectedRoute>} />
           <Route path="/cart" element={<ProtectedRoute> <Cart /> </ProtectedRoute>} />
           {/* user layout */}
           <Route path="/profile" element={<ProtectedRoute> <UserLayout /> </ProtectedRoute>}>
