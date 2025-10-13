@@ -32,6 +32,7 @@ import UserWishlist from './pages/UserWishlist'
 import AddCategory from './pages/AddCategory'
 import ProtectedRoute from './components/ProtectedRoute'
 import Product from "./pages/Product";
+import NotFound from './pages/NotFound';
 
 
 function App() {
@@ -59,6 +60,7 @@ function App() {
           <Route path="/auth/register" element={<Register />} />
           <Route path="/wishlist" element={<Wishlist />} />
           <Route path="/product/:id" element={<Product />} />
+          <Route path="*" element={<NotFound />} />
 
           {/* yopiq routerlar */}
           <Route path="/shop" element={<ProtectedRoute> <Shop /> </ProtectedRoute>} />

@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import empty from '../assets/empty.svg'
 
 // react router dom 
-import { Link } from "lucide-react";
+import { Link } from "react-router-dom";
 
 
 export default function Wishlist() {
@@ -46,11 +46,13 @@ export default function Wishlist() {
                     <img className="w-120 h-120 mx-auto" src={empty} alt="" />
                 </div>
             ) : (
-                <div className="grid grid-cols-4 gap-3">
+                <div className="w-full grid grid-cols-4 gap-3 max-[900px]:grid-cols-2">
                     {wishlists.map((i) => (
                         <div key={i._id} className="border border-[#E5E7EB] p-3 flex flex-col items-start gap-2 rounded-lg overflow-hidden">
                             <div className="w-full relative">
-                                <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                <Link to={`/product/${i._id}`} className="w-full h-full ">
+                                    <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                </Link>
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
                             </div>
                             <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>
