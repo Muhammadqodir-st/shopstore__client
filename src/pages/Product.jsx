@@ -47,7 +47,18 @@ export default function Product() {
     const isWishlesed = user?.user?.wishlist?.some(item => item === product?._id);
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [products, setProducts] = useState([])
+    const [products, setProducts] = useState([]);
+    const [mainImage, setMainImage] = useState(product?.mainImage)
+    const isAddtoCarted = user?.user?.cart.some(item => item.product === product?._id)
+
+
+
+    // mainImage
+    useEffect(() => {
+        if (product?.mainImage) {
+            setMainImage(product.mainImage)
+        }
+    }, [product]);
 
 
     // message
@@ -132,6 +143,28 @@ export default function Product() {
     }, []);
 
 
+    // add to cart
+    const handleCart = async (productId) => {
+        try {
+            const res = await axios.post('http://localhost:8000/carts', {
+                productId,
+                quantity: quentity,
+                userId: user?.user?._id
+            }, { withCredentials: true });
+
+            setMessage(res.data.message);
+            window.location.reload();
+        } catch (error) {
+            console.log(error)
+            if (error.response && error.response.data) {
+                setError(error.response.data.message || 'error!')
+            } else {
+                setError("Server error!")
+            }
+        }
+    }
+
+
     return (
         <div className="max-w-[998px] w-[90%] mx-auto py-8">
             <div className="flex gap-3 max-[700px]:flex-col">
@@ -139,7 +172,7 @@ export default function Product() {
                 {/* images */}
                 <div className="w-[45%] flex flex-col  items-center justify-center gap-3 max-[700px]:w-full">
                     <div className="w-full flex items-center justify-center relative border border-gray-300 rounded-xl overflow-hidden">
-                        {product?.mainImage && (
+                        {mainImage && (
                             <img className="w-125 h-110 object-cover" src={`http://localhost:8000/uploads/${product.mainImage}`} alt="" />
                         )}
                         <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-3 left-3">{product?.discountPercent}%</button>
@@ -151,7 +184,7 @@ export default function Product() {
                     </div>
                     <div className="w-full flex items-center justify-center gap-3 max-[700px]:justify-start">
                         {product?.images.map((i, key) => (
-                            <div key={key} className={`w-20 h-20 rounded-md overflow-hidden cursor-pointer ${product.mainImage === i ? `border border-gray-400` : ``}`}>
+                            <div onClick={() => setMainImage(i)} key={key} className={`w-20 h-20 rounded-md overflow-hidden cursor-pointer ${mainImage === i ? `border border-gray-400` : ``}`}>
                                 <img className="w-full h-full" src={`http://localhost:8000/uploads/${i}`} alt="" />
                             </div>
                         ))}
@@ -183,13 +216,23 @@ export default function Product() {
                         <div className="w-fit flex items-center justify-between gap-3 py-2 px-3 border border-[#D1D5DB] rounded-md">
                             <button onClick={() => setQuentity(prev => (prev > 1 ? prev - 1 : 1))} className="cursor-pointer"><Minus className="text-[#030712]" size={18} /></button>
                             <p>{quentity}</p>
-                            <button onClick={() => setQuentity(prev => prev + 1)} className="cursor-pointer"><Plus className="text-[#030712]" size={18} /></button>
+                            <button onClick={() => setQuentity(prev => prev < product?.stock ? prev + 1 : product?.stock)} className="cursor-pointer"><Plus className="text-[#030712]" size={18} /></button>
                         </div>
-                        <button className="py-2 px-4 bg-[#16A34A] rounded-lg flex items-center justify-center gap-2 text-white font-bold cursor-pointer"><ShoppingBag size={20} />Add to cart</button>
+                        <button onClick={() => handleCart(product?._id)} className="py-2 px-4 bg-[#16A34A] rounded-lg flex items-center justify-center gap-2 text-white font-bold cursor-pointer">
+                            {isAddtoCarted ? (
+                                <Link to={'/cart'} className="w-full h-full flex items-center justify-center gap-2">
+                                    <Eye size={20} /> View
+                                </Link>
+                            ) : (
+                                <div className="w-full h-full flex items-center justify-center gap-2">
+                                    <ShoppingBag size={20} />Add to cart
+                                </div>
+                            )}
+                        </button>
                     </div>
                     <div className="border border-[#E5E7EB] rounded-lg flex flex-col">
-                        {payment.map((i) => (
-                            <div className="flex items-center gap-2 border-b border-[#E5E7EB] px-3 py-2">
+                        {payment.map((i, key) => (
+                            <div key={key} className="flex items-center gap-2 border-b border-[#E5E7EB] px-3 py-2">
                                 <img className="w-7 h-7" src={i.image} alt="" />
                                 <div>
                                     <p className="text-sm text-[#6B7280]"><span className="font-semibold">{i.title}</span>{i.descripton}</p>

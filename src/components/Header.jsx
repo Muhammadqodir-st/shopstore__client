@@ -84,7 +84,7 @@ export default function Header() {
                         <div className="relative cursor-pointer">
                             <Heart size={24} />
                             <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                                {user?.user.wishlist.length || 0}
+                                {user?.user?.wishlist?.length || 0}
                             </span>
                         </div>
                     </Link>
@@ -93,7 +93,9 @@ export default function Header() {
                     <Link className="max-[850px]:hidden" to={'/cart'}>
                         <div className="relative cursor-pointer">
                             <ShoppingCart size={24} />
-                            <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">0</span>
+                            <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
+                                {user?.user?.cart?.length || 0}
+                            </span>
                         </div>
                     </Link>
                 </div>
@@ -122,13 +124,16 @@ export default function Header() {
                     <Link to={'/wishlist'} className="flex flex-col items-center relative">
                         <Heart size={23} className="text-[#505054]" />
                         <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                            {user?.user.wishlist.length || 0}
+                            {user?.user?.wishlist?.length || 0}
                         </span>
                     </Link>
 
 
-                    <Link to={'/profile'} className="flex flex-col items-center">
+                    <Link to={'/profile'} className="flex flex-col items-center relative">
                         <CircleUser size={23} className="text-[#505054]" />
+                        <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
+                            {user?.user?.cart?.length || 0}
+                        </span>
                     </Link>
                 </div>
             </div>

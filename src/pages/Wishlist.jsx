@@ -13,6 +13,9 @@ import empty from '../assets/empty.svg'
 // react router dom 
 import { Link } from "react-router-dom";
 
+// lucide react
+import { Trash } from "lucide-react";
+
 
 export default function Wishlist() {
 
@@ -36,7 +39,22 @@ export default function Wishlist() {
             }
         }
         getAllWishlists();
-    }, [user])
+    }, [user]);
+
+
+    // delete wishlist
+    const handleWishlistDelete = async (productId) => {
+        try {
+            const red = await axios.delete('http://localhost:8000/wishlists', {
+                data: { productId, userId: user?.user?._id },
+                withCredentials: true
+            });
+
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
     return (
@@ -54,6 +72,9 @@ export default function Wishlist() {
                                     <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
                                 </Link>
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
+                                <button onClick={() => handleWishlistDelete(i._id)} className={`absolute top-0 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>
+                                    <Trash className="text-red-500" size={20} />
+                                </button>
                             </div>
                             <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>
                             <div className="w-full flex items-end gap-3 border-b border-[#E5E7EB] py-2">

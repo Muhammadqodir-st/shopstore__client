@@ -142,6 +142,27 @@ export default function Home() {
     }
 
 
+    // add to cart
+    const handleCart = async (productId) => {
+        try {
+            const res = await axios.post('http://localhost:8000/carts', {
+                productId,
+                userId: user?.user?._id
+            }, { withCredentials: true });
+
+            setMessage(res.data.message);
+            window.location.reload();
+        } catch (error) {
+            console.log(error)
+            if (error.response && error.response.data) {
+                setError(error.response.data.message || 'error!')
+            } else {
+                setError("Server error!")
+            }
+        }
+    }
+
+
     // swiper data 
     const swiper = [
         {
@@ -435,6 +456,8 @@ export default function Home() {
                     <div className="w-[40%] border border-[#E5E7EB] rounded-lg max-[950px]:w-full">
                         {products.slice(0, 2).map((i) => {
                             const isWishlesed = user?.user?.wishlist?.some(item => item === i._id);
+                            const isAddtoCarted = user?.user?.cart.some(item => item.product === i?._id)
+
 
 
                             return (
@@ -456,7 +479,17 @@ export default function Home() {
                                             <p className="text-2xl font-bold text-red-600 ">${i.discountedPrice}</p>
                                             <p className="font-semibold line-through">${i.price}</p>
                                         </Link>
-                                        <button className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer"> Add to cart <Plus className="text-[#634C9F]" size={20} /> </button>
+                                        <button onClick={() => handleCart(i._id)} className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer">
+                                            {isAddtoCarted ? (
+                                                <Link to={'/cart'} className="w-full h-full flex items-center justify-between text-[#634C9F]">
+                                                    <Eye size={20} /> View
+                                                </Link>
+                                            ) : (
+                                                <div className="w-full h-full flex items-center justify-between text-[#634C9F]">
+                                                    Add to cart <Plus className="text-[#634C9F]" size={20} />
+                                                </div>
+                                            )}
+                                        </button>
                                     </div>
                                 </div>
                             )
@@ -466,6 +499,7 @@ export default function Home() {
                     <div className="flex-1 border-3 p-4 border-[#DC2626] rounded-lg">
                         {products.slice(4, 5).map((i) => {
                             const isWishlesed = user?.user?.wishlist?.some(item => item === i._id);
+                            const isAddtoCarted = user?.user?.cart.some(item => item.product === i?._id)
 
                             return (
                                 <div key={i._id} className="w-full h-full flex items-center gap-3 max-[700px]:flex-col">
@@ -494,7 +528,17 @@ export default function Home() {
                                             <div className="w-full py-1 bg-gradient-to-r from-[#FFD200] to-[#DC2626]"></div>
                                             <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">available only: <span className="text-xl font-bold text-black">{i.stock}</span></p>
                                         </div>
-                                        <button className="w-full py-2 px-3 bg-[#16A34A] rounded-lg flex items-center text-white gap-2 cursor-pointer"><ShoppingBasket size={21} /> Add to Cart</button>
+                                        <button onClick={() => handleCart(i._id)} className="w-full py-2 px-3 bg-[#16A34A] rounded-lg flex items-center text-white gap-2 cursor-pointer">
+                                            {isAddtoCarted ? (
+                                                <Link to={'/cart'} className="w-full h-full flex items-center justify-start gap-2">
+                                                    <Eye size={20} /> View
+                                                </Link>
+                                            ) : (
+                                                <div className="w-full h-full flex items-center text-white gap-2 cursor-pointer">
+                                                    <ShoppingBasket size={21} /> Add to Cart
+                                                </div>
+                                            )}
+                                        </button>
                                     </div>
                                 </div>
                             )
