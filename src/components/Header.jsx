@@ -115,8 +115,11 @@ export default function Header() {
                     </Link>
 
 
-                    <Link to={'/cart'} className="flex flex-col items-center">
+                    <Link to={'/cart'} className="flex flex-col items-center relative">
                         <ShoppingBasket size={23} className="text-[#505054]" />
+                        <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
+                            {user?.user?.cart?.length || 0}
+                        </span>
                     </Link>
 
 
@@ -129,11 +132,8 @@ export default function Header() {
                     </Link>
 
 
-                    <Link to={'/profile'} className="flex flex-col items-center relative">
+                    <Link to={'/profile'} className="flex flex-col items-center">
                         <CircleUser size={23} className="text-[#505054]" />
-                        <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                            {user?.user?.cart?.length || 0}
-                        </span>
                     </Link>
                 </div>
             </div>

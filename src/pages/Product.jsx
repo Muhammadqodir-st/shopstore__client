@@ -146,14 +146,17 @@ export default function Product() {
     // add to cart
     const handleCart = async (productId) => {
         try {
-            const res = await axios.post('http://localhost:8000/carts', {
-                productId,
-                quantity: quentity,
-                userId: user?.user?._id
-            }, { withCredentials: true });
 
-            setMessage(res.data.message);
-            window.location.reload();
+            if (!isAddtoCarted) {
+                const res = await axios.post('http://localhost:8000/carts', {
+                    productId,
+                    quantity: quentity,
+                    userId: user?.user?._id
+                }, { withCredentials: true });
+
+                setMessage(res.data.message);
+                window.location.reload();
+            }
         } catch (error) {
             console.log(error)
             if (error.response && error.response.data) {
