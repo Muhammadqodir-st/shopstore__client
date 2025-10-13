@@ -29,7 +29,7 @@ import { ArrowRight, Heart, Plus, ShoppingBasket, Eye } from 'lucide-react'
 
 
 // cart data
-import { cart } from '../data/data'
+import { cart, cardSlice } from '../data/data'
 
 
 // redux
@@ -50,7 +50,6 @@ export default function Home() {
     // states
     const [category, setCategory] = useState([]);
     const [products, setProducts] = useState([]);
-    const [wishlist, setWishlist] = useState(false);
     const [message, setMessage] = useState('')
     const [error, setError] = useState('');
 
@@ -504,6 +503,19 @@ export default function Home() {
                 </div>
             </div>
 
+
+            {/* ============= CART SLIDE ================= */}
+            <div className="w-full flex items-center justify-between gap-3 overflow-x-auto py-8">
+                {cardSlice.map((i, key) => (
+                    <div key={key} className="flex items-center justify-between gap-5 flex-shrink-0">
+                        <img className="w-12 h-12" src={i.image} alt="" />
+                        <div>
+                            <p className="text-sm font-semibold">{i.title}</p>
+                            <p className="max-w-45 text-[10px] text-[#6B7280]">{i.descripton}</p>
+                        </div>
+                    </div>
+                ))}
+            </div>
 
             {/* message */}
             {

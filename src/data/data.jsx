@@ -19,6 +19,9 @@ import c8 from '../assets/c8.png'
 import c9 from '../assets/c9.png'
 import c10 from '../assets/c10.png'
 
+import p from '../assets/p.svg'
+import p2 from '../assets/p2.svg'
+
 
 
 
@@ -146,4 +149,19 @@ const cart = [
     },
 ]
 
-export { cardSlice, blog, cart };
+
+const payment = [
+    {
+        image: p,
+        title: 'Payment.',
+        descripton: 'Payment upon receipt of goods, Payment by card in the department, Google Pay, Online card, - 5 % discount in case of payment'
+    },
+    {
+        image: p2,
+        title: 'Warranty.',
+        descripton: 'The Consumer Protection Act does not provide for the return of this product of proper quality.'
+    }
+]
+
+
+export { cardSlice, blog, cart, payment };

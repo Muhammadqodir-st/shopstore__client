@@ -1,11 +1,18 @@
 // react rouetr dom
-import { Navigate, replace } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 
 // redux
 import { useSelector } from "react-redux";
 
+// loading
+import Loading from "./Loading";
+
 export default function ProtectedRoute({ children }) {
-    const { user } = useSelector((state) => state.user);
+    const { user, loading } = useSelector((state) => state?.user);
+
+    if (loading) {
+        return <Loading />
+    }
 
     if (!user) {
         return <Navigate to={'/auth/login'} replace />

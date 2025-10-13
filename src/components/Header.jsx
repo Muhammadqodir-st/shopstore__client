@@ -84,7 +84,7 @@
                             <div className="relative cursor-pointer">
                                 <Heart size={24} />
                                 <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                                    {user?.user.wishlist.length}
+                                    {user?.user.wishlist.length || 0}
                                 </span>
                             </div>
                         </Link>

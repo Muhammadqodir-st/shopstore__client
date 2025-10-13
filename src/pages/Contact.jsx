@@ -89,8 +89,8 @@ export default function Contact() {
 
             {/* slide cards */}
             <div className="w-full flex items-center justify-between gap-3 overflow-x-auto">
-                {cardSlice.map((i) => (
-                    <div className="flex items-center justify-between gap-5 flex-shrink-0">
+                {cardSlice.map((i, key) => (
+                    <div key={key} className="flex items-center justify-between gap-5 flex-shrink-0">
                         <img className="w-12 h-12" src={i.image} alt="" />
                         <div>
                             <p className="text-sm font-semibold">{i.title}</p>
