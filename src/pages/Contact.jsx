@@ -6,6 +6,9 @@ import { cardSlice } from '../data/data'
 
 
 export default function Contact() {
+
+    window.scrollTo(0, 0)
+
     return (
         <div className="max-w-[998px] w-[90%] mx-auto flex flex-col gap-3 py-10">
             <p className="text-center font-semibold max-[600px]:hidden">Contact With Us</p>

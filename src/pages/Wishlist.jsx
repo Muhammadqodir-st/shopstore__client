@@ -19,6 +19,8 @@ import { Trash } from "lucide-react";
 
 export default function Wishlist() {
 
+    window.scrollTo(0, 0)
+
     // user
     const { user } = useSelector((state) => state.user);
 

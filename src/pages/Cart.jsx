@@ -26,6 +26,8 @@ import empty from '../assets/empty.gif'
 
 export default function Cart() {
 
+    window.scrollTo(0, 0)
+
 
     //  user
     const { user } = useSelector((state) => state.user)

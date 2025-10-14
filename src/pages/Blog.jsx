@@ -19,6 +19,7 @@ export default function Blog() {
     // blog slide
     const blogSlideOne = blog.slice(0, 3)
     const blogProfile = blog.slice(0, 4);
+    window.scrollTo(0, 0)
 
 
     return (

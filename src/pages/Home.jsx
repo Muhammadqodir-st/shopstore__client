@@ -91,7 +91,9 @@ export default function Home() {
                 console.log(error);
             }
         }
-        getAllCAtegory()
+        getAllCAtegory();
+
+        window.scrollTo(0, 0)
     }, []);
 
 
