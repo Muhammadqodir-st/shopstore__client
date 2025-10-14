@@ -153,7 +153,7 @@ export default function Register() {
                 <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
                     {message}
                 </div>
-            )};
+            )}
 
             {/* error */}
             {error && (

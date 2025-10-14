@@ -50,7 +50,9 @@ export default function Wishlist() {
                 withCredentials: true
             });
 
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 500)
         } catch (error) {
             console.log(error);
         }

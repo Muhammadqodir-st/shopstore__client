@@ -42,7 +42,7 @@ export default function MainLayout() {
         <>
             <Header />
             <Outlet />
-            {/* <Footer />  */}
+            <Footer />
         </>
     )
 }

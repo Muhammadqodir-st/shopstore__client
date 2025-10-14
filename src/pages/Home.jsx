@@ -119,7 +119,9 @@ export default function Home() {
                 }, { withCredentials: true });
 
                 setMessage(res.data.message || 'Add to  wishlist');
-                window.location.reload();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500)
             } else {
                 const res = await axios.delete('http:/localhost:8000/wishlists', {
                     data: { userId: user?.user?._id, productId },
@@ -151,7 +153,9 @@ export default function Home() {
             }, { withCredentials: true });
 
             setMessage(res.data.message);
-            window.location.reload();
+            setTimeout(() => {
+                window.location.reload();
+            }, 500)
         } catch (error) {
             console.log(error)
             if (error.response && error.response.data) {

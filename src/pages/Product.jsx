@@ -49,7 +49,7 @@ export default function Product() {
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
     const [mainImage, setMainImage] = useState(product?.mainImage)
-    const isAddtoCarted = user?.user?.cart.some(item => item.product === product?._id)
+    const isAddtoCarted = user?.user?.cart.some(item => item.product === product?._id);
 
 
 
@@ -97,10 +97,14 @@ export default function Product() {
                 }, { withCredentials: true });
 
                 setMessage('Add to  wishlist');
-                window.location.reload();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500)
             }
 
             const updateUser = await axios.get(`http://localhost:8000/register/${user?.user?._id}`, { withCredentials: true })
+            console.log(updateUser);
+
             dispatch(setUser({ user: updateUser.data }));
         } catch (error) {
             console.log(error)
@@ -155,7 +159,9 @@ export default function Product() {
                 }, { withCredentials: true });
 
                 setMessage(res.data.message);
-                window.location.reload();
+                setTimeout(() => {
+                    window.location.reload();
+                }, 500)
             }
         } catch (error) {
             console.log(error)
