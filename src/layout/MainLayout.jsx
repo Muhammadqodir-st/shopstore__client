@@ -1,48 +1,24 @@
 // components
 import Header from '../components/Header'
 import Footer from '../components/Footer'
+import StoreUser from '../components/StoreUser'
 
 // react router dom
 import { Outlet } from 'react-router-dom'
 
-// axios
-import axios from 'axios'
-
-// useEffect
-import { useEffect } from 'react'
-
-
-// react redux
-import { useDispatch } from 'react-redux'
-import { setUser, logOut } from '../store/feature/userSlice'
-
-
+// loading or taosts 
+import { Toaster } from 'react-hot-toast'
 
 export default function MainLayout() {
 
-    // dispatch
-    const dispatch = useDispatch();
-
-    // get user data
-    useEffect(() => {
-        const getUser = async () => {
-            try {
-                const { data } = await axios.get('http://localhost:8000/register/me', { withCredentials: true })
-                dispatch(setUser({ user: data }))
-            } catch (error) {
-                dispatch(logOut())
-            }
-        };
-        getUser()
-    }, [dispatch]);
-
-
-
     return (
-        <>
+        <div>
+            <StoreUser />
+            <Toaster />
+
             <Header />
             <Outlet />
             <Footer />
-        </>
+        </div>
     )
 }

@@ -56,7 +56,7 @@ export default function Blog() {
 
 
             {/* blog list */}
-            <div className='w-[28%] flex flex-col gap-10 max-[990px]:w-full'>
+            <div className='sticky top-20 w-[28%] flex flex-col gap-10 max-[990px]:w-full'>
                 <p className='font-semibold'>Blog Post List</p>
 
                 {/* profiles */}
@@ -86,11 +86,11 @@ export default function Blog() {
                             <Twitter size={20} />
                             twitter
                         </button>
-                        <button className='w-full flex items-center justify-start py-3 px-3 gap-3 bg-[#FD1D1D] rounded-lg cursor-pointer text-white text-sm'>
-                            <Instagram size={20} />
+                        <button className='w-full flex items-center font-semibold justify-start py-3 px-3 gap-3 bg-gradient-to-tr from-yellow-400 via-pink-500 to-purple-600 rounded-lg cursor-pointer text-white text-sm'>
+                            <Instagram size={20}  />
                             instagram
                         </button>
-                        <button className='w-full flex items-center justify-start py-3 px-3 gap-3 bg-[#0077B5] rounded-lg cursor-pointer text-white text-sm'>
+                        <button className='w-full flex items-center justify-start py-3 px-3 gap-3 bg-gradient-to-r from-[#0A66C2] to-[#004182] rounded-lg cursor-pointer text-white text-sm'>
                             <Linkedin size={20} />
                             linkedin
                         </button>

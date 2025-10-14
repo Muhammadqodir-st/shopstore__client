@@ -36,6 +36,9 @@ import { cart, cardSlice } from '../data/data'
 import { useDispatch, useSelector } from "react-redux"
 import { setUser } from '../store/feature/userSlice'
 
+// loading and toaster 
+import toast from "react-hot-toast";
+
 
 export default function Home() {
 
@@ -151,8 +154,8 @@ export default function Home() {
                 productId,
                 userId: user?.user?._id
             }, { withCredentials: true });
-
-            setMessage(res.data.message);
+            toast.success(res.data.message)
+            // setMessage(res.data.message);
             setTimeout(() => {
                 window.location.reload();
             }, 500)

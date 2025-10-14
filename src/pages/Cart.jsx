@@ -20,7 +20,6 @@ import { setUser } from '../store/feature/userSlice'
 
 
 // gif animation
-import React from 'react';
 import { DotLottieReact } from '@lottiefiles/dotlottie-react';
 import empty from '../assets/empty.gif'
 
@@ -35,7 +34,7 @@ export default function Cart() {
 
     // states
     const [carts, setCarts] = useState([]);
-    const [quantity, setQuantity] = useState(1)
+    const [quantity, setQuantity] = useState(1);
     const [message, setMessage] = useState('')
     const [error, setError] = useState('');
     const subtotal = carts.reduce((acc, item) => acc + item.product.discountedPrice * item.quantity, 0)
