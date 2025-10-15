@@ -23,6 +23,8 @@ export default function Header() {
 
     // /redux
     const { user } = useSelector((state) => state.user);
+    const { cart } = useSelector((state) => state.cart)
+
 
     // location
     const location = useLocation();
@@ -93,7 +95,7 @@ export default function Header() {
                         <div className="relative cursor-pointer">
                             <ShoppingCart size={24} />
                             <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                                {user?.user?.cart?.length || 0}
+                                {cart?.length}
                             </span>
                         </div>
                     </Link>

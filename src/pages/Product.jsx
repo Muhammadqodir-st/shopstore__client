@@ -26,6 +26,7 @@ import { payment } from '../data/data'
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from '../store/feature/userSlice'
+import { setCart } from '../store/feature/cartSlice'
 
 
 
@@ -33,25 +34,23 @@ export default function Product() {
 
     // user
     const { user } = useSelector((state) => state.user)
-
+    const { cart } = useSelector((state) => state.cart)
 
     // params
     const { id } = useParams();
 
-
     // states
     const [product, setProduct] = useState(null);
-    const [quentity, setQuentity] = useState(1);
+    const [quantity, setQuantity] = useState(null);
+
     const [message, setMessage] = useState('')
     const [error, setError] = useState('');
-    const isWishlesed = user?.user?.wishlist?.some(item => item === product?._id);
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
     const [mainImage, setMainImage] = useState(product?.mainImage)
-    const isAddtoCarted = user?.user?.cart.some(item => item.product === product?._id);
-
-
+    const isWishlesed = user?.user?.wishlist?.some(item => item === product?._id);
+    const isAddtoCarted = cart?.some(item => item.product?._id === product?._id);
 
     // mainImage
     useEffect(() => {
@@ -97,9 +96,6 @@ export default function Product() {
                 }, { withCredentials: true });
 
                 setMessage('Add to  wishlist');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 500)
             }
 
             const updateUser = await axios.get(`http://localhost:8000/register/${user?.user?._id}`, { withCredentials: true })
@@ -123,6 +119,7 @@ export default function Product() {
             try {
                 const res = await axios.get(`http://localhost:8000/products/${id}`, { withCredentials: true })
                 setProduct(res.data.product);
+                setQuantity(res?.data?.product?.quantity);
             } catch (error) {
                 console.log(error);
             }
@@ -148,30 +145,35 @@ export default function Product() {
 
 
     // add to cart
-    const handleCart = async (productId) => {
+    const handleCart = async (product) => {
         try {
-
             if (!isAddtoCarted) {
                 const res = await axios.post('http://localhost:8000/carts', {
-                    productId,
-                    quantity: quentity,
-                    userId: user?.user?._id
+                    productId: product._id,
                 }, { withCredentials: true });
 
                 setMessage(res.data.message);
-                setTimeout(() => {
-                    window.location.reload();
-                }, 500)
+                dispatch(setCart([...cart, product]));
             }
         } catch (error) {
-            console.log(error)
+            console.log(error);
             if (error.response && error.response.data) {
                 setError(error.response.data.message || 'error!')
             } else {
-                setError("Server error!")
+                setError("Server error!");
             }
         }
-    }
+    };
+
+
+    // add quantity
+    useEffect(() => {
+        const addQuantity = async () => {
+            const res = await axios.put(`http://localhost:8000/carts/${id}`)
+            console.log(res);
+        }
+        addQuantity();
+    }, [quantity]);
 
 
     return (
@@ -223,11 +225,11 @@ export default function Product() {
                     </div>
                     <div className="flex items-center gap-3">
                         <div className="w-fit flex items-center justify-between gap-3 py-2 px-3 border border-[#D1D5DB] rounded-md">
-                            <button onClick={() => setQuentity(prev => (prev > 1 ? prev - 1 : 1))} className="cursor-pointer"><Minus className="text-[#030712]" size={18} /></button>
-                            <p>{quentity}</p>
-                            <button onClick={() => setQuentity(prev => prev < product?.stock ? prev + 1 : product?.stock)} className="cursor-pointer"><Plus className="text-[#030712]" size={18} /></button>
+                            <button onClick={() => setQuantity(prev => (prev > 1 ? prev - 1 : 1))} className="cursor-pointer"><Minus className="text-[#030712]" size={18} /></button>
+                            <p>{quantity}</p>
+                            <button onClick={() => setQuantity(prev => prev < product?.stock ? prev + 1 : product?.stock)} className="cursor-pointer"><Plus className="text-[#030712]" size={18} /></button>
                         </div>
-                        <button onClick={() => handleCart(product?._id)} className="py-2 px-4 bg-[#16A34A] rounded-lg flex items-center justify-center gap-2 text-white font-bold cursor-pointer">
+                        <button onClick={() => handleCart(product)} className="py-2 px-4 bg-[#16A34A] rounded-lg flex items-center justify-center gap-2 text-white font-bold cursor-pointer">
                             {isAddtoCarted ? (
                                 <Link to={'/cart'} className="w-full h-full flex items-center justify-center gap-2">
                                     <Eye size={20} /> View

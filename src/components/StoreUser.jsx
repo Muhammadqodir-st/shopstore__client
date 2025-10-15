@@ -8,9 +8,8 @@ import { useEffect, useState } from 'react'
 // react redux
 import { useDispatch } from 'react-redux'
 import { setUser, logOut } from '../store/feature/userSlice'
+import { setCart } from '../store/feature/cartSlice'
 
-// components 
-import Loading from './Loading';
 
 export default function StoreUser() {
     const [loading, setLoading] = useState(false);
@@ -25,6 +24,7 @@ export default function StoreUser() {
             try {
                 const { data } = await axios.get('http://localhost:8000/register/me', { withCredentials: true })
                 dispatch(setUser({ user: data }));
+                dispatch(setCart(data.user.cart));
             } catch (error) {
                 dispatch(logOut())
             } finally { setLoading(false) };
