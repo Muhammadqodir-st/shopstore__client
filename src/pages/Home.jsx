@@ -36,6 +36,7 @@ import { cart, cardSlice } from '../data/data'
 import { useDispatch, useSelector } from "react-redux"
 import { setUser } from '../store/feature/userSlice'
 
+
 // loading and toaster 
 import toast from "react-hot-toast";
 
@@ -53,124 +54,30 @@ export default function Home() {
     // states
     const [category, setCategory] = useState([]);
     const [products, setProducts] = useState([]);
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('');
-    const [selectCategory, setSelectCategory] = useState(null)
-
-
-
-    // message
-    useEffect(() => {
-        if (message) {
-            const timer = setTimeout(() => {
-                setMessage('')
-            }, 2500);
-
-            return () => clearTimeout(timer)
-        }
-    }, [message]);
-
-
-    // error message
-    useEffect(() => {
-        if (error) {
-            const timer = setTimeout(() => {
-                setError('')
-            }, 2500)
-
-            return () => clearTimeout(timer);
-        }
-    }, [error]);
 
 
     // get all category
     useEffect(() => {
-        const getAllCAtegory = async () => {
-            try {
-                const res = await axios.get('http://localhost:8000/categories');
-                setCategory(res.data.categories);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getAllCAtegory();
-
-        window.scrollTo(0, 0)
+       
     }, []);
 
 
     // get products
     useEffect(() => {
-        const getProducts = async () => {
-            try {
-                const res = await axios.get('http://localhost:8000/products')
-                setProducts(res.data.products);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getProducts()
+        
     }, []);
 
 
 
     //  wishlist 
     const handleWishlist = async (productId) => {
-        try {
-            const isWishlesed = user?.wishlist?.some(item => item === productId)
-
-            if (!isWishlesed) {
-                const res = await axios.post('http://localhost:8000/wishlists', {
-                    userId: user?.user?._id,
-                    productId
-                }, { withCredentials: true });
-
-                setMessage(res.data.message || 'Add to  wishlist');
-                setTimeout(() => {
-                    window.location.reload();
-                }, 500)
-            } else {
-                const res = await axios.delete('http:/localhost:8000/wishlists', {
-                    data: { userId: user?.user?._id, productId },
-                    withCredentials: true
-                })
-
-                setMessage(res.data.message || "Remeved form wishlist")
-            }
-
-            const updateUser = await axios.get(`http://localhost:8000/register/${user.user._id}`, { withCredentials: true })
-            dispatch(setUser({ user: updateUser.data }));
-        } catch (error) {
-            console.log(error)
-            if (error.response && error.response.data) {
-                setError(error.response.data.message || 'error!')
-            } else {
-                setError("Server error!")
-            }
-        }
+        
     }
 
 
     // add to cart
     const handleCart = async (productId) => {
-        try {
-            const res = await axios.post('http://localhost:8000/carts', {
-                productId,
-                userId: user?.user?._id
-            }, { withCredentials: true });
-            toast.success(res.data.message)
-            // setMessage(res.data.message);
-            setTimeout(() => {
-                window.location.reload();
-            }, 500)
-        } catch (error) {
-            console.log(error)
-            if (error.response && error.response.data) {
-                setError(error.response.data.message || 'error!')
-            } else {
-                setError("Server error!")
-            }
-        }
+        
     }
 
 
@@ -578,25 +485,6 @@ export default function Home() {
                     </div>
                 ))}
             </div>
-
-            {/* message */}
-            {
-                message && (
-                    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
-                        {message}
-                    </div>
-                )
-            }
-
-            {/* error */}
-            {
-                error && (
-                    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
-                        {error}
-                    </div>
-                )
-            }
-
 
         </div >
     )

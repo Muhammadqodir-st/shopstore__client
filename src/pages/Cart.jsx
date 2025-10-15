@@ -31,67 +31,20 @@ export default function Cart() {
     //  user
     const { user } = useSelector((state) => state.user)
     const { cart } = useSelector((state) => state.cart)
-
+    
     const dispatch = useDispatch();
 
     // states
     const [quantity, setQuantity] = useState(1);
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('');
-    const subtotal = cart.reduce((acc, item) => acc + item?.product?.discountedPrice * item?.quantity, 0)
-
-
-
-    // message
-    useEffect(() => {
-        if (message) {
-            const timer = setTimeout(() => {
-                setMessage('')
-            }, 2500);
-
-            return () => clearTimeout(timer)
-        }
-    }, [message]);
-
-
-    // error message
-    useEffect(() => {
-        if (error) {
-            const timer = setTimeout(() => {
-                setError('')
-            }, 2500)
-
-            return () => clearTimeout(timer);
-        }
-    }, [error]);
+    const subtotal = cart.reduce((acc, item) => acc + item?.product?.discountedPrice * item?.quantity, 0);
 
 
 
     // delete cart
     const handleCartDelete = async (productId) => {
-        const cartItem = cart?.find(item => item?.product?._id === productId);
-
-        if (!cartItem) {
-            return setError("Product not found in cart");
-        }
-        try {
-            const res = await axios.delete(`http://localhost:8000/carts/${productId}`, { withCredentials: true });
-            setMessage(res.data.message);
-            const updateUser = await axios.get(`http://localhost:8000/register/${user?.user?._id}`, { withCredentials: true })
-            dispatch(setUser({ user: updateUser?.data }));
-
-
-        } catch (error) {
-            console.log(error)
-            if (error.response && error.response.data) {
-                setError(error.response.data.message || 'error!')
-            } else {
-                setError("Server error!")   
-            }
-        }
+        
     }
 
-    cart.map((i) => console.log(i))
 
     return (
         <div className="max-w-[998px] w-[90%] mx-auto">
@@ -158,21 +111,6 @@ export default function Cart() {
                     </div>
                 </div>
             )}
-
-            {/* message */}
-            {message && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
-                    {message}
-                </div>
-            )}
-
-            {/* error */}
-            {error && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
-                    {error}
-                </div>
-            )}
-
         </div>
     )
 }

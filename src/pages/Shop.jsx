@@ -15,9 +15,6 @@ import { MoveRight, Search } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 
 
-
-
-
 export default function Shop() {
 
     // navigate
@@ -73,7 +70,7 @@ export default function Shop() {
         <div className="max-w-[998px] w-[90%] mx-auto">
             <div className="flex justify-between gap-5">
 
-                {/* fileter */}
+                {/* filter */}
                 <div className="flex flex-col gap-3">
                     <p className="text-lg font-bold">Product Categories</p>
                     <div className="flex flex-col gap-1">

@@ -29,35 +29,9 @@ export default function Wishlist() {
     const [wishlists, setWishlists] = useState([]);
 
 
-    // get wishlist
-    useEffect(() => {
-        const getAllWishlists = async () => {
-            if (!user) return;
-            try {
-                const res = await axios.get(`http://localhost:8000/wishlists/${user?.user?._id}`, { withCredentials: true })
-                setWishlists(res.data.wishlist);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getAllWishlists();
-    }, [user]);
-
-
     // delete wishlist
     const handleWishlistDelete = async (productId) => {
-        try {
-            const red = await axios.delete('http://localhost:8000/wishlists', {
-                data: { productId, userId: user?.user?._id },
-                withCredentials: true
-            });
-
-            setTimeout(() => {
-                window.location.reload();
-            }, 500)
-        } catch (error) {
-            console.log(error);
-        }
+        
     }
 
 

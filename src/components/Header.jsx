@@ -23,7 +23,8 @@ export default function Header() {
 
     // /redux
     const { user } = useSelector((state) => state.user);
-    const { cart } = useSelector((state) => state.cart)
+    const { cart } = useSelector((state) => state.cart);
+    const { wishlist } = useSelector((state) => state.wishlist)
 
 
     // location
@@ -85,7 +86,7 @@ export default function Header() {
                         <div className="relative cursor-pointer">
                             <Heart size={24} />
                             <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                                {user?.user?.wishlist?.length || 0}
+                                {wishlist?.length || 0}
                             </span>
                         </div>
                     </Link>
@@ -95,7 +96,7 @@ export default function Header() {
                         <div className="relative cursor-pointer">
                             <ShoppingCart size={24} />
                             <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                                {cart?.length}
+                                {cart?.length || 0}
                             </span>
                         </div>
                     </Link>
@@ -119,7 +120,7 @@ export default function Header() {
                     <Link to={'/cart'} className="flex flex-col items-center relative">
                         <ShoppingBasket size={23} className="text-[#505054]" />
                         <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                            {user?.user?.cart?.length || 0}
+                            {cart?.length || 0}
                         </span>
                     </Link>
 
@@ -128,7 +129,7 @@ export default function Header() {
                     <Link to={'/wishlist'} className="flex flex-col items-center relative">
                         <Heart size={23} className="text-[#505054]" />
                         <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                            {user?.user?.wishlist?.length || 0}
+                            {wishlist?.length || 0}
                         </span>
                     </Link>
 

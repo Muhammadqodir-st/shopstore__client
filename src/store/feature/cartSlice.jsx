@@ -7,6 +7,9 @@ const cartSlice = createSlice({
     reducers: {
         setCart: (state, action) => {
             state.cart = action.payload
+        }, 
+        remove:(state, action) => {
+            state.cart = state.cart.filter((i) => i.prodcut_id !== action.payload)
         }
     }
 

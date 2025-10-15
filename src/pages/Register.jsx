@@ -2,10 +2,13 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
 // react
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 
 // axios
 import axios from "axios";
+
+// loader or message
+import toast from "react-hot-toast";
 
 
 export default function Register() {
@@ -22,34 +25,7 @@ export default function Register() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('customer');
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-
-
-    // message
-    useEffect(() => {
-        if (message) {
-            const timer = setTimeout(() => {
-                setMessage('')
-            }, 2500);
-
-            return () => clearTimeout(timer)
-        }
-    }, [message]);
-
-
-    // error message
-    useEffect(() => {
-        if (error) {
-            const timer = setTimeout(() => {
-                setError('')
-            }, 2500)
-
-            return () => clearTimeout(timer);
-        }
-    }, [error]);
-
 
 
     // register
@@ -67,7 +43,7 @@ export default function Register() {
                 role: role
             }, { withCredentials: true });
 
-            setMessage(res.data.message);
+            toast.success(res.data.message);
 
             if (res.data.success) {
                 setTimeout(() => {
@@ -81,9 +57,9 @@ export default function Register() {
         } catch (error) {
             console.log(error)
             if (error.response && error.response.data) {
-                setError(error.response.data.message || 'error!')
+                toast.error(error.response.data.message || 'error!');
             } else {
-                setError("Server error!")
+                toast.error("Server error!");
             }
             setLoading(false);
         }
@@ -147,20 +123,6 @@ export default function Register() {
                     </button>
                 </form>
             </div>
-
-            {/* message */}
-            {message && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
-                    {message}
-                </div>
-            )}
-
-            {/* error */}
-            {error && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
-                    {error}
-                </div>
-            )}
         </div>
     )
 }

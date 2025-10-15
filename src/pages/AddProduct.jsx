@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 
 // react router dom
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 
 
@@ -31,8 +32,6 @@ export default function AddProduct() {
     const [discount, setDiscount] = useState(0);
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('');
 
 
     // handleImage
@@ -47,30 +46,6 @@ export default function AddProduct() {
 
         setImages(files)
     }
-
-
-    // message
-    useEffect(() => {
-        if (message) {
-            const timer = setTimeout(() => {
-                setMessage('')
-            }, 2500);
-
-            return () => clearTimeout(timer)
-        }
-    }, [message]);
-
-
-    // error
-    useEffect(() => {
-        if (error) {
-            const timer = setTimeout(() => {
-                setError('')
-            }, 2500);
-
-            return () => clearTimeout(timer);
-        }
-    }, [error]);
 
 
     // get category
@@ -102,14 +77,14 @@ export default function AddProduct() {
             formData.append('discountPercent', discount)
             formData.append('category', selectedCategory)
             formData.append('createdBy', user.user._id);
-            
+
             images.forEach((file) => {
                 formData.append("images", file)
             })
 
-            const res = await axios.post('http://localhost:8000/products', formData, { withCredentials: true , headers:{'Content-Type' : 'multipart/form-data'}})
+            const res = await axios.post('http://localhost:8000/products', formData, { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } })
 
-            setMessage(res.data.message);
+            toast.success(res.data.message);
 
             if (res.data.success) {
                 setTimeout(() => {
@@ -123,9 +98,9 @@ export default function AddProduct() {
         } catch (error) {
             console.log(error)
             if (error.response && error.response.data) {
-                setError(error.response.data.message || 'error!')
+                toast.error(error.response.data.message || 'error!')
             } else {
-                setError("Server error!")
+                toast.error("Server error!")
             }
             setLoading(false);
         }
@@ -225,20 +200,6 @@ export default function AddProduct() {
                 </div>
 
             </form>
-
-            {/* message */}
-            {message && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
-                    {message}
-                </div>
-            )};
-
-            {/* error */}
-            {error && (
-                <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
-                    {error}
-                </div>
-            )}
         </div>
     )
 }

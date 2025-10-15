@@ -28,6 +28,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from '../store/feature/userSlice'
 import { setCart } from '../store/feature/cartSlice'
 
+// loading and toaster 
+import toast from "react-hot-toast";
+
 
 
 export default function Product() {
@@ -42,9 +45,6 @@ export default function Product() {
     // states
     const [product, setProduct] = useState(null);
     const [quantity, setQuantity] = useState(null);
-
-    const [message, setMessage] = useState('')
-    const [error, setError] = useState('');
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
@@ -60,119 +60,37 @@ export default function Product() {
     }, [product]);
 
 
-    // message
-    useEffect(() => {
-        if (message) {
-            const timer = setTimeout(() => {
-                setMessage('')
-            }, 2500);
-
-            return () => clearTimeout(timer)
-        }
-    }, [message]);
 
 
-    // error message
-    useEffect(() => {
-        if (error) {
-            const timer = setTimeout(() => {
-                setError('')
-            }, 2500)
-
-            return () => clearTimeout(timer);
-        }
-    }, [error]);
 
 
     //  wishlist 
     const handleWishlist = async (productId) => {
-        try {
-            const isWishlesed = user?.wishlist?.some(item => item === productId)
 
-            if (!isWishlesed) {
-                const res = await axios.post('http://localhost:8000/wishlists', {
-                    userId: user?.user?._id,
-                    productId
-                }, { withCredentials: true });
-
-                setMessage('Add to  wishlist');
-            }
-
-            const updateUser = await axios.get(`http://localhost:8000/register/${user?.user?._id}`, { withCredentials: true })
-            console.log(updateUser);
-
-            dispatch(setUser({ user: updateUser.data }));
-        } catch (error) {
-            console.log(error)
-            if (error.response && error.response.data) {
-                setError(error.response.data.message || 'error!')
-            } else {
-                setError("Server error!")
-            }
-        }
     }
 
 
     // get product /:id
     useEffect(() => {
-        const getProduct = async () => {
-            try {
-                const res = await axios.get(`http://localhost:8000/products/${id}`, { withCredentials: true })
-                setProduct(res.data.product);
-                setQuantity(res?.data?.product?.quantity);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getProduct();
 
-        window.scrollTo(0, 0)
     }, [id]);
 
 
     // get products
     useEffect(() => {
-        const getProducts = async () => {
-            try {
-                const res = await axios.get('http://localhost:8000/products')
-                setProducts(res.data.products);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        getProducts()
+
     }, []);
 
 
     // add to cart
     const handleCart = async (product) => {
-        try {
-            if (!isAddtoCarted) {
-                const res = await axios.post('http://localhost:8000/carts', {
-                    productId: product._id,
-                }, { withCredentials: true });
 
-                setMessage(res.data.message);
-                dispatch(setCart([...cart, product]));
-            }
-        } catch (error) {
-            console.log(error);
-            if (error.response && error.response.data) {
-                setError(error.response.data.message || 'error!')
-            } else {
-                setError("Server error!");
-            }
-        }
     };
 
 
     // add quantity
     useEffect(() => {
-        const addQuantity = async () => {
-            const res = await axios.put(`http://localhost:8000/carts/${id}`)
-            console.log(res);
-        }
-        addQuantity();
+
     }, [quantity]);
 
 
@@ -286,24 +204,6 @@ export default function Product() {
                 </div>
             </div>
 
-
-            {/* message */}
-            {
-                message && (
-                    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-indigo-500 text-white px-4 py-2 rounded shadow-lg">
-                        {message}
-                    </div>
-                )
-            }
-
-            {/* error */}
-            {
-                error && (
-                    <div className="fixed top-5 left-1/2 -translate-x-1/2 z-1000 bg-red-500 text-white px-4 py-2 rounded shadow-lg">
-                        {error}
-                    </div>
-                )
-            }
         </div>
     )
 }
