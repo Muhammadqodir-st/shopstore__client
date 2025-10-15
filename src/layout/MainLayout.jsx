@@ -15,10 +15,9 @@ export default function MainLayout() {
         <div>
             <StoreUser />
             <Toaster />
-
             <Header />
             <Outlet />
-            <Footer />
+            {/* <Footer /> */}
         </div>
     )
 }

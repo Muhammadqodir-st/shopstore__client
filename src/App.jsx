@@ -63,7 +63,7 @@ function App() {
           <Route path="*" element={<NotFound />} />
 
           {/* yopiq routerlar */}
-          <Route path="/shop" element={<ProtectedRoute> <Shop /> </ProtectedRoute>} />
+          <Route path="/shop/:categoryId?" element={<ProtectedRoute> <Shop /> </ProtectedRoute>} />
           <Route path="/blog" element={<ProtectedRoute> <Blog /> </ProtectedRoute>} />
           <Route path="/contact" element={<ProtectedRoute> <Contact /> </ProtectedRoute>} />
           <Route path="/cart" element={<ProtectedRoute> <Cart /> </ProtectedRoute>} />

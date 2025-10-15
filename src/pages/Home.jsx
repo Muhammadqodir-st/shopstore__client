@@ -55,6 +55,8 @@ export default function Home() {
     const [products, setProducts] = useState([]);
     const [message, setMessage] = useState('')
     const [error, setError] = useState('');
+    const [selectCategory, setSelectCategory] = useState(null)
+
 
 
     // message
@@ -172,6 +174,12 @@ export default function Home() {
     }
 
 
+    // filter category
+    const handleFilter = (id) => {
+        navigate(`/shop/${id}`)        
+    };
+
+
     // swiper data 
     const swiper = [
         {
@@ -245,7 +253,7 @@ export default function Home() {
                 {/* categories */}
                 <div className="flex items-center justify-between border border-[#E5E7EB] rounded-lg max-[1100px]:overflow-x-auto">
                     {category.slice(2).map((i) => (
-                        <div key={i._id} className="shrink-0 w-[140px] flex items-center justify-center flex-col gap-1 border-r border-[#E5E7EB] py-3 cursor-pointer">
+                        <div onClick={() => handleFilter(i._id)} key={i._id} className="shrink-0 w-[140px] flex items-center justify-center flex-col gap-1 border-r border-[#E5E7EB] py-3 cursor-pointer">
                             <img className="w-30 h-30" src={i.image} alt="" />
                             <p className="text-sm font-semibold flex flex-nowrap">{i.name}</p>
                         </div>
