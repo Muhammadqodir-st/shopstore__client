@@ -13,7 +13,7 @@ import b from '../assets/b.png'
 
 
 // react router dom
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link, data } from "react-router-dom"
 
 
 // react
@@ -29,12 +29,14 @@ import { ArrowRight, Heart, Plus, ShoppingBasket, Eye } from 'lucide-react'
 
 
 // cart data
-import { cart, cardSlice } from '../data/data'
+import { card, cardSlice } from '../data/data'
 
 
 // redux
 import { useDispatch, useSelector } from "react-redux"
 import { setUser } from '../store/feature/userSlice'
+import { setWishlist } from '../store/feature/wishlistSlice'
+import { setCart } from '../store/feature/cartSlice'
 
 
 // loading and toaster 
@@ -48,42 +50,85 @@ export default function Home() {
 
     // redux
     const { user } = useSelector((state) => state.user);
+    const { wishlist } = useSelector((state) => state.wishlist)
+    const { cart } = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
 
     // states
     const [category, setCategory] = useState([]);
     const [products, setProducts] = useState([]);
+    const [quantity, setQuentity] = useState(1);
 
 
     // get all category
     useEffect(() => {
-       
+        const getCategory = async () => {
+            try {
+                const { data } = await axios.get('http://localhost:8000/categories', { withCredentials: true })
+                setCategory(data.categories);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getCategory();
     }, []);
 
 
     // get products
     useEffect(() => {
-        
+        const getProduct = async () => {
+            try {
+                const { data } = await axios.get('http://localhost:8000/products', { withCredentials: true })
+                setProducts(data.products)
+            } catch (error) {
+                console.log(error);
+
+            }
+        }
+        getProduct();
     }, []);
 
 
 
     //  wishlist 
-    const handleWishlist = async (productId) => {
-        
+    const handleWishlist = async (product) => {
+        const isWishlesed = wishlist.some((i) => i._id === product._id)
+        try {
+            if (!isWishlesed) {
+                const res = await axios.post('http://localhost:8000/wishlists', {
+                    productId: product._id
+                }, { withCredentials: true });
+                toast.success(res.data.message);
+                dispatch(setWishlist([...wishlist, product]));
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
     // add to cart
-    const handleCart = async (productId) => {
-        
+    const handleCart = async (product) => {
+        const isAddtoCarted = cart.some((i) => i.product._id === product._id)
+        try {
+            if (!isAddtoCarted) {
+                const { data } = await axios.post('http://localhost:8000/carts', {
+                    productId: product._id,
+                    quantity: quantity
+                }, { withCredentials: true });
+                dispatch(setCart([...cart, { product, quantity: quantity }]))
+                toast.success(data.message)
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
     // filter category
     const handleFilter = (id) => {
-        navigate(`/shop/${id}`)        
+        navigate(`/shop/${id}`)
     };
 
 
@@ -104,6 +149,16 @@ export default function Home() {
             salePrice: '21.67'
         }
     ]
+
+    products.map((i) => {
+        if (i?.title?.length > 40) {
+            i.title = i.title.slice(0, 40) + '...'
+        }
+
+        if (i.title.length < 28) {
+            i.title = i.title + ' Original item'
+        }
+    })
 
 
     return (
@@ -215,9 +270,9 @@ export default function Home() {
             </div>
 
 
-            {/* =================== CARTS ================= */}
+            {/* =================== CARDS ================= */}
             <div className="w-full flex items-center justify-between gap-4 max-[800px]:flex-col py-4">
-                {cart.slice(0, 3).map((i, key) => (
+                {card.slice(0, 3).map((i, key) => (
                     <div key={key} className="relative flex items-center justify-start rounded-lg overflow-hidden max-[800px]:w-full">
                         <img className="w-full h-full object-cover" src={i.image} alt="" />
                         <div className="absolute w-full p-3 flex flex-col gap-2">
@@ -246,9 +301,9 @@ export default function Home() {
                 {/* datas */}
                 <div className="grid grid-cols-4 border border-[#E5E7EB] rounded-lg max-[900px]:grid-cols-2 max-[400px]:grid-cols-1">
 
-                    {/* carts */}
+                    {/* cards */}
                     <div className="flex flex-col-reverse justify-between">
-                        {cart.slice(2, 4).map((i, key) => (
+                        {card.slice(2, 4).map((i, key) => (
                             <div key={key} className="flex-1 relative flex items-center justify-start overflow-hidden max-[800px]:w-full">
                                 <img className="w-full h-full object-cover" src={i.image} alt="" />
                                 <div className="absolute w-full p-3 flex flex-col gap-2">
@@ -283,9 +338,9 @@ export default function Home() {
             </div>
 
 
-            {/* ================ CARTS =================== */}
+            {/* ================ CARDS =================== */}
             <div className="w-full flex items-center justify-between gap-5 max-[800px]:flex-col py-4">
-                {cart.slice(4, 6).map((i, key) => (
+                {card.slice(4, 6).map((i, key) => (
                     <div key={key} className="relative flex items-center justify-start rounded-lg overflow-hidden max-[800px]:w-full">
                         <img className="w-full h-full object-cover" src={i.image} alt="" />
                         <div className="absolute w-full p-3 flex flex-col gap-2">
@@ -314,9 +369,9 @@ export default function Home() {
                 {/* datas */}
                 <div className="grid grid-cols-4 border border-[#E5E7EB] rounded-lg max-[900px]:grid-cols-2 max-[400px]:grid-cols-1">
 
-                    {/* carts */}
+                    {/* cards */}
                     <div className="flex flex-col-reverse justify-between">
-                        {cart.slice(6, 7).map((i, key) => (
+                        {card.slice(6, 7).map((i, key) => (
                             <div key={key} className="flex-1 relative flex items-center justify-start overflow-hidden max-[800px]:w-full">
                                 <img className="w-full h-full object-cover" src={i.image} alt="" />
                                 <div className="w-full h-full absolute px-4 py-3 flex flex-col gap-2">
@@ -348,9 +403,9 @@ export default function Home() {
             </div>
 
 
-            {/* =================== CARTS ================= */}
+            {/* =================== CARDS ================= */}
             <div className="w-full flex items-center justify-between gap-4 max-[800px]:flex-col py-4">
-                {cart.slice(7, 11).map((i, key) => (
+                {card.slice(7, 11).map((i, key) => (
                     <div key={key} className="relative flex items-center justify-start rounded-lg overflow-hidden max-[800px]:w-full">
                         <img className="w-full h-full object-cover" src={i.image} alt="" />
                         <div className="absolute w-full p-3 flex flex-col gap-2">
@@ -379,8 +434,9 @@ export default function Home() {
                 <div className="w-full flex gap-3 max-[950px]:flex-col">
                     <div className="w-[40%] border border-[#E5E7EB] rounded-lg max-[950px]:w-full">
                         {products.slice(0, 2).map((i) => {
-                            const isWishlesed = user?.user?.wishlist?.some(item => item === i._id);
-                            const isAddtoCarted = user?.user?.cart.some(item => item.product === i?._id)
+                            const isWishlesed = wishlist?.some(item => item._id === i._id);
+                            const isAddtoCarted = cart?.some(item => item?.product._id === i?._id)
+
 
 
 
@@ -391,7 +447,7 @@ export default function Home() {
                                             <img src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
                                         </Link>
                                         <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
-                                        <button onClick={() => handleWishlist(i._id)} className={`absolute top-2 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>
+                                        <button onClick={() => handleWishlist(i)} className={`absolute top-2 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>
                                             {isWishlesed ? <Eye onClick={() => navigate('/wishlist')} className="text-red-500" size={22} /> : (
                                                 <Heart className={`${isWishlesed ? 'text-red-500' : ''}`} size={22} />
                                             )}
@@ -403,7 +459,7 @@ export default function Home() {
                                             <p className="text-2xl font-bold text-red-600 ">${i.discountedPrice}</p>
                                             <p className="font-semibold line-through">${i.price}</p>
                                         </Link>
-                                        <button onClick={() => handleCart(i._id)} className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer">
+                                        <button onClick={() => handleCart(i)} className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer">
                                             {isAddtoCarted ? (
                                                 <Link to={'/cart'} className="w-full h-full flex items-center justify-between text-[#634C9F]">
                                                     <Eye size={20} /> View
@@ -422,8 +478,8 @@ export default function Home() {
 
                     <div className="flex-1 border-3 p-4 border-[#DC2626] rounded-lg">
                         {products.slice(4, 5).map((i) => {
-                            const isWishlesed = user?.user?.wishlist?.some(item => item === i._id);
-                            const isAddtoCarted = user?.user?.cart.some(item => item.product === i?._id)
+                            const isWishlesed = wishlist?.some(item => item._id === i._id);
+                            const isAddtoCarted = cart?.some(item => item?.product._id === i?._id)
 
                             return (
                                 <div key={i._id} className="w-full h-full flex items-center gap-3 max-[700px]:flex-col">
@@ -432,7 +488,7 @@ export default function Home() {
                                             <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
                                         </Link>
                                         <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
-                                        <button onClick={() => handleWishlist(i._id)} className={`absolute top-2 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>
+                                        <button onClick={() => handleWishlist(i)} className={`absolute top-2 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>
                                             {isWishlesed ? <Eye onClick={() => navigate('/wishlist')} className="text-red-500" size={22} /> : (
                                                 <Heart className={`${isWishlesed ? 'text-red-500' : ''}`} size={22} />
                                             )}
@@ -452,7 +508,7 @@ export default function Home() {
                                             <div className="w-full py-1 bg-gradient-to-r from-[#FFD200] to-[#DC2626]"></div>
                                             <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">available only: <span className="text-xl font-bold text-black">{i.stock}</span></p>
                                         </div>
-                                        <button onClick={() => handleCart(i._id)} className="w-full py-2 px-3 bg-[#16A34A] rounded-lg flex items-center text-white gap-2 cursor-pointer">
+                                        <button onClick={() => handleCart(i)} className="w-full py-2 px-3 bg-[#16A34A] rounded-lg flex items-center text-white gap-2 cursor-pointer">
                                             {isAddtoCarted ? (
                                                 <Link to={'/cart'} className="w-full h-full flex items-center justify-start gap-2">
                                                     <Eye size={20} /> View
@@ -488,4 +544,4 @@ export default function Home() {
 
         </div >
     )
-}
+};

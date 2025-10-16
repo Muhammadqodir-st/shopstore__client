@@ -17,10 +17,12 @@ import { Minus, Plus, Trash } from "lucide-react";
 // redux
 import { useSelector, useDispatch } from "react-redux";
 import { setUser } from '../store/feature/userSlice'
+import { remove } from '../store/feature/cartSlice'
 
 
 // gif animation
 import empty from '../assets/empty.gif'
+import toast from "react-hot-toast";
 
 
 export default function Cart() {
@@ -29,10 +31,9 @@ export default function Cart() {
 
 
     //  user
-    const { user } = useSelector((state) => state.user)
     const { cart } = useSelector((state) => state.cart)
-    
     const dispatch = useDispatch();
+
 
     // states
     const [quantity, setQuantity] = useState(1);
@@ -42,7 +43,17 @@ export default function Cart() {
 
     // delete cart
     const handleCartDelete = async (productId) => {
-        
+        try {
+            const { data } = await axios.delete('http://localhost:8000/carts', {
+                data: { productId: productId },
+                withCredentials: true
+            });
+            toast.success(data.message)
+            dispatch(remove(productId));
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
 
@@ -50,9 +61,10 @@ export default function Cart() {
         <div className="max-w-[998px] w-[90%] mx-auto">
             {cart?.length === 0 ? (
                 <div className="flex flex-col gap-4 items-center py-6">
-                    <img className="w-89 h-90" src={empty} alt="" loop autoPlay />
-                    <p className="text-5xl font-bold text-[#F03E3E]">Your cart is currently empty.</p>
-                    <Link to={'/shop'} className="py-3 px-5 bg-[#212529] text-white rounded-lg font-semibold cursor-pointer">Return to shop</Link>
+                    <img className="w-45 h-45" src={empty} alt="" loop autoPlay />
+                    <p className="text-2xl font-bold text-[#F03E3E]">Your cart is currently empty.</p>
+                    <p className="max-w-130 text-center text-sm text-gray-600">Start from the main page - you can find the product you need by searching or browse our collections. Popular products</p>
+                    <Link to={'/shop'} className="py-2 px-4 bg-[#212529] text-white rounded-lg font-semibold text-sm cursor-pointer">Return to shop</Link>
                 </div>
             ) : (
                 <div className="flex items-start justify-between gap-5">

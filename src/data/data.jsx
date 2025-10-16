@@ -96,7 +96,7 @@ const blog = [
 ]
 
 // home cart data
-const cart = [
+const card = [
     {
         image: c1,
         title: 'We provide you the best quality products',
@@ -164,4 +164,4 @@ const payment = [
 ]
 
 
-export { cardSlice, blog, cart, payment };
+export { cardSlice, blog, card, payment };

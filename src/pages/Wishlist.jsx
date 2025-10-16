@@ -5,16 +5,20 @@ import axios from "axios"
 import { useEffect, useState } from "react"
 
 // redux
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { remove } from '../store/feature/wishlistSlice'
 
 // images
-import empty from '../assets/empty.svg'
+import e from '../assets/e.gif'
 
 // react router dom 
 import { Link } from "react-router-dom";
 
 // lucide react
 import { Trash } from "lucide-react";
+
+// loader or message
+import toast from "react-hot-toast";
 
 
 export default function Wishlist() {
@@ -23,27 +27,41 @@ export default function Wishlist() {
 
     // user
     const { user } = useSelector((state) => state.user);
+    const { wishlist } = useSelector((state) => state.wishlist);
+    const dispatch = useDispatch();
 
 
     // states
-    const [wishlists, setWishlists] = useState([]);
 
 
     // delete wishlist
     const handleWishlistDelete = async (productId) => {
-        
+        try {
+            const res = await axios.delete('http://localhost:8000/wishlists', {
+                data: { productId },
+                withCredentials: true
+            });
+            dispatch(remove(productId));
+            toast.success('product removed from wishlist')
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
 
     return (
         <div className="max-w-[998px] w-[90%] mx-auto py-8">
-            {wishlists.length === 0 ? (
-                <div className="w-full h-full items-center justify-center">
-                    <img className="w-120 h-120 mx-auto" src={empty} alt="" />
+            {wishlist?.length === 0 ? (
+                <div className="flex flex-col gap-4 items-center py-6">
+                    <img className="w-40 h-40" src={e} alt="" loop autoPlay />
+                    <p className="text-2xl font-bold text-[#F03E3E]">Add what you like.</p>
+                    <p className="max-w-130 text-center text-sm text-gray-600">Go to the home page and click on the ♡ icon on the product</p>
+                    <Link to={'/'} className="py-2 px-4 bg-[#212529] text-white rounded-lg font-semibold text-sm cursor-pointer">Return to home</Link>
                 </div>
             ) : (
                 <div className="w-full grid grid-cols-4 gap-3 max-[900px]:grid-cols-2">
-                    {wishlists.map((i) => (
+                    {wishlist?.map((i) => (
                         <div key={i._id} className="border border-[#E5E7EB] p-3 flex flex-col items-start gap-2 rounded-lg overflow-hidden">
                             <div className="w-full relative">
                                 <Link to={`/product/${i._id}`} className="w-full h-full ">

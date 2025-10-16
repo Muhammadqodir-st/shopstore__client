@@ -1,56 +1,53 @@
 // react router dom
 import { useNavigate, useParams, Link } from "react-router-dom"
 
-
 // react
 import { useEffect, useState } from "react";
 
-
 // axios
 import axios from "axios";
-
 
 // assets
 import s from '../assets/s.svg'
 import ss from '../assets/ss.svg'
 
-
 // lucide react
 import { Plus, Minus, ShoppingBag, Eye, Heart } from "lucide-react";
 
-
 // data
 import { payment } from '../data/data'
-
 
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from '../store/feature/userSlice'
 import { setCart } from '../store/feature/cartSlice'
+import { setWishlist } from '../store/feature/wishlistSlice'
+
 
 // loading and toaster 
 import toast from "react-hot-toast";
 
 
-
 export default function Product() {
+    window.scrollTo(0, 0)
 
     // user
     const { user } = useSelector((state) => state.user)
     const { cart } = useSelector((state) => state.cart)
+    const { wishlist } = useSelector((state) => state.wishlist)
+    const dispatch = useDispatch();
 
     // params
     const { id } = useParams();
 
     // states
-    const [product, setProduct] = useState(null);
-    const [quantity, setQuantity] = useState(null);
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
     const [products, setProducts] = useState([]);
+    const [product, setProduct] = useState(null);
+    const [quantity, setQuantity] = useState(1);
     const [mainImage, setMainImage] = useState(product?.mainImage)
-    const isWishlesed = user?.user?.wishlist?.some(item => item === product?._id);
+    const isWishlesed = wishlist?.some(item => item._id === product?._id);
     const isAddtoCarted = cart?.some(item => item.product?._id === product?._id);
+    const navigate = useNavigate();
 
     // mainImage
     useEffect(() => {
@@ -60,38 +57,67 @@ export default function Product() {
     }, [product]);
 
 
-
-
-
-
-    //  wishlist 
-    const handleWishlist = async (productId) => {
-
-    }
-
-
     // get product /:id
     useEffect(() => {
-
+        const getProduct = async () => {
+            try {
+                const { data } = await axios.get(`http://localhost:8000/products/${id}`, { withCredentials: true })
+                setProduct(data.product)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getProduct()
     }, [id]);
 
 
     // get products
     useEffect(() => {
-
+        const getProducts = async () => {
+            try {
+                const { data } = await axios.get('http://localhost:8000/products')
+                setProducts(data.products)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        getProducts();
     }, []);
+
+
+    //  wishlist 
+    const handleWishlist = async (productId) => {
+        const isWishlesed = wishlist.some((i) => i._id === product._id)
+        try {
+            if (!isWishlesed) {
+                const res = await axios.post('http://localhost:8000/wishlists', {
+                    productId: product._id
+                }, { withCredentials: true });
+                toast.success(res.data.message);
+                dispatch(setWishlist([...wishlist, product]));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
 
     // add to cart
     const handleCart = async (product) => {
-
+        const isAddtoCarted = cart.some((i) => i.product._id === product._id)
+        try {
+            if (!isAddtoCarted) {
+                const { data } = await axios.post('http://localhost:8000/carts', {
+                    productId: product._id,
+                    quantity: quantity
+                }, { withCredentials: true });
+                dispatch(setCart([...cart, { product, quantity: quantity }]))
+                toast.success(data.message)
+            }
+        } catch (error) {
+            console.log(error);
+        }
     };
-
-
-    // add quantity
-    useEffect(() => {
-
-    }, [quantity]);
 
 
     return (
@@ -102,7 +128,7 @@ export default function Product() {
                 <div className="w-[45%] flex flex-col  items-center justify-center gap-3 max-[700px]:w-full">
                     <div className="w-full flex items-center justify-center relative border border-gray-300 rounded-xl overflow-hidden">
                         {mainImage && (
-                            <img className="w-125 h-110 object-cover" src={`http://localhost:8000/uploads/${product.mainImage}`} alt="" />
+                            <img className="w-125 h-110 object-cover" src={`http://localhost:8000/uploads/${mainImage}`} alt="" />
                         )}
                         <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-3 left-3">{product?.discountPercent}%</button>
                         <button onClick={() => handleWishlist(product?._id)} className={`absolute top-3 right-3 cursor-pointer ${!user ? 'hidden' : ''}`}>
