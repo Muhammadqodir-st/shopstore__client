@@ -28,8 +28,6 @@ import AccountDetails from './pages/AccountDetails'
 import Orders from './pages/Orders'
 import Dowloads from './pages/Dowloads'
 import Addresses from './pages/Addresses'
-import UserWishlist from './pages/UserWishlist'
-import AddCategory from './pages/AddCategory'
 import ProtectedRoute from './components/ProtectedRoute'
 import Product from "./pages/Product";
 import NotFound from './pages/NotFound';
@@ -73,9 +71,7 @@ function App() {
             <Route index={true} element={<ProtectedRoute> <Orders /> </ProtectedRoute>} />
             <Route path="dowloads" element={<ProtectedRoute> <Dowloads /> </ProtectedRoute>} />
             <Route path="addresses" element={<ProtectedRoute> <Addresses /> </ProtectedRoute>} />
-            <Route path="wishist" element={<ProtectedRoute> <UserWishlist /> </ProtectedRoute>} />
             <Route path="addproduct" element={<ProtectedRoute> <AddProduct /> </ProtectedRoute>} />
-            <Route path="addcategory" element={<ProtectedRoute> <AddCategory /> </ProtectedRoute>} />
           </Route>
         </Route>
       </Route>

@@ -1,9 +1,9 @@
 // react rouetr dom
-import { Link, Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 
 // lucide icon
-import { CircleUser } from "lucide-react";
+import { ListOrdered, Download, MapPinHouse, UserCog, Plus, ChartBarStacked } from "lucide-react";
 
 
 // redux
@@ -26,6 +26,7 @@ export default function UserLayout() {
 
     // naviagte
     const navigate = useNavigate();
+    const location = useLocation()
 
 
     // redux
@@ -41,50 +42,35 @@ export default function UserLayout() {
 
 
     return (
-        <div className="max-w-[998px] w-[90%] mx-auto py-10">
+        <div className="max-w-[998px] w-[90%] mx-auto py-5">
 
             {/* sidebar */}
-            <div className="flex flex-col gap-5">
-                <div className="w-full flex items-center justify-start">
-                    <div className="flex items-center gap-3">
-                        <div className="bg-gray-200 p-4 rounded-full text-gray-800"><CircleUser /></div>
-                        <div className="flex flex-col">
-                            <p className="text-sm text-[#9CA3AF]">Welcome back,</p>
-                            <p className="text-sm font-semibold">{user?.user?.email || 'Account'}</p>
-                        </div>
-                    </div>
-                </div>
+            <div className="">
                 <div className="flex items-start gap-5">
-                    <div className="w-[31%] border border-[#E5E7EB] rounded-md flex flex-col items-start">
-                        <Link to={'/'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
-                            Dashboard
-                        </Link>
-                        <Link to={'/profile'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
+                    <div className="w-[31%] sticky top-25 border border-[#E5E7EB] rounded-md flex flex-col items-start">
+                        <Link to={'/profile'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile' ? 'text-indigo-600' : ''}`}>
+                            <ListOrdered size={20} />
                             Orders
                         </Link>
-                        <Link to={'dowloads'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
+                        <Link to={'dowloads'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile/dowloads' ? 'text-indigo-600' : ''}`}>
+                            <Download size={20} />
                             Downloads
                         </Link>
-                        <Link to={'addresses'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
+                        <Link to={'addresses'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile/addresses' ? 'text-indigo-600' : ''}`}>
+                            <MapPinHouse size={20} />
                             Addresses
                         </Link>
-                        <Link to={'accound'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
+                        <Link to={'accound'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile/accound' ? 'text-indigo-600' : ''}`}>
+                            <UserCog size={20} />
                             Account details
                         </Link>
-                        <Link to={'wishist'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
-                            Wishlist
-                        </Link>
                         {user?.user?.role === "admin" && (
-                            <Link to={'addproduct'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
+                            <Link to={'addproduct'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile/addproduct' ? 'text-indigo-600' : ''}`}>
+                                <Plus size={20} />
                                 Add product
                             </Link>
                         )}
-                        {user?.user?.role === "admin" && (
-                            <Link to={'addcategory'} className="w-full p-3 border-b border-[#E5E7EB] font-semibold">
-                                Add category
-                            </Link>
-                        )}
-                        <button onClick={() => setModal(true)} className="p-3 border-b border-[#E5E7EB] font-semibold cursor-pointer text-red-500">
+                        <button onClick={() => setModal(true)} className="p-3 border-b border-[#E5E7EB] cursor-pointer text-red-500">
                             Log out
                         </button>
                     </div>
@@ -102,7 +88,7 @@ export default function UserLayout() {
                             {/* icon */}
                             <div className="w-14 h-14 rounded-full bg-red-100 flex items-center justify-center mb-4">
                                 <svg xmlns="http://www.w3.org/2000/svg" className="w-8 h-8 text-red-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 11-4 0v-1m0-8V7a2 2 0 114 0v1"/>
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 11-4 0v-1m0-8V7a2 2 0 114 0v1" />
                                 </svg>
                             </div>
 

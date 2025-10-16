@@ -17,7 +17,7 @@ export default function MainLayout() {
             <Toaster />
             <Header />
             <Outlet />
-            {/* <Footer /> */}
+            <Footer />
         </div>
     )
 }

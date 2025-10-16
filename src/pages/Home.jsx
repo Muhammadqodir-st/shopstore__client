@@ -150,15 +150,6 @@ export default function Home() {
         }
     ]
 
-    products.map((i) => {
-        if (i?.title?.length > 40) {
-            i.title = i.title.slice(0, 40) + '...'
-        }
-
-        if (i.title.length < 28) {
-            i.title = i.title + ' Original item'
-        }
-    })
 
 
     return (
@@ -226,7 +217,7 @@ export default function Home() {
 
             {/* =============== BANNER =================== */}
             <Link to={user ? '/shop' : '/auth/login'} className="w-full rounded-lg bg-[#FFF7ED] py-3 px-4 flex items-center justify-between relative overflow-hidden cursor-pointer">
-                <div className="flex flex-col z-20">
+                <div className="flex flex-col z-2">
                     <p className="text-xl font-semibold text-[#EA580C]">In store or online your health & safety is our top priority</p>
                     <p className="text-[13px] text-[#6B7280]">The only supermarket that makes your life easier, makes you enjoy life and makes it better</p>
                 </div>

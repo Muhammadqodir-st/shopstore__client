@@ -168,7 +168,7 @@ export default function Shop() {
                                 const isAddtoCarted = cart?.some(item => item?.product._id === i?._id)
 
                                 return (
-                                    < div key={i._id} className="border-r border-b border-[#E5E7EB] p-3 flex flex-col gap-2" >
+                                    <div key={i._id} className="border-r border-b border-[#E5E7EB] p-3 flex flex-col justify-between gap-2" >
                                         <div className="w-full relative">
                                             <Link to={`/product/${i._id}`} className="w-full h-full">
                                                 <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />

@@ -39,7 +39,7 @@ export default function Header() {
     }
 
     return (
-        <div className="w-full z-2 sticky top-0 bg-white">
+        <div className="w-full z-3 sticky top-0 bg-white">
             <div className="max-w-[998px] w-[90%] mx-auto py-5 flex justify-between gap-5">
 
                 {/* logo */}
@@ -82,7 +82,7 @@ export default function Header() {
                                 <span className="text-[10px] text-gray-600">
                                     {user ? '' : 'Sign In'}
                                 </span>
-                                <span className={user ? 'text-[14px] text-black truncate' : 'text-[11px] text-black truncate'}>
+                                <span className={user ? 'max-w-32 text-[14px] text-black truncate' : 'text-[11px] text-black truncate'}>
                                     {user ? user?.user?.name : "Account"}
                                 </span>
                             </p>
