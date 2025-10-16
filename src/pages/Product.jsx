@@ -164,7 +164,7 @@ export default function Product() {
                     </div>
                     <p className="text-[12px] text-[#4B5563]">Vivamus adipiscing nisl ut dolor dignissim semper. Nulla luctus malesuada tincidunt. Class aptent taciti sociosqu ad litora torquent Vivamus adipiscing nisl ut dolor dignissim semper.</p>
                     <div className="flex items-end gap-3">
-                        <p className="text-4xl font-bold text-[#DC2626]">${product?.discountedPrice}</p>
+                        <p className="max-w-40 text-4xl font-bold text-[#DC2626] truncate">${product?.discountedPrice}</p>
                         <p className="text-lg font-bold line-through">${product?.price}</p>
                     </div>
                     <div className="flex items-center gap-3">
@@ -219,7 +219,7 @@ export default function Product() {
                             </div>
                             <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>
                             <div className="w-full flex items-end gap-3 border-b border-[#E5E7EB] py-2">
-                                <p className="text-3xl text-red-600 font-bold max-[500px]:text-xl">${i.discountedPrice}</p>
+                                <p className="max-w-33 truncate text-3xl text-red-600 font-bold max-[500px]:text-xl">${i.discountedPrice}</p>
                                 <p className="font-semibold line-through max-[500px]:text-sm">${i.price}</p>
                             </div>
                             <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">This product is about to run out</p>

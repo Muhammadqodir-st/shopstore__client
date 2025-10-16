@@ -150,6 +150,11 @@ export default function Home() {
         }
     ]
 
+    products.map((i) => {
+        if(i.title.length > 40){
+            i.title = i.title.slice(0,40) + '...'
+        }
+    })
 
 
     return (
@@ -222,7 +227,7 @@ export default function Home() {
                     <p className="text-[13px] text-[#6B7280]">The only supermarket that makes your life easier, makes you enjoy life and makes it better</p>
                 </div>
                 <p className="text-8xl font-semibold  absolute -top-7 left-[50%] z-2 bg-gradient-to-r from-[#ea580c66] to-[#ea580c00] bg-clip-text text-transparent">%50</p>
-                <img className="absolute right-0 w-100 h-full z-11 object-cover max-[900px]:hidden" src={b} alt="" />
+                <img className="absolute right-0 w-100 h-full z-2 object-cover max-[900px]:hidden" src={b} alt="" />
             </Link>
 
 
@@ -249,7 +254,7 @@ export default function Home() {
                             </div>
                             <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>
                             <div className="w-full flex items-end gap-3 border-b border-[#E5E7EB] py-2">
-                                <p className="text-3xl text-red-600 font-bold max-[500px]:text-xl">${i.discountedPrice}</p>
+                                <p className="max-w-33 truncate text-3xl text-red-600 font-bold max-[500px]:text-xl">${i.discountedPrice}</p>
                                 <p className="font-semibold line-through max-[500px]:text-sm">${i.price}</p>
                             </div>
                             <p className="text-sm text-[#6B7280] max-[400px]:text-[11px]">This product is about to run out</p>
@@ -447,7 +452,7 @@ export default function Home() {
                                     <div className="flex flex-col gap-2 max-[700px]:w-full">
                                         <Link to={`/product/${i._id}`} className="max-w-60 text-lg font-semibold">{i.title}</Link>
                                         <Link to={`/product/${i._id}`} className="w-full flex items-center gap-3 ">
-                                            <p className="text-2xl font-bold text-red-600 ">${i.discountedPrice}</p>
+                                            <p className="max-w-28 truncate text-2xl font-bold text-red-600 ">${i.discountedPrice}</p>
                                             <p className="font-semibold line-through">${i.price}</p>
                                         </Link>
                                         <button onClick={() => handleCart(i)} className="w-full py-1 px-3 rounded-full flex items-center justify-between border border-[#634C9F] text-[#634C9F] cursor-pointer">

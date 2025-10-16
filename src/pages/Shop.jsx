@@ -186,7 +186,7 @@ export default function Shop() {
                                         </div>
                                         <p className="text-sm font-semibold">{i.title}</p>
                                         <div className="w-full flex items-end gap-3 ">
-                                            <p className="text-[20px] font-bold text-[#DC2626]">${i.discountedPrice}</p>
+                                            <p className="max-w-18 truncate text-[20px] font-bold text-[#DC2626]">${i.discountedPrice}</p>
                                             <p className="line-through">${i.price}</p>
                                         </div>
                                         <div className="flex items-center gap-3">

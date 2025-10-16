@@ -21,6 +21,8 @@ import { useState } from "react";
 
 export default function UserLayout() {
 
+    window.scrollTo(0, 0)
+
     // state
     const [modal, setModal] = useState(false)
 

@@ -30,13 +30,6 @@ export default function Header() {
     // location
     const location = useLocation();
 
-    if(!wishlist){
-        return (
-            <div>
-                <p>Loading ...</p>
-            </div>
-        )
-    }
 
     return (
         <div className="w-full z-3 sticky top-0 bg-white">
