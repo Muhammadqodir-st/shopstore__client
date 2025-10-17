@@ -109,11 +109,11 @@ export default function AddProduct() {
 
 
     return (
-        <div className="w-[66%]">
-            <form onSubmit={handleProduct} className="flex items-start justify-between gap-5">
+        <div className="w-[66%] max-[850px]:w-full">
+            <form onSubmit={handleProduct} className="flex items-start justify-between gap-5 max-[620px]:flex-col">
 
                 {/* images */}
-                <div className="w-[50%] flex flex-col gap-3">
+                <div className="w-[50%] flex flex-col gap-3 max-[620px]:w-full">
 
                     {/* product image mian */}
                     <label className={`w-full h-97 border-2  ${images.length === 0 ? 'border-dashed border-[#bababa] ' : 'border-none'} rounded-lg cursor-pointer" htmlFor="fileInput`}>
@@ -141,7 +141,7 @@ export default function AddProduct() {
                 </div>
 
                 {/* data title and others  */}
-                <div className="w-[50%] flex flex-col gap-3">
+                <div className="w-[50%] flex flex-col gap-3 max-[620px]:w-full">
 
                     {/* tite */}
                     <label>
@@ -156,7 +156,7 @@ export default function AddProduct() {
                     </label>
 
 
-                    <div className="flex items-center justify-center gap-3">
+                    <div className="flex items-center justify-center gap-3 max-[620px]:justify-between">
                         {/* price */}
                         <label>
                             <p className="text-sm font-semibold text-gray-700">Price</p>

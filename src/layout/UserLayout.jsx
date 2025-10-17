@@ -48,31 +48,31 @@ export default function UserLayout() {
 
             {/* sidebar */}
             <div className="">
-                <div className="flex items-start gap-5">
-                    <div className="w-[31%] sticky top-25 border border-[#E5E7EB] rounded-md flex flex-col items-start">
-                        <Link to={'/profile'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile' ? 'text-indigo-600' : ''}`}>
+                <div className="flex items-start gap-5 max-[850px]:flex-col">
+                    <div className="w-[31%] sticky top-25 border border-[#E5E7EB] rounded-md flex flex-col items-start max-[850px]:w-full max-[850px]:flex-row flex-nowrap bg-white max-[850px]:overflow-x-auto">
+                        <Link to={'/profile'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile' ? 'text-indigo-600' : ''}`}>
                             <ListOrdered size={20} />
                             Orders
                         </Link>
-                        <Link to={'dowloads'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile/dowloads' ? 'text-indigo-600' : ''}`}>
+                        <Link to={'dowloads'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile/dowloads' ? 'text-indigo-600' : ''}`}>
                             <Download size={20} />
                             Downloads
                         </Link>
-                        <Link to={'addresses'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile/addresses' ? 'text-indigo-600' : ''}`}>
+                        <Link to={'addresses'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile/addresses' ? 'text-indigo-600' : ''}`}>
                             <MapPinHouse size={20} />
                             Addresses
                         </Link>
-                        <Link to={'accound'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile/accound' ? 'text-indigo-600' : ''}`}>
+                        <Link to={'accound'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile/accound' ? 'text-indigo-600' : ''}`}>
                             <UserCog size={20} />
                             Account details
                         </Link>
                         {user?.user?.role === "admin" && (
-                            <Link to={'addproduct'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 ${location.pathname === '/profile/addproduct' ? 'text-indigo-600' : ''}`}>
+                            <Link to={'addproduct'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile/addproduct' ? 'text-indigo-600' : ''}`}>
                                 <Plus size={20} />
                                 Add product
                             </Link>
                         )}
-                        <button onClick={() => setModal(true)} className="p-3 border-b border-[#E5E7EB] cursor-pointer text-red-500">
+                        <button onClick={() => setModal(true)} className="p-3 border-b border-[#E5E7EB] cursor-pointer text-red-500 shrink-0 max-[850px]:w-fit">
                             Log out
                         </button>
                     </div>

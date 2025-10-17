@@ -39,7 +39,7 @@ export default function Cart() {
 
     // states
     const [quantity, setQuantity] = useState(1);
-    const subtotal = cart.reduce((acc, item) => acc + item?.product?.discountedPrice * item?.quantity, 0);
+    const subtotal = Number(cart.reduce((acc, item) => acc + item?.product?.discountedPrice * item?.quantity, 0).toFixed(2))
 
 
 
@@ -73,8 +73,8 @@ export default function Cart() {
                         <p className="font-semibold">Products ({cart.length})</p>
 
                         <div className="flex flex-col gap-3">
-                            {cart.map((i) => (
-                                <Card item={i} />
+                            {cart.map((i, key) => (
+                                <Card key={key} item={i} />
                             ))}
                         </div>
                     </div>
@@ -87,8 +87,8 @@ export default function Cart() {
                         <div className="flex flex-col">
                             {cart.map((i) => (
                                 <div className="w-full flex items-center justify-between py-3 border-b border-[#E5E7EB]" key={i?.product?._id}>
-                                    <p className="max-w-45 text-sm">{i?.product?.title} <span className="font-bold px-1">x{i.quantity}</span></p>
-                                    <p className="max-w-20 font-semibold truncate">${i?.product?.discountedPrice * i.quantity}</p>
+                                    <p className="max-w-45 text-sm">{i?.product?.title?.length > 40 ? i?.product?.title.slice(0, 40) + ' . . .' : i?.product?.title} <span className="font-bold px-1">x{i.quantity}</span></p>
+                                    <p className="max-w-20 font-semibold truncate">${Number(i?.product?.discountedPrice * i.quantity).toFixed(2)}</p>
                                 </div>
                             ))}
                         </div>

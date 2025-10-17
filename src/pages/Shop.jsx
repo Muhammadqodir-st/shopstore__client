@@ -117,21 +117,21 @@ export default function Shop() {
 
     return (
         <div className="max-w-[998px] w-[90%] mx-auto">
-            <div className="flex justify-between gap-5">
+            <div className="flex justify-between gap-5 max-[998px]:flex-col">
 
                 {/* filter */}
-                <div className="sticky h-fit top-20 flex flex-col gap-3">
+                <div className="sticky h-fit top-20 flex flex-col gap-3 bg-white z-2 py-2">
                     <p className="text-lg font-bold">Product Categories</p>
-                    <div className="flex flex-col gap-1">
+                    <div className="flex flex-col gap-1 max-[998px]:flex-row max-[998px]:flex-wrap max-[998px]:gap-2">
                         {/* all category  */}
-                        <label className="flex items-center gap-2 cursor-pointer">
-                            <input className="input" name="input" checked={!categoryId} onChange={() => handleCategoryClick(null)} type="checkbox" />
+                        <label className="flex items-center gap-2 cursor-pointer max-[998px]:border border-gray-400 max-[998px]:py-1 max-[998px]:px-3 max-[998px]:rounded-full w-fit max-[998px]:text-[13px]">
+                            <input className="input max-[998px]:hidden" name="input" checked={!categoryId} onChange={() => handleCategoryClick(null)} type="checkbox" />
                             <p className={`${!categoryId ? 'text-[#7764d8] font-semibold' : ''}`}>All products</p>
                         </label>
                         {/* filter category */}
                         {categories.map((i) => (
-                            <label className="flex items-center gap-2 cursor-pointer" key={i._id}>
-                                <input className="input" name="input" checked={categoryId === i._id} onChange={() => handleCategoryClick(i._id)} type="checkbox" />
+                            <label className="flex items-center gap-2 cursor-pointer max-[998px]:border border-gray-400 max-[998px]:py-1 max-[998px]:px-3 max-[998px]:rounded-full w-fit max-[998px]:text-[13px]" key={i._id}>
+                                <input className="input max-[998px]:hidden" name="input" checked={categoryId === i._id} onChange={() => handleCategoryClick(i._id)} type="checkbox" />
                                 <p className={`${selectCategory === i._id || categoryId === i._id ? 'text-[#7764d8] font-semibold' : ''}`}>{i.name}</p>
                             </label>
                         )).reverse()}
@@ -140,7 +140,7 @@ export default function Shop() {
 
 
                 {/* product */}
-                <div className="w-[78%] flex flex-col gap-3">
+                <div className="w-[78%] flex flex-col gap-3 max-[998px]:w-full">
 
                     {/* search */}
                     <label className="w-full py-[7px] px-3 rounded-xl border border-indigo-700 flex items-center justify-between gap-3">
@@ -149,7 +149,7 @@ export default function Shop() {
                     </label>
 
                     {/* banner */}
-                    <div className="relative rounded-lg overflow-hidden">
+                    <div className="relative rounded-lg overflow-hidden max-[730px]:hidden">
                         <img src={s} alt="" />
                         <div className="absolute w-full h-full p-5 top-0 flex flex-col gap-2">
                             <button className="w-fit px-2 py-1 rounded-full text-[11px] text-[#7C2D12] bg-[#FFEDD5]">Only This Week</button>
@@ -159,7 +159,7 @@ export default function Shop() {
                     </div>
 
                     {/* products */}
-                    <div className="grid grid-cols-4 border border-[#E5E7EB] rounded-lg">
+                    <div className="grid grid-cols-4 border border-[#E5E7EB] rounded-lg max-[850px]:grid-cols-3 max-[600px]:grid-cols-2">
                         {products.length === 0 ? (
                             <p>no product</p>
                         ) : (
@@ -184,7 +184,7 @@ export default function Shop() {
                                                 )}
                                             </button>
                                         </div>
-                                        <p className="text-sm font-semibold">{i.title}</p>
+                                        <p className="text-sm font-semibold">{i?.title?.length > 40 ? i?.title.slice(0, 40) + ' . . .' : i?.title}</p>
                                         <div className="w-full flex items-end gap-3 ">
                                             <p className="max-w-18 truncate text-[20px] font-bold text-[#DC2626]">${i.discountedPrice}</p>
                                             <p className="line-through">${i.price}</p>
