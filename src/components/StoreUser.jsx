@@ -9,7 +9,8 @@ import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { setUser, logOut } from '../store/feature/userSlice'
 import { setCart } from '../store/feature/cartSlice'
-import {setWishlist} from '../store/feature/wishlistSlice'
+import { setWishlist } from '../store/feature/wishlistSlice'
+import { setOrder } from '../store/feature/orderSlice'
 
 
 export default function StoreUser() {
@@ -27,6 +28,7 @@ export default function StoreUser() {
                 dispatch(setUser({ user: data }));
                 dispatch(setCart(data.user.cart));
                 dispatch(setWishlist(data.user.wishlist));
+                dispatch(setOrder(data.user.order));
             } catch (error) {
                 dispatch(logOut())
             } finally { setLoading(false) };

@@ -43,11 +43,10 @@ export default function Register() {
                 role: role
             }, { withCredentials: true });
 
-            toast.success(res.data.message);
-
             if (res.data.success) {
                 setTimeout(() => {
                     setLoading(false)
+                    toast.success(res.data.message);
                     navigate('/');
                     window.location.reload();
                 }, 2500);

@@ -98,7 +98,7 @@ export default function Shop() {
 
     // add to cart
     const handleCart = async (product) => {
-        const isAddtoCarted = cart.some((i) => i.product._id === product._id)
+        const isAddtoCarted = cart?.some((i) => i.product?._id === product._id)
         try {
             if (!isAddtoCarted) {
                 const { data } = await axios.post('http://localhost:8000/carts', {
@@ -164,8 +164,8 @@ export default function Shop() {
                             <p>no product</p>
                         ) : (
                             products.map((i) => {
-                                const isWishlesed = wishlist.some((item) => item._id === i._id)
-                                const isAddtoCarted = cart?.some(item => item?.product._id === i?._id)
+                                const isWishlesed = wishlist?.some((item) => item?._id === i._id)
+                                const isAddtoCarted = cart?.some(item => item?.product?._id === i?._id)
 
                                 return (
                                     <div key={i._id} className="border-r border-b border-[#E5E7EB] p-3 flex flex-col justify-between gap-2" >

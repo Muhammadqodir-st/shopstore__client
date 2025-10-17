@@ -7,18 +7,14 @@ import { useEffect, useState } from "react"
 
 
 // react router dom
-import { Link } from "react-router-dom";
+import { data, Link, useNavigate } from "react-router-dom";
 
-
-// lucide react
-import { Minus, Plus, Trash } from "lucide-react";
 
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { setUser } from '../store/feature/userSlice'
-import { remove } from '../store/feature/cartSlice'
-
+import { setOrder } from '../store/feature/orderSlice'
+import { clearCart } from '../store/feature/cartSlice'
 
 // gif animation
 import empty from '../assets/empty.gif'
@@ -26,6 +22,7 @@ import toast from "react-hot-toast";
 
 // components
 import Card from '../components/Card'
+import CheckOut from '../pages/CheckOut'
 
 export default function Cart() {
 
@@ -33,30 +30,55 @@ export default function Cart() {
 
 
     //  user
-    const { cart } = useSelector((state) => state.cart)
+    const { cart } = useSelector((state) => state.cart);
+
+    // redux
     const dispatch = useDispatch();
+
+    // naviagte
+    const navigate = useNavigate();
 
 
     // states
-    const [quantity, setQuantity] = useState(1);
+    const [step, setStep] = useState(1);
+    const [loading, setLoading] = useState(false);
     const subtotal = Number(cart.reduce((acc, item) => acc + item?.product?.discountedPrice * item?.quantity, 0).toFixed(2))
 
 
+    // orders
+    const handleCheckOutSubmit = async (data) => {
+        const orders = cart.map((i) => i);
+        const id = cart.map((i) => i.product._id);
 
-    // delete cart
-    const handleCartDelete = async (productId) => {
+        setLoading(true)
+        const formData = { ...data, orders: orders, totalPrice: subtotal + 5 }
         try {
-            const { data } = await axios.delete('http://localhost:8000/carts', {
-                data: { productId: productId },
-                withCredentials: true
-            });
-            toast.success(data.message)
-            dispatch(remove(productId));
+            const { data } = await axios.post('http://localhost:8000/orders', formData, { withCredentials: true })
+            dispatch(setOrder(data.id));
+            if (data.success) {
+                const { data } = await axios.delete('http://localhost:8000/carts', {
+                    data: { productId: id },
+                    withCredentials: true
+                });
+                toast.success('Order placed successfully!');
+                setTimeout(() => {
+                    setLoading(false);
+                    navigate('/profile');
+                    dispatch(clearCart());
+                }, 3000);
+            } else {
+                setLoading(false)
+            }
         } catch (error) {
-            console.log(error);
+            console.log(error)
+            if (error.response && error.response.data) {
+                toast.error(error.response.data.message || 'error!');
+            } else {
+                toast.error("Server error!");
+            }
+            setLoading(false);
         }
     }
-
 
     return (
         <div className="max-w-[998px] w-[90%] mx-auto">
@@ -70,12 +92,15 @@ export default function Cart() {
             ) : (
                 <div className="flex items-start justify-between gap-5">
                     <div className="w-[65%] flex flex-col gap-3">
-                        <p className="font-semibold">Products ({cart.length})</p>
-
+                        <p className="font-semibold">{step === 1 ? (`Products(${cart.length})`) : (`Billing details`)}</p>
                         <div className="flex flex-col gap-3">
-                            {cart.map((i, key) => (
-                                <Card key={key} item={i} />
-                            ))}
+                            {step === 1 ? (
+                                cart.map((i) => (
+                                    <Card key={i._id} item={i} />
+                                ))
+                            ) : (
+                                <CheckOut onSubmit={(data) => handleCheckOutSubmit(data)} />
+                            )}
                         </div>
                     </div>
                     <div className="w-[35%] bg-[#fcfcfc] p-4   border border-[#E5E7EB] rounded-lg">
@@ -107,7 +132,19 @@ export default function Cart() {
                             </label>
                             <p className="text-sm text-[#4B5563]">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
                         </div>
-                        <button className="w-full py-3 bg-[#634C9F] rounded-lg text-white font-semibold cursor-pointer">Place order</button>
+                        <button onClick={() => {
+                            setTimeout(() => {
+                                const btn = document.getElementById("order");
+                                if (btn) {
+                                    btn.click();
+                                }
+                            }, 10);
+                            setStep((prev) => prev + 1)
+                        }} className="w-full py-3 bg-[#634C9F] rounded-lg text-white font-semibold cursor-pointer flex items-center justify-center">
+                            {loading ? (
+                                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                            ) : "Place order"}
+                        </button>
                     </div>
                 </div>
             )}

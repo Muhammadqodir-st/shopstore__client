@@ -431,7 +431,7 @@ export default function Home() {
                     <div className="w-[40%] border border-[#E5E7EB] rounded-lg max-[950px]:w-full">
                         {products.slice(0, 2).map((i) => {
                             const isWishlesed = wishlist?.some(item => item._id === i._id);
-                            const isAddtoCarted = cart?.some(item => item?.product._id === i?._id)
+                            const isAddtoCarted = cart?.some(item => item?.product?._id === i?._id)
 
 
 
