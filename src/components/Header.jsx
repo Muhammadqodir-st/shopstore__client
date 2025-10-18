@@ -33,7 +33,7 @@ export default function Header() {
 
     return (
         <div className="w-full z-3 sticky top-0 bg-white">
-            <div className="max-w-[998px] w-[90%] mx-auto py-5 flex justify-between gap-5">
+            <div className="max-w-[998px] w-[90%] mx-auto py-5 flex justify-between gap-5 ">
 
                 {/* logo */}
                 <Link to={'/'}>
@@ -58,8 +58,8 @@ export default function Header() {
 
                     {/* search */}
                     {openSearch && (
-                        <div className={`absolute top-full left-0 z-100 w-full transition-all duration-500 ease-in-out max-[850px]:static ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
-                            <input type="text" placeholder="Search..." className="w-full px-4 py-2 rounded-lg border shadow focus:outline-none" />
+                        <div className={`absolute py-3 top-full left-0 z-100 w-full bg-white transition-all flex items-center justify-center duration-500 ease-in-out max-[850px]:static ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
+                            <input type="text" placeholder="Search..." className="max-w-[998px] w-[90%] px-4 py-2 rounded-lg border shadow focus:outline-none" />
                         </div>
                     )}
                     <div onClick={() => setOpenSearch(!openSearch)} className="cursor-pointer">

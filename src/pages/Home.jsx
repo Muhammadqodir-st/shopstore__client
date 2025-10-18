@@ -34,7 +34,6 @@ import { card, cardSlice } from '../data/data'
 
 // redux
 import { useDispatch, useSelector } from "react-redux"
-import { setUser } from '../store/feature/userSlice'
 import { setWishlist } from '../store/feature/wishlistSlice'
 import { setCart } from '../store/feature/cartSlice'
 
@@ -274,7 +273,7 @@ export default function Home() {
                         <div className="absolute w-full p-3 flex flex-col gap-2">
                             <p className="text-[12px] text-[#EA580C] max-[800px]:text-xl max-[500px]:text-[12px]">Only This Week</p>
                             <p className="w-50 font-bold max-[800px]:text-4xl max-[800px]:w-100 max-[500px]:text-lg max-[500px]:w-50">{i.title}</p>
-                            <button className="w-fit py-1 px-3 flex items-center justify-center gap-2 rounded-full text-[14px] bg-white cursor-pointer">Shop Now <ArrowRight size={16} /></button>
+                            <Link to={'/shop'} className="w-fit py-1 px-3 flex items-center justify-center gap-2 rounded-full text-[14px] bg-white cursor-pointer">Shop Now <ArrowRight size={16} /></Link>
                         </div>
                     </div>
                 ))}
@@ -290,7 +289,7 @@ export default function Home() {
                         <p className="text-xl font-semibold">NEW ARRIVALS</p>
                         <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">Do not miss the current offers until the end of month.</span>
                     </div>
-                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
+                    <Link to={'/shop'} className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></Link>
                 </div>
 
 
@@ -343,7 +342,7 @@ export default function Home() {
                             <p className="py-1 px-3 bg-[#FFEDD5] rounded-lg text-[#7C2D12] w-fit max-[550px]:text-[12px] max-[400px]:hidden">Only This Week</p>
                             <p className="max-w-70 text-2xl font-bold max-[500px]:text-lg">{i.title}</p>
                             <p className="text-sm text-[#6B7280] max-[500px]:hidden">{i.descripton}</p>
-                            <button className="flex items-center gap-2 text-sm bg-white w-fit py-2 px-4 rounded-full cursor-pointer max-[500px]:py-1 max-[500px]:px-3">Shop Now <ArrowRight size={16} /></button>
+                            <Link to={'/shop'} className="flex items-center gap-2 text-sm bg-white w-fit py-2 px-4 rounded-full cursor-pointer max-[500px]:py-1 max-[500px]:px-3">Shop Now <ArrowRight size={16} /></Link>
                         </div>
                     </div>
                 ))}
@@ -359,7 +358,7 @@ export default function Home() {
                         <p className="text-xl font-semibold">Featured Products</p>
                         <span className="text-sm text-[#9CA3AF] max-[600px]:hidden">Do not miss the current offers until the end of month.</span>
                     </div>
-                    <button className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></button>
+                    <Link to={'/shop'} className="py-2 px-4 border border-[#E5E7EB] rounded-full flex text-sm items-center justify-center gap-2 cursor-pointer hover:border-gray-900 max-[500px]:py-1 max-[500px]:px-3 max-[500px]:text-[12px]">View All <ArrowRight size={16} /></Link>
                 </div>
 
                 {/* datas */}
@@ -374,7 +373,7 @@ export default function Home() {
                                     <p className="text-sm text-[#EA580C]">Only This Week</p>
                                     <p className="text-2xl font-bold">{i.title}</p>
                                     <p className="text-sm text-[#6B7280]">{i.descripton}</p>
-                                    <button className="flex items-center gap-2 text-sm bg-white w-fit py-2 px-4 rounded-full cursor-pointer max-[500px]:py-1 max-[500px]:px-3">Shop Now <ArrowRight size={16} /></button>
+                                    <Link to={'/shop'} className="flex items-center gap-2 text-sm bg-white w-fit py-2 px-4 rounded-full cursor-pointer max-[500px]:py-1 max-[500px]:px-3">Shop Now <ArrowRight size={16} /></Link>
                                 </div>
                             </div>
                         ))}
@@ -407,7 +406,7 @@ export default function Home() {
                         <div className="absolute w-full p-3 flex flex-col gap-2">
                             <p className="text-[12px] text-[#EA580C] max-[800px]:text-xl max-[500px]:text-[12px]">Only This Week</p>
                             <p className="w-50 font-bold max-[800px]:text-4xl max-[800px]:w-100 max-[500px]:text-lg max-[500px]:w-50">{i.title}</p>
-                            <button className="w-fit py-1 px-3 flex items-center justify-center gap-2 rounded-full text-[14px] bg-white cursor-pointer">Shop Now <ArrowRight size={16} /></button>
+                            <Link to={'/shop'} className="w-fit py-1 px-3 flex items-center justify-center gap-2 rounded-full text-[14px] bg-white cursor-pointer">Shop Now <ArrowRight size={16} /></Link>
                         </div>
                     </div>
                 ))}
