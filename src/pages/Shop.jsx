@@ -40,6 +40,10 @@ export default function Shop() {
     const [categories, setCategories] = useState([]);
     const [selectCategory, setSelectCategory] = useState(null)
     const [quantity, setQuentity] = useState(1);
+    const [search, setSerach] = useState('')
+    const searchResult = products.filter((p) => p?.title?.toLowerCase()?.includes(search?.toLocaleLowerCase()));
+
+
     const { categoryId } = useParams();
 
 
@@ -144,7 +148,7 @@ export default function Shop() {
 
                     {/* search */}
                     <label className="w-full py-[7px] px-3 rounded-xl border border-indigo-700 flex items-center justify-between gap-3">
-                        <input className="flex-1 outline-0" type="text" />
+                        <input value={search} onChange={(e) => setSerach(e.target.value)} className="flex-1 outline-0" type="text" />
                         <Search className="text-indigo-700 cursor-pointer" strokeWidth={1.55} size={22} />
                     </label>
 
@@ -163,7 +167,7 @@ export default function Shop() {
                         {products.length === 0 ? (
                             <p>no product</p>
                         ) : (
-                            products.map((i) => {
+                            searchResult.map((i) => {
                                 const isWishlesed = wishlist?.some((item) => item?._id === i._id)
                                 const isAddtoCarted = cart?.some(item => item?.product?._id === i?._id)
 

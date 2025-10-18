@@ -3,7 +3,7 @@ import { Link, Outlet, useLocation, useNavigate } from "react-router-dom";
 
 
 // lucide icon
-import { ListOrdered, Download, MapPinHouse, UserCog, Plus, ChartBarStacked } from "lucide-react";
+import { ListOrdered, Download, MapPinHouse, Plus } from "lucide-react";
 
 
 // redux
@@ -17,6 +17,10 @@ import Cookies from "js-cookie";
 
 // react
 import { useState } from "react";
+
+// axios
+import axios from "axios";
+import toast from "react-hot-toast";
 
 
 export default function UserLayout() {
@@ -36,10 +40,14 @@ export default function UserLayout() {
     const dispatch = useDispatch();
 
     // log out
-    const handleLogOut = () => {
-        dispatch(logOut());
-        Cookies.remove("token", { path: '/' });
-        navigate('/', { replace: true });
+    const handleLogOut = async () => {
+        try {
+            const { data } = await axios.post('http://localhost:8000/register/logout', {}, { withCredentials: true })
+            navigate('/');
+            window.location.reload();
+        } catch (error) {
+            console.log(error);
+        }
     }
 
 
@@ -61,10 +69,6 @@ export default function UserLayout() {
                         <Link to={'addresses'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile/addresses' ? 'text-indigo-600' : ''}`}>
                             <MapPinHouse size={20} />
                             Addresses
-                        </Link>
-                        <Link to={'accound'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile/accound' ? 'text-indigo-600' : ''}`}>
-                            <UserCog size={20} />
-                            Account details
                         </Link>
                         {user?.user?.role === "admin" && (
                             <Link to={'addproduct'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile/addproduct' ? 'text-indigo-600' : ''}`}>

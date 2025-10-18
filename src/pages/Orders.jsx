@@ -20,8 +20,8 @@ export default function Orders() {
             ) : (
                 <div>
                     {order.order.map((i) => (
-                        <div className='border py-3' key={i._id}>
-                            
+                        <div className='border py-3 rounded-lg' key={i._id}>
+                            <p></p>
                         </div>
                     ))}
                 </div>

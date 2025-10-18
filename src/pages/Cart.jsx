@@ -90,8 +90,8 @@ export default function Cart() {
                     <Link to={'/shop'} className="py-2 px-4 bg-[#212529] text-white rounded-lg font-semibold text-sm cursor-pointer">Return to shop</Link>
                 </div>
             ) : (
-                <div className="flex items-start justify-between gap-5">
-                    <div className="w-[65%] flex flex-col gap-3">
+                <div className="flex items-start justify-between gap-5 max-[900px]:flex-col">
+                    <div className="w-[65%] flex flex-col gap-3 max-[900px]:w-full">
                         <p className="font-semibold">{step === 1 ? (`Products(${cart.length})`) : (`Billing details`)}</p>
                         <div className="flex flex-col gap-3">
                             {step === 1 ? (
@@ -103,7 +103,7 @@ export default function Cart() {
                             )}
                         </div>
                     </div>
-                    <div className="w-[35%] bg-[#fcfcfc] p-4   border border-[#E5E7EB] rounded-lg">
+                    <div className="w-[35%] h-fit sticky top-25 bg-[#fcfcfc] p-4   border border-[#E5E7EB] rounded-lg max-[900px]:w-full">
                         <p className="text-lg font-semibold">Your order</p>
                         <div className="w-full flex items-center justify-between py-2 border-b border-[#E5E7EB]">
                             <p className="text-[#9CA3AF]">Product</p>
@@ -140,7 +140,7 @@ export default function Cart() {
                                 }
                             }, 10);
                             setStep((prev) => prev + 1)
-                        }} className="w-full py-3 bg-[#634C9F] rounded-lg text-white font-semibold cursor-pointer flex items-center justify-center">
+                        }} className="w-full py-3 bg-[#634C9F] rounded-lg text-white font-semibold cursor-pointer flex items-center justify-center max-[900px]:fixed bottom-15 left-11 max-[900px]:w-[90%] max-[700px]:left-9 max-[550px]:left-7 max-[420px]:left-5 max-[380px]:left-4">
                             {loading ? (
                                 <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
                             ) : "Place order"}
