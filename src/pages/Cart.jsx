@@ -7,7 +7,7 @@ import { useEffect, useState } from "react"
 
 
 // react router dom
-import { data, Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -16,7 +16,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { setOrder } from '../store/feature/orderSlice'
 import { clearCart } from '../store/feature/cartSlice'
 
-// gif animation
+// gif animation    const { order } = useSelector((state) => state.order);
+
 import empty from '../assets/empty.gif'
 import toast from "react-hot-toast";
 
@@ -31,6 +32,8 @@ export default function Cart() {
 
     //  user
     const { cart } = useSelector((state) => state.cart);
+    const { order } = useSelector((state) => state.order);
+
 
     // redux
     const dispatch = useDispatch();
@@ -49,12 +52,13 @@ export default function Cart() {
     const handleCheckOutSubmit = async (data) => {
         const orders = cart.map((i) => i);
         const id = cart.map((i) => i.product._id);
-
         setLoading(true)
-        const formData = { ...data, orders: orders, totalPrice: subtotal + 5 }
+        const formData = { ...data, orders, totalPrice: subtotal + 5, deliveryDays: 2 }
+        const formDataR = { ...data, products: orders, totalPrice: subtotal + 5, deliveryDays: 2 }
+
         try {
             const { data } = await axios.post('http://localhost:8000/orders', formData, { withCredentials: true })
-            dispatch(setOrder(data._id));
+            dispatch(setOrder([...order, formDataR]));
             if (data.success) {
                 const { data } = await axios.delete('http://localhost:8000/carts', {
                     data: { productId: id },
@@ -62,8 +66,8 @@ export default function Cart() {
                 });
                 toast.success('Order placed successfully!');
                 setLoading(false);
-                navigate('/profile');
                 dispatch(clearCart());
+                navigate('/profile');
             } else {
                 setLoading(false)
             }
@@ -118,6 +122,10 @@ export default function Cart() {
                         <div className="py-3 flex items-center justify-between border-b border-[#E5E7EB]">
                             <p className="text-[#9CA3AF]">Subtotal</p>
                             <p className="font-semibold">${subtotal}</p>
+                        </div>
+                        <div className="py-3 flex items-center justify-between border-b border-[#E5E7EB]">
+                            <p className="text-[#9CA3AF]">Delivery</p>
+                            <p className="font-semibold">$5</p>
                         </div>
                         <div className="py-3 flex items-center justify-between border-b border-[#E5E7EB]">
                             <p className="text-[#9CA3AF]">Total</p>

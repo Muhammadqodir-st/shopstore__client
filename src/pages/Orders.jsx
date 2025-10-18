@@ -32,9 +32,9 @@ export default function Orders() {
                             <div className='border-t border-gray-100 py-3 flex flex-col gap-4'>
                                 {i.products.map((i) => (
                                     <div key={i?._id} className="flex items-satrt gap-4">
-                                        <img src={`http://localhost:8000/uploads/${i.product.mainImage}`} alt="Product" className="w-16 h-16 rounded-md object-cover border border-gray-100" />
+                                        <img src={`http://localhost:8000/uploads/${i?.product?.mainImage}`} alt="Product" className="w-16 h-16 rounded-md object-cover border border-gray-100" />
                                         <div className="flex-1">
-                                            <p className="font-medium text-gray-800">{i.product.title}</p>
+                                            <p className="font-medium text-gray-800">{i?.product?.title}</p>
                                             <p className="text-sm text-gray-600 font-semibold">${i.product.discountedPrice}</p>
                                         </div>
                                     </div>
