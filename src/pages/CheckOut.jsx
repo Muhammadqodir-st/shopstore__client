@@ -34,7 +34,7 @@ export default function CheckOut({ onSubmit }) {
     }
 
     return (
-        <form className="" onSubmit={handleSubmit}>
+        <form className="flex flex-col gap-3" onSubmit={handleSubmit}>
             <div className="flex items-center justify-between gap-5">
                 <label className="flex-1 flex flex-col gap-1">
                     <p className="text-sm cursor-pointer">First name *</p>

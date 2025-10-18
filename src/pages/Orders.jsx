@@ -8,7 +8,8 @@ import { useSelector } from 'react-redux'
 export default function Orders() {
 
     // orders
-    const { order } = useSelector((state) => state.order)
+    const { order } = useSelector((state) => state.order);
+
 
     return (
         <div className='w-[65%]  max-[850px]:w-full'>
@@ -18,8 +19,8 @@ export default function Orders() {
                     <p className='text-lg font-semibold text-[#2ba976]'>No orders found.</p>
                 </div>
             ) : (
-                <div>
-                    {order.order.map((i) => (
+                <div className='flex flex-col gap-3'>
+                    {order?.map((i) => (
                         <div key={i?._id} className='bg-white rounded-2xl p-3 border border-gray-100 flex flex-col gap-3'>
                             {/* header */}
                             <div className='flex items-center justify-between '>
@@ -34,7 +35,7 @@ export default function Orders() {
                                         <img src={`http://localhost:8000/uploads/${i.product.mainImage}`} alt="Product" className="w-16 h-16 rounded-md object-cover border border-gray-100" />
                                         <div className="flex-1">
                                             <p className="font-medium text-gray-800">{i.product.title}</p>
-                                            <p className="text-sm text-gray-600 font-semibold">{i.product.discountedPrice}</p>
+                                            <p className="text-sm text-gray-600 font-semibold">${i.product.discountedPrice}</p>
                                         </div>
                                     </div>
                                 ))}

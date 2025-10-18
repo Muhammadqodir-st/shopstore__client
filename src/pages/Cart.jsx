@@ -42,7 +42,7 @@ export default function Cart() {
     // states
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
-    const subtotal = Number(cart.reduce((acc, item) => acc + item?.product?.discountedPrice * item?.quantity, 0).toFixed(2))
+    const subtotal = Number(cart?.reduce((acc, item) => acc + item?.product?.discountedPrice * item?.quantity, 0).toFixed(2)) || 0
 
 
     // orders
@@ -54,18 +54,16 @@ export default function Cart() {
         const formData = { ...data, orders: orders, totalPrice: subtotal + 5 }
         try {
             const { data } = await axios.post('http://localhost:8000/orders', formData, { withCredentials: true })
-            dispatch(setOrder(data.id));
+            dispatch(setOrder(data._id));
             if (data.success) {
                 const { data } = await axios.delete('http://localhost:8000/carts', {
                     data: { productId: id },
                     withCredentials: true
                 });
                 toast.success('Order placed successfully!');
-                setTimeout(() => {
-                    setLoading(false);
-                    navigate('/profile');
-                    dispatch(clearCart());
-                }, 3000);
+                setLoading(false);
+                navigate('/profile');
+                dispatch(clearCart());
             } else {
                 setLoading(false)
             }
@@ -110,7 +108,7 @@ export default function Cart() {
                             <p className="text-[#9CA3AF]">Subtotal</p>
                         </div>
                         <div className="flex flex-col">
-                            {cart.map((i) => (
+                            {cart?.map((i) => (
                                 <div className="w-full flex items-center justify-between py-3 border-b border-[#E5E7EB]" key={i?.product?._id}>
                                     <p className="max-w-45 text-sm">{i?.product?.title?.length > 40 ? i?.product?.title.slice(0, 40) + ' . . .' : i?.product?.title} <span className="font-bold px-1">x{i.quantity}</span></p>
                                     <p className="max-w-20 font-semibold truncate">${Number(i?.product?.discountedPrice * i.quantity).toFixed(2)}</p>
