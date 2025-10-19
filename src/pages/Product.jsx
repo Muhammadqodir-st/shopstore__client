@@ -23,10 +23,8 @@ import { setUser } from '../store/feature/userSlice'
 import { setCart } from '../store/feature/cartSlice'
 import { setWishlist } from '../store/feature/wishlistSlice'
 
-
 // loading and toaster 
 import toast from "react-hot-toast";
-
 
 export default function Product() {
     window.scrollTo(0, 0)
@@ -229,7 +227,6 @@ export default function Product() {
                     ))}
                 </div>
             </div>
-
         </div>
     )
 }

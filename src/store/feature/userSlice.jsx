@@ -19,7 +19,7 @@ const userSlice = createSlice({
             state.loading = false
         }
     }
-});
+})
 
 export const { setUser, logOut, finishLoading } = userSlice.actions
 export default userSlice.reducer;

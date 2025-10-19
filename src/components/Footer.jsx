@@ -13,7 +13,18 @@ import i from '../assets/i.svg'
 import l from '../assets/l.svg'
 
 
+import toast from "react-hot-toast";
+
+
 export default function Footer() {
+
+    const handleContact = (e) => {
+        e.preventDefault();
+        const email = e.target.email.value
+        toast.success('Thanks for subscribing')
+        e.target.reset();
+    }
+
     return (
         <footer className="w-full bg-[#f3f4f6] py-10 mt-7">
             <div className="max-w-[998px] w-[90%] mx-auto">
@@ -28,10 +39,10 @@ export default function Footer() {
 
                     {/* contact  */}
                     <div className="flex flex-col gap-1 max-[400px]:w-full">
-                        <form className="flex items-center justify-between gap-3 bg-white border border-[#D1D5DB] rounded-lg overflow-hidden">
+                        <form onSubmit={handleContact} className="flex items-center justify-between gap-3 bg-white border border-[#D1D5DB] rounded-lg overflow-hidden">
                             <label className="flex items-center gap-2 bg-white px-3 flex-1">
                                 <Mail className="text-[#9CA3AF] cursor-pointer" />
-                                <input className="outline-0  w-full" type="text" placeholder="Enter your email address" required />
+                                <input name="email" className="outline-0  w-full" type="email" placeholder="Enter your email address" required />
                             </label>
                             <button className="p-3 bg-[#634C9F] text-white cursor-pointer hover:bg-[#7356ba]" type="submit">SEND</button>
                         </form>

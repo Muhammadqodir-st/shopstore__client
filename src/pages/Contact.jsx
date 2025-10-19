@@ -3,11 +3,18 @@ import { MapPin } from "lucide-react"
 
 // data
 import { cardSlice } from '../data/data'
+import toast from "react-hot-toast";
 
 
 export default function Contact() {
 
-    window.scrollTo(0, 0)
+    window.scrollTo(0, 0);
+
+    const handleContact = (e) => {
+        e.preventDefault();
+        toast.success('Your message has been sent.')
+        e.target.reset();
+    }
 
     return (
         <div className="max-w-[998px] w-[90%] mx-auto flex flex-col gap-3 py-10">
@@ -62,7 +69,7 @@ export default function Contact() {
                 {/* data */}
                 <div className="w-[50%] flex flex-col gap-3 max-[1000px]:w-full">
                     <p className="text-[12px] text-[#6B7280]">On dekande mydurtad mora även om skurkstat. Semirade timaheten rena. Radiogen pasam inte loba även om prerade i garanterad traditionell specialitet till bebel.</p>
-                    <form className="w-full flex flex-col gap-4">
+                    <form onSubmit={handleContact} className="w-full flex flex-col gap-4">
                         <div className="w-full flex items-center justify-between gap-5">
                             <label className="flex-1">
                                 <p className="">Your name *</p>

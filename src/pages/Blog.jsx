@@ -13,14 +13,12 @@ import 'swiper/css/pagination'
 import { Facebook, Twitter, Instagram, Linkedin } from 'lucide-react'
 
 
-
 export default function Blog() {
 
     // blog slide
     const blogSlideOne = blog.slice(0, 3)
     const blogProfile = blog.slice(0, 4);
     window.scrollTo(0, 0)
-
 
     return (
         <div className="max-w-[998px] w-[90%] mx-auto flex items-start justify-between gap-10 py-10 max-[990px]:flex-col">
@@ -52,9 +50,7 @@ export default function Blog() {
                         ))}
                     </div>
                 </SwiperSlide>
-
             </Swiper>
-
 
             {/* blog list */}
             <div className='sticky top-20 w-[28%] flex flex-col gap-10 max-[990px]:w-full'>

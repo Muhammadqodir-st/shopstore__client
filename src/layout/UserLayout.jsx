@@ -57,7 +57,7 @@ export default function UserLayout() {
             {/* sidebar */}
             <div className="">
                 <div className="flex items-start gap-5 max-[850px]:flex-col">
-                    <div className="w-[31%] sticky top-25 border border-[#E5E7EB] rounded-md flex flex-col items-start max-[850px]:w-full max-[850px]:flex-row flex-nowrap bg-white max-[850px]:overflow-x-auto">
+                    <div className="w-[31%] sticky top-25 border border-[#E5E7EB] rounded-md flex flex-col items-start max-[850px]:w-full max-[850px]:flex-row flex-nowrap bg-white max-[850px]:overflow-x-auto max-[400px]:top-21">
                         <Link to={'/profile'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile' ? 'text-indigo-600' : ''}`}>
                             <ListOrdered size={20} />
                             Orders

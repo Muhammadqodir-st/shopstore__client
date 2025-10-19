@@ -53,7 +53,7 @@ export default function Wishlist() {
     return (
         <div className="max-w-[998px] w-[90%] mx-auto py-8">
             {wishlist?.length === 0 ? (
-                <div className="flex flex-col gap-4 items-center py-6">
+                <div className="flex flex-col gap-4 items-center justify-center py-6 max-[400px]:h-130">
                     <img className="w-40 h-40" src={e} alt="" loop autoPlay />
                     <p className="text-2xl font-bold text-[#F03E3E]">Add what you like.</p>
                     <p className="max-w-130 text-center text-sm text-gray-600">Go to the home page and click on the ♡ icon on the product</p>

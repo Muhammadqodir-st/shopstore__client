@@ -10,7 +10,6 @@ import axios from "axios";
 // loader or message
 import toast from "react-hot-toast";
 
-
 export default function Register() {
 
     // location

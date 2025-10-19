@@ -1,4 +1,5 @@
 export default function Loading() {
+
   return (
     <div className="flex justify-center items-center h-screen bg-gray-50">
       <div className="flex flex-col items-center gap-3">
@@ -9,4 +10,5 @@ export default function Loading() {
       </div>
     </div>
   );
+  
 }

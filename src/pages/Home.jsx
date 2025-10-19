@@ -44,6 +44,8 @@ import toast from "react-hot-toast";
 
 export default function Home() {
 
+    window.scrollTo(0, 0)
+
     // navigate
     const navigate = useNavigate();
 

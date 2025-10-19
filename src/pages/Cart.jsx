@@ -85,10 +85,10 @@ export default function Cart() {
     return (
         <div className="max-w-[998px] w-[90%] mx-auto">
             {cart?.length === 0 ? (
-                <div className="flex flex-col gap-4 items-center py-6">
+                <div className="flex flex-col gap-4 items-center justify-center py-6 max-[400px]:h-140">
                     <img className="w-45 h-45" src={empty} alt="" loop autoPlay />
-                    <p className="text-2xl font-bold text-[#F03E3E]">Your cart is currently empty.</p>
-                    <p className="max-w-130 text-center text-sm text-gray-600">Start from the main page - you can find the product you need by searching or browse our collections. Popular products</p>
+                    <p className="text-2xl font-bold text-[#F03E3E] max-[400px]:text-xl">Your cart is currently empty.</p>
+                    <p className="max-w-130 text-center text-sm text-gray-600 max-[400px]:text-[12px]">Start from the main page - you can find the product you need by searching or browse our collections. Popular products</p>
                     <Link to={'/shop'} className="py-2 px-4 bg-[#212529] text-white rounded-lg font-semibold text-sm cursor-pointer">Return to shop</Link>
                 </div>
             ) : (

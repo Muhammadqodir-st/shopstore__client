@@ -8,7 +8,7 @@ const orderSlice = createSlice({
             state.order = action.payload
         }
     }
-});
+})
 
 export const { setOrder } = orderSlice.actions;
 export default orderSlice.reducer;

@@ -4,12 +4,10 @@ import n from '../assets/n.svg'
 // react rouetr dom
 import { Link, useNavigate } from 'react-router-dom'
 
-
 export default function NotFound() {
 
     // navigate
     const navigate = useNavigate();
-
 
     return (
         <div className='max-w-[998px] w-[90%] mx-auto py-10 flex flex-col gap-4'>

@@ -12,7 +12,6 @@ import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 
 
-
 export default function AddProduct() {
 
     // navigate
@@ -20,7 +19,6 @@ export default function AddProduct() {
 
     // user id
     const { user } = useSelector((state) => state.user);
-
 
     // state
     const [category, setCategory] = useState([]);
@@ -105,8 +103,6 @@ export default function AddProduct() {
             setLoading(false);
         }
     }
-
-
 
     return (
         <div className="w-[66%] max-[850px]:w-full">

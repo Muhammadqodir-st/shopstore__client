@@ -24,7 +24,6 @@ import Wishlist from './pages/Wishlist'
 import Cart from './pages/Cart'
 import UserLayout from './layout/UserLayout'
 import AddProduct from './pages/AddProduct'
-import AccountDetails from './pages/AccountDetails'
 import Orders from './pages/Orders'
 import Dowloads from './pages/Dowloads'
 import Addresses from './pages/Addresses'
@@ -67,7 +66,6 @@ function App() {
           <Route path="/cart" element={<ProtectedRoute> <Cart /> </ProtectedRoute>} />
           {/* user layout */}
           <Route path="/profile" element={<ProtectedRoute> <UserLayout /> </ProtectedRoute>}>
-            <Route path="accound" element={<ProtectedRoute> <AccountDetails /> </ProtectedRoute>} />
             <Route index={true} element={<ProtectedRoute> <Orders /> </ProtectedRoute>} />
             <Route path="dowloads" element={<ProtectedRoute> <Dowloads /> </ProtectedRoute>} />
             <Route path="addresses" element={<ProtectedRoute> <Addresses /> </ProtectedRoute>} />

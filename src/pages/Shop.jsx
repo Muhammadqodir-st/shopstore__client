@@ -43,9 +43,7 @@ export default function Shop() {
     const [search, setSerach] = useState('')
     const searchResult = products.filter((p) => p?.title?.toLowerCase()?.includes(search?.toLocaleLowerCase()));
 
-
     const { categoryId } = useParams();
-
 
 
     // get category
@@ -116,8 +114,6 @@ export default function Shop() {
             console.log(error);
         }
     }
-
-
 
     return (
         <div className="max-w-[998px] w-[90%] mx-auto">

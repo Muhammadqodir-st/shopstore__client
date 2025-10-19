@@ -1,7 +1,5 @@
 // react
-import { useState } from "react";
 import toast from "react-hot-toast";
-
 
 export default function CheckOut({ onSubmit }) {
 

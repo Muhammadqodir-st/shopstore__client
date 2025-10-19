@@ -14,7 +14,7 @@ export default function Orders() {
     return (
         <div className='w-[65%]  max-[850px]:w-full'>
             {order?.length === 0 ? (
-                <div className='w-full h-85 flex flex-col items-center justify-center gap-2'>
+                <div className='w-full h-85 flex flex-col items-center justify-center gap-2 max-[400px]:h-115'>
                     <img className='w-35 h-35' src={e2} alt="" />
                     <p className='text-lg font-semibold text-[#2ba976]'>No orders found.</p>
                 </div>
@@ -35,7 +35,8 @@ export default function Orders() {
                                         <img src={`http://localhost:8000/uploads/${i?.product?.mainImage}`} alt="Product" className="w-16 h-16 rounded-md object-cover border border-gray-100" />
                                         <div className="flex-1">
                                             <p className="font-medium text-gray-800">{i?.product?.title}</p>
-                                            <p className="text-sm text-gray-600 font-semibold">${i.product.discountedPrice}</p>
+                                            <p className="text-sm text-gray-600 font-semibold">${Number(i?.product?.discountedPrice * i.quantity).toFixed(2)}</p>
+                                            <p className='text-sm text-gray-600 font-semibold'>Count : {i.quantity}</p>
                                         </div>
                                     </div>
                                 ))}

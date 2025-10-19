@@ -15,8 +15,6 @@ import { remove, update } from '../store/feature/cartSlice'
 import axios from "axios"
 
 
-
-
 export default function Card({ item }) {
 
     // state

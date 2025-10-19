@@ -23,8 +23,6 @@ import p from '../assets/p.svg'
 import p2 from '../assets/p2.svg'
 
 
-
-
 const cardSlice = [
     {
         image: i1,
@@ -162,6 +160,5 @@ const payment = [
         descripton: 'The Consumer Protection Act does not provide for the return of this product of proper quality.'
     }
 ]
-
 
 export { cardSlice, blog, card, payment };

@@ -10,7 +10,6 @@ import { useEffect, useState, } from "react";
 // loader or message
 import toast from "react-hot-toast";
 
-
 export default function Login() {
 
     // navigate
@@ -23,7 +22,6 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-
 
     // login
     const handleLogin = async (e) => {
@@ -59,11 +57,6 @@ export default function Login() {
             setLoading(false);
         }
     }
-
-
-
-
-
 
     return (
         <div className="max-w-[998px] w-[90%] h-170 mx-auto flex items-center justify-center">
