@@ -41,8 +41,8 @@ export default function Login() {
             if (res.data.success) {
                 setTimeout(() => {
                     setLoading(false)
-                    navigate('/');
-                    window.location.reload()
+                    // navigate('/');
+                    // window.location.reload()
                 }, 2500)
             } else {
                 setLoading(false)
