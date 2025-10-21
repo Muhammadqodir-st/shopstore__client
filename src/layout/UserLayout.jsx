@@ -42,7 +42,7 @@ export default function UserLayout() {
     // log out
     const handleLogOut = async () => {
         try {
-            const { data } = await axios.post('http://localhost:8000/register/logout', {}, { withCredentials: true })
+            const { data } = await axios.post('https://shopstore-server.onrender.com/logout', {}, { withCredentials: true })
             navigate('/');
             window.location.reload();
         } catch (error) {

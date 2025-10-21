@@ -31,7 +31,7 @@ export default function Login() {
 
         // xatoni tutib olish
         try {
-            const res = await axios.post('http://localhost:8000/login', {
+            const res = await axios.post('https://shopstore-server.onrender.com/login', {
                 email: email,
                 password: password
             }, { withCredentials: true });

@@ -35,7 +35,7 @@ export default function Register() {
 
         // xatolarni tutub olish 
         try {
-            const res = await axios.post('http://localhost:8000/register', {
+            const res = await axios.post('https://shopstore-server.onrender.com/register', {
                 name: name,
                 email: email,
                 password: password,

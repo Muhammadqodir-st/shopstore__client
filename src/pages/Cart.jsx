@@ -57,10 +57,10 @@ export default function Cart() {
         const formDataR = { ...data, products: orders, totalPrice: subtotal + 5, deliveryDays: 2 }
 
         try {
-            const { data } = await axios.post('http://localhost:8000/orders', formData, { withCredentials: true })
+            const { data } = await axios.post('https://shopstore-server.onrender.com/orders', formData, { withCredentials: true })
             dispatch(setOrder([...order, formDataR]));
             if (data.success) {
-                const { data } = await axios.delete('http://localhost:8000/carts', {
+                const { data } = await axios.delete('https://shopstore-server.onrender.com/carts', {
                     data: { productId: id },
                     withCredentials: true
                 });

@@ -23,7 +23,7 @@ export default function StoreUser() {
         const getUser = async () => {
             setLoading(true);
             try {
-                const { data } = await axios.get('http://localhost:8000/register/me', { withCredentials: true })
+                const { data } = await axios.get('https://shopstore-server.onrender.com/me', { withCredentials: true })
                 dispatch(setUser({ user: data }));
                 dispatch(setCart(data.user.cart));
                 dispatch(setWishlist(data.user.wishlist));

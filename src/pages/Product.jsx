@@ -59,7 +59,7 @@ export default function Product() {
     useEffect(() => {
         const getProduct = async () => {
             try {
-                const { data } = await axios.get(`http://localhost:8000/products/${id}`, { withCredentials: true })
+                const { data } = await axios.get(`https://shopstore-server.onrender.com/products/${id}`, { withCredentials: true })
                 setProduct(data.product)
             } catch (error) {
                 console.log(error);
@@ -73,7 +73,7 @@ export default function Product() {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const { data } = await axios.get('http://localhost:8000/products')
+                const { data } = await axios.get('https://shopstore-server.onrender.com/products')
                 setProducts(data.products)
             } catch (error) {
                 console.log(error);
@@ -88,7 +88,7 @@ export default function Product() {
         const isWishlesed = wishlist.some((i) => i._id === product._id)
         try {
             if (!isWishlesed) {
-                const res = await axios.post('http://localhost:8000/wishlists', {
+                const res = await axios.post('https://shopstore-server.onrender.com/wishlists', {
                     productId: product._id
                 }, { withCredentials: true });
                 toast.success(res.data.message);
@@ -105,7 +105,7 @@ export default function Product() {
         const isAddtoCarted = cart.some((i) => i.product._id === product._id)
         try {
             if (!isAddtoCarted) {
-                const { data } = await axios.post('http://localhost:8000/carts', {
+                const { data } = await axios.post('https://shopstore-server.onrender.com/carts', {
                     productId: product._id,
                     quantity: quantity
                 }, { withCredentials: true });
@@ -126,7 +126,7 @@ export default function Product() {
                 <div className="w-[45%] flex flex-col  items-center justify-center gap-3 max-[700px]:w-full">
                     <div className="w-full flex items-center justify-center relative border border-gray-300 rounded-xl overflow-hidden">
                         {mainImage && (
-                            <img className="w-125 h-110 object-cover" src={`http://localhost:8000/uploads/${mainImage}`} alt="" />
+                            <img className="w-125 h-110 object-cover" src={`https://shopstore-server.onrender.com/uploads/${mainImage}`} alt="" />
                         )}
                         <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-3 left-3">{product?.discountPercent}%</button>
                         <button onClick={() => handleWishlist(product?._id)} className={`absolute top-3 right-3 cursor-pointer ${!user ? 'hidden' : ''}`}>
@@ -138,7 +138,7 @@ export default function Product() {
                     <div className="w-full flex items-center justify-center gap-3 max-[700px]:justify-start">
                         {product?.images.map((i, key) => (
                             <div onClick={() => setMainImage(i)} key={key} className={`w-20 h-20 rounded-md overflow-hidden cursor-pointer ${mainImage === i ? `border border-gray-400` : ``}`}>
-                                <img className="w-full h-full" src={`http://localhost:8000/uploads/${i}`} alt="" />
+                                <img className="w-full h-full" src={`https://shopstore-server.onrender.com/uploads/${i}`} alt="" />
                             </div>
                         ))}
                     </div>
@@ -212,7 +212,7 @@ export default function Product() {
                     {products?.slice(0, 4).map((i) => (
                         <Link to={`/product/${i._id}`} key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
                             <div className="w-full relative">
-                                <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                <img className="w-full h-full object-cover" src={`https://shopstore-server.onrender.com/uploads/${i.mainImage}`} alt="" />
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
                             </div>
                             <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>

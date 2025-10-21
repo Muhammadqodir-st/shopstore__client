@@ -50,7 +50,7 @@ export default function Shop() {
     useEffect(() => {
         const getCategory = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/categories', { withCredentials: true })
+                const res = await axios.get('https://shopstore-server.onrender.com/categories', { withCredentials: true })
                 setCategories(res.data.categories)
             } catch (error) {
                 console.log(error);
@@ -63,7 +63,7 @@ export default function Shop() {
     useEffect(() => {
         const getProducts = async () => {
             try {
-                const url = categoryId ? `http://localhost:8000/products?category=${categoryId}` : 'http://localhost:8000/products?category'
+                const url = categoryId ? `https://shopstore-server.onrender.com/products?category=${categoryId}` : 'https://shopstore-server.onrender.com/products?category'
                 const res = await axios.get(url)
                 setProducts(res.data.products)
             } catch (error) {
@@ -87,7 +87,7 @@ export default function Shop() {
         const isWishlesed = wishlist.some((i) => i._id === product._id)
         try {
             if (!isWishlesed) {
-                const res = await axios.post('http://localhost:8000/wishlists', {
+                const res = await axios.post('https://shopstore-server.onrender.com/wishlists', {
                     productId: product._id
                 }, { withCredentials: true });
                 toast.success(res.data.message);
@@ -103,7 +103,7 @@ export default function Shop() {
         const isAddtoCarted = cart?.some((i) => i.product?._id === product._id)
         try {
             if (!isAddtoCarted) {
-                const { data } = await axios.post('http://localhost:8000/carts', {
+                const { data } = await axios.post('https://shopstore-server.onrender.com/carts', {
                     productId: product._id,
                     quantity: quantity
                 }, { withCredentials: true });
@@ -171,7 +171,7 @@ export default function Shop() {
                                     <div key={i._id} className="border-r border-b border-[#E5E7EB] p-3 flex flex-col justify-between gap-2" >
                                         <div className="w-full relative">
                                             <Link to={`/product/${i._id}`} className="w-full h-full">
-                                                <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                                <img className="w-full h-full object-cover" src={`https://shopstore-server.onrender.com/uploads/${i.mainImage}`} alt="" />
                                             </Link>
                                             <button className="py-1 px-3 rounded-full bg-[#DC2626] text-white text-[11px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
                                             <button onClick={() => handleWishlist(i)} className=" absolute top-0 right-0 cursor-pointer">

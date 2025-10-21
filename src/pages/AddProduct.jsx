@@ -50,7 +50,7 @@ export default function AddProduct() {
     useEffect(() => {
         const getCategry = async () => {
             try {
-                const res = await axios.get('http://localhost:8000/categories')
+                const res = await axios.get('https://shopstore-server.onrender.com/categories')
                 setCategory(res.data.categories);
             } catch (error) {
                 console.log(error.message);
@@ -80,7 +80,7 @@ export default function AddProduct() {
                 formData.append("images", file)
             })
 
-            const res = await axios.post('http://localhost:8000/products', formData, { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } })
+            const res = await axios.post('https://shopstore-server.onrender.com/products', formData, { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } })
 
             toast.success(res.data.message);
 

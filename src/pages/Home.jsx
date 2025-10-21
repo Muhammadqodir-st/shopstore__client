@@ -66,7 +66,7 @@ export default function Home() {
     useEffect(() => {
         const getCategory = async () => {
             try {
-                const { data } = await axios.get('http://localhost:8000/categories', { withCredentials: true })
+                const { data } = await axios.get('https://shopstore-server.onrender.com/categories', { withCredentials: true })
                 setCategory(data.categories);
             } catch (error) {
                 console.log(error);
@@ -80,7 +80,7 @@ export default function Home() {
     useEffect(() => {
         const getProduct = async () => {
             try {
-                const { data } = await axios.get('http://localhost:8000/products', { withCredentials: true })
+                const { data } = await axios.get('https://shopstore-server.onrender.com/products', { withCredentials: true })
                 setProducts(data.products)
             } catch (error) {
                 console.log(error);
@@ -97,7 +97,7 @@ export default function Home() {
         const isWishlesed = wishlist.some((i) => i._id === product._id)
         try {
             if (!isWishlesed) {
-                const res = await axios.post('http://localhost:8000/wishlists', {
+                const res = await axios.post('https://shopstore-server.onrender.com/wishlists', {
                     productId: product._id
                 }, { withCredentials: true });
                 toast.success(res.data.message);
@@ -114,7 +114,7 @@ export default function Home() {
         const isAddtoCarted = cart.some((i) => i.product._id === product._id)
         try {
             if (!isAddtoCarted) {
-                const { data } = await axios.post('http://localhost:8000/carts', {
+                const { data } = await axios.post('https://shopstore-server.onrender.com/carts', {
                     productId: product._id,
                     quantity: quantity
                 }, { withCredentials: true });
@@ -152,8 +152,8 @@ export default function Home() {
     ]
 
     products.map((i) => {
-        if(i.title.length > 40){
-            i.title = i.title.slice(0,40) + '...'
+        if (i.title.length > 40) {
+            i.title = i.title.slice(0, 40) + '...'
         }
     })
 
@@ -211,7 +211,7 @@ export default function Home() {
 
                 {/* categories */}
                 <div className="flex items-center justify-between border border-[#E5E7EB] rounded-lg max-[1100px]:overflow-x-auto">
-                    {category.slice(2).map((i) => (
+                    {category.slice(0, 7).map((i) => (
                         <div onClick={() => handleFilter(i._id)} key={i._id} className="shrink-0 w-[140px] flex items-center justify-center flex-col gap-1 border-r border-[#E5E7EB] py-3 cursor-pointer">
                             <img className="w-30 h-30" src={i.image} alt="" />
                             <p className="text-sm font-semibold flex flex-nowrap">{i.name}</p>
@@ -250,7 +250,7 @@ export default function Home() {
                     {products.slice(0, 4).map((i) => (
                         <Link to={`/product/${i._id}`} key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
                             <div className="w-full relative">
-                                <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                <img className="w-full h-full object-cover" src={`https://shopstore-server.onrender.com/uploads/${i.mainImage}`} alt="" />
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
                             </div>
                             <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>
@@ -385,7 +385,7 @@ export default function Home() {
                     {products.slice(4, 7).map((i) => (
                         <Link to={`/product/${i._id}`} key={i._id} className="border-r border-[#E5E7EB] p-3 flex flex-col items-start gap-2 max-[900px]:border-b">
                             <div className="w-full relative">
-                                <img className="w-full h-full object-cover" src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                <img className="w-full h-full object-cover" src={`https://shopstore-server.onrender.com/uploads/${i.mainImage}`} alt="" />
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
                             </div>
                             <p className=" font-semibold truncation overflow-hidden max-[500px]:text-sm">{i.title}</p>
@@ -441,7 +441,7 @@ export default function Home() {
                                 <div key={i._id} className="flex items-start gap-3 p-3 border-b border-[#E5E7EB] max-[700px]:flex-col" >
                                     <div className="relative flex items-center justify-center max-[700px]:w-full">
                                         <Link to={`/product/${i._id}`}>
-                                            <img src={`http://localhost:8000/uploads/${i.mainImage}`} alt="" />
+                                            <img src={`https://shopstore-server.onrender.com/uploads/${i.mainImage}`} alt="" />
                                         </Link>
                                         <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-2 left-0">{i.discountPercent}%</button>
                                         <button onClick={() => handleWishlist(i)} className={`absolute top-2 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>
