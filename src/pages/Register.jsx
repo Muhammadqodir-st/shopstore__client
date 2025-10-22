@@ -2,7 +2,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom"
 
 // react
-import {  useState } from "react";
+import { useState } from "react";
 
 // axios
 import axios from "axios";
@@ -25,6 +25,7 @@ export default function Register() {
     const [password, setPassword] = useState('');
     const [role, setRole] = useState('customer');
     const [loading, setLoading] = useState(false);
+    const token = localStorage.getItem('token')
 
 
     // register
@@ -40,7 +41,7 @@ export default function Register() {
                 email: email,
                 password: password,
                 role: role
-            }, { withCredentials: true });
+            }, { headers: { Authorization: `Bearer ${token}` } });
 
             if (res.data.success) {
                 setTimeout(() => {

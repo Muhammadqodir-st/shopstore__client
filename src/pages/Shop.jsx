@@ -42,6 +42,7 @@ export default function Shop() {
     const [quantity, setQuentity] = useState(1);
     const [search, setSerach] = useState('')
     const searchResult = products.filter((p) => p?.title?.toLowerCase()?.includes(search?.toLocaleLowerCase()));
+    const token = localStorage.getItem('token');
 
     const { categoryId } = useParams();
 
@@ -50,7 +51,7 @@ export default function Shop() {
     useEffect(() => {
         const getCategory = async () => {
             try {
-                const res = await axios.get('https://shopstore-server.onrender.com/categories', { withCredentials: true })
+                const res = await axios.get('https://shopstore-server.onrender.com/categories', { headers: { Authorization: `Bearer ${token}` }})
                 setCategories(res.data.categories)
             } catch (error) {
                 console.log(error);
@@ -89,7 +90,7 @@ export default function Shop() {
             if (!isWishlesed) {
                 const res = await axios.post('https://shopstore-server.onrender.com/wishlists', {
                     productId: product._id
-                }, { withCredentials: true });
+                }, { headers: { Authorization: `Bearer ${token}` }});
                 toast.success(res.data.message);
                 dispatch(setWishlist([...wishlist, product]));
             }
@@ -106,7 +107,7 @@ export default function Shop() {
                 const { data } = await axios.post('https://shopstore-server.onrender.com/carts', {
                     productId: product._id,
                     quantity: quantity
-                }, { withCredentials: true });
+                }, { headers: { Authorization: `Bearer ${token}` } });
                 dispatch(setCart([...cart, { product, quantity: quantity }]))
                 toast.success(data.message)
             }
@@ -171,7 +172,7 @@ export default function Shop() {
                                     <div key={i._id} className="border-r border-b border-[#E5E7EB] p-3 flex flex-col justify-between gap-2" >
                                         <div className="w-full relative">
                                             <Link to={`/product/${i._id}`} className="w-full h-full">
-                                                <img className="w-full h-full object-cover" src={`https://shopstore-server.onrender.com/uploads/${i.mainImage}`} alt="" />
+                                                <img className="w-full h-full object-cover" src={i.mainImage} alt="" />
                                             </Link>
                                             <button className="py-1 px-3 rounded-full bg-[#DC2626] text-white text-[11px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
                                             <button onClick={() => handleWishlist(i)} className=" absolute top-0 right-0 cursor-pointer">

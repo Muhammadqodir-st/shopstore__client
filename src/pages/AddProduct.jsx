@@ -30,6 +30,7 @@ export default function AddProduct() {
     const [discount, setDiscount] = useState(0);
     const [images, setImages] = useState([]);
     const [loading, setLoading] = useState(false);
+    const token = localStorage.getItem('token')
 
 
     // handleImage
@@ -80,7 +81,7 @@ export default function AddProduct() {
                 formData.append("images", file)
             })
 
-            const res = await axios.post('https://shopstore-server.onrender.com/products', formData, { withCredentials: true, headers: { 'Content-Type': 'multipart/form-data' } })
+            const res = await axios.post('https://shopstore-server.onrender.com/products', formData, { headers: { 'Content-Type': 'multipart/form-data', Authorization: `Bearer ${token}` } })
 
             toast.success(res.data.message);
 

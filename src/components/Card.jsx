@@ -21,6 +21,7 @@ export default function Card({ item }) {
     const [quantity, setQuantity] = useState(item?.quantity);
     const { cart } = useSelector((state) => state.cart)
     const dispatch = useDispatch();
+    const token = localStorage.getItem('token')
 
 
 
@@ -32,7 +33,7 @@ export default function Card({ item }) {
                 const { data } = await axios.put('https://shopstore-server.onrender.com/carts', {
                     productId: item?.product?._id,
                     quantity: quantity
-                }, { withCredentials: true });
+                }, { headers: { Authorization: `Bearer ${token}` } });
 
                 dispatch(update(data.user.cart));
             } catch (error) {
@@ -49,7 +50,7 @@ export default function Card({ item }) {
         try {
             const { data } = await axios.delete('https://shopstore-server.onrender.com/carts', {
                 data: { productId: productId },
-                withCredentials: true
+                headers: { Authorization: `Bearer ${token}` }
             });
             toast.success(data.message)
             dispatch(remove(productId));
@@ -62,7 +63,7 @@ export default function Card({ item }) {
         <div className="py-3 px-3 bg-[#fcfcfc] rounded-lg flex items-center justify-between gap-3 border border-[#E5E7EB] max-[450px]:flex-col" key={item?.product?._id}>
             <div className="flex items-center gap-5 max-[450px]:w-full">
                 <div className='flex items-center gap-5'>
-                    <img className="w-15 h-15 object-cover border border-[#E5E7EB] rounded-lg" src={item?.product?.mainImage ? `https://shopstore-server.onrender.com/uploads/${item?.product?.mainImage}` : ''} alt="" />
+                    <img className="w-15 h-15 object-cover border border-[#E5E7EB] rounded-lg" src={item?.product?.mainImage} alt="" />
                     <p className="max-w-50 font-semibold text-gray-600 max-[470px]:">{item?.product?.title?.length > 40 ? item?.product?.title.slice(0, 40) + ' . . .' : item?.product?.title}</p>
                 </div>
                 <div className="w-fit flex items-center justify-between gap-3 py-2 px-3 border border-[#D1D5DB] rounded-md max-[450px]:hidden">

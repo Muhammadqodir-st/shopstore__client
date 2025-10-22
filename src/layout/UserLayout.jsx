@@ -8,11 +8,6 @@ import { ListOrdered, Download, MapPinHouse, Plus } from "lucide-react";
 
 // redux
 import { useSelector, useDispatch } from "react-redux";
-import { logOut } from '../store/feature/userSlice'
-
-
-// cookie
-import Cookies from "js-cookie";
 
 
 // react
@@ -20,7 +15,6 @@ import { useState } from "react";
 
 // axios
 import axios from "axios";
-import toast from "react-hot-toast";
 
 
 export default function UserLayout() {
@@ -29,6 +23,7 @@ export default function UserLayout() {
 
     // state
     const [modal, setModal] = useState(false)
+    const token = localStorage.getItem('token')
 
     // naviagte
     const navigate = useNavigate();
@@ -42,7 +37,8 @@ export default function UserLayout() {
     // log out
     const handleLogOut = async () => {
         try {
-            const { data } = await axios.post('https://shopstore-server.onrender.com/logout', {}, { withCredentials: true })
+            const { data } = await axios.post('https://shopstore-server.onrender.com/register/logout', {}, { headers: { Authorization: `Bearer ${token}` } })
+            localStorage.removeItem('token')
             navigate('/');
             window.location.reload();
         } catch (error) {

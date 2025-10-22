@@ -1,5 +1,5 @@
 // react router dom
-import { Link, useLocation, useNavigate } from "react-router-dom"
+import { data, Link, useLocation, useNavigate } from "react-router-dom"
 
 // axios
 import axios from "axios";
@@ -22,6 +22,7 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+    const token = localStorage.getItem('token')
 
     // login
     const handleLogin = async (e) => {
@@ -34,15 +35,15 @@ export default function Login() {
             const res = await axios.post('https://shopstore-server.onrender.com/login', {
                 email: email,
                 password: password
-            }, { withCredentials: true });
-
+            }, { headers: { Authorization: `Bearer ${token}` } });
             toast.success(res.data.message)
 
             if (res.data.success) {
+                localStorage.setItem('token', res.data.token)
                 setTimeout(() => {
                     setLoading(false)
-                    // navigate('/');
-                    // window.location.reload()
+                    navigate('/');
+                    window.location.reload()
                 }, 2500)
             } else {
                 setLoading(false)

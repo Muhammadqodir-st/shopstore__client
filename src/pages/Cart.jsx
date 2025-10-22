@@ -46,6 +46,7 @@ export default function Cart() {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
     const subtotal = Number(cart?.reduce((acc, item) => acc + item?.product?.discountedPrice * item?.quantity, 0).toFixed(2)) || 0
+    const token = localStorage.getItem('token')
 
 
     // orders
@@ -57,12 +58,12 @@ export default function Cart() {
         const formDataR = { ...data, products: orders, totalPrice: subtotal + 5, deliveryDays: 2 }
 
         try {
-            const { data } = await axios.post('https://shopstore-server.onrender.com/orders', formData, { withCredentials: true })
+            const { data } = await axios.post('https://shopstore-server.onrender.com/orders', formData, { headers: { Authorization: `Bearer ${token}` } })
             dispatch(setOrder([...order, formDataR]));
             if (data.success) {
                 const { data } = await axios.delete('https://shopstore-server.onrender.com/carts', {
                     data: { productId: id },
-                    withCredentials: true
+                    headers: { Authorization: `Bearer ${token}` }
                 });
                 toast.success('Order placed successfully!');
                 setLoading(false);

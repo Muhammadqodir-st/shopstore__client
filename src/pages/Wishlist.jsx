@@ -29,6 +29,7 @@ export default function Wishlist() {
     const { user } = useSelector((state) => state.user);
     const { wishlist } = useSelector((state) => state.wishlist);
     const dispatch = useDispatch();
+    const token = localStorage.getItem('token')
 
 
     // states
@@ -39,7 +40,7 @@ export default function Wishlist() {
         try {
             const res = await axios.delete('https://shopstore-server.onrender.com/wishlists', {
                 data: { productId },
-                withCredentials: true
+                headers: { Authorization: `Bearer ${token}` }
             });
             dispatch(remove(productId));
             toast.success('product removed from wishlist')
@@ -65,7 +66,7 @@ export default function Wishlist() {
                         <div key={i._id} className="border border-[#E5E7EB] p-3 flex flex-col items-start gap-2 rounded-lg overflow-hidden">
                             <div className="w-full relative">
                                 <Link to={`/product/${i._id}`} className="w-full h-full ">
-                                    <img className="w-full h-full object-cover" src={`https://shopstore-server.onrender.com/uploads/${i.mainImage}`} alt="" />
+                                    <img className="w-full h-full object-cover" src={i.mainImage} alt="" />
                                 </Link>
                                 <button className="py-1 px-4 rounded-full bg-red-500 text-white text-[12px] font-semibold absolute top-0 left-0">{i.discountPercent}%</button>
                                 <button onClick={() => handleWishlistDelete(i._id)} className={`absolute top-0 right-0 cursor-pointer ${!user ? 'hidden' : ''}`}>

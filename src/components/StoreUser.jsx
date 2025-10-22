@@ -14,6 +14,7 @@ import { setOrder } from '../store/feature/orderSlice'
 
 export default function StoreUser() {
     const [loading, setLoading] = useState(false);
+    const token = localStorage.getItem('token');
 
     // dispatch
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ export default function StoreUser() {
         const getUser = async () => {
             setLoading(true);
             try {
-                const { data } = await axios.get('https://shopstore-server.onrender.com/me', { withCredentials: true })
+                const { data } = await axios.get('https://shopstore-server.onrender.com/register/me', { headers: { Authorization: `Bearer ${token}` } })
                 dispatch(setUser({ user: data }));
                 dispatch(setCart(data.user.cart));
                 dispatch(setWishlist(data.user.wishlist));
