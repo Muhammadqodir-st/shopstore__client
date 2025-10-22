@@ -1,12 +1,12 @@
 // react router dom
-import { Link, useLocation } from "react-router-dom"
+import { Link, useLocation, useNavigate } from "react-router-dom"
 
 // react
 import { useState } from "react"
 
 
 // lucide react
-import { Search, User, Heart, ShoppingCart, House, Store, ShoppingBasket, CircleUser } from "lucide-react"
+import { Search, User, Heart, ShoppingCart, House, Store, ShoppingBasket, CircleUser, Plus } from "lucide-react"
 
 // logo
 import logo from '../assets/logo.svg'
@@ -17,10 +17,6 @@ import { useSelector } from "react-redux"
 
 export default function Header() {
 
-    // use state
-    const [openSearch, setOpenSearch] = useState(false);
-
-
     // /redux
     const { user } = useSelector((state) => state.user);
     const { cart } = useSelector((state) => state.cart);
@@ -29,7 +25,7 @@ export default function Header() {
 
     // location
     const location = useLocation();
-
+    const navigate = useNavigate();
 
     return (
         <div className="w-full z-3 sticky top-0 bg-white">
@@ -50,6 +46,9 @@ export default function Header() {
                     <Link to={'/shop'} className={location.pathname === '/shop' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Shop</Link>
                     <Link to={'/blog'} className={location.pathname === '/blog' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Blog</Link>
                     <Link to={'/contact'} className={location.pathname === '/contact' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Contact</Link>
+                    {user?.user?.role === 'admin' ? (
+                        <Link to={'/profile/addproduct'} className={location.pathname === '/profile/addproduct' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>new</Link>
+                    ) : null}
                 </ul>
 
 
@@ -57,12 +56,7 @@ export default function Header() {
                 <div className="flex items-center justify-center gap-5">
 
                     {/* search */}
-                    {openSearch && (
-                        <div className={`absolute py-3 top-full left-0 z-100 w-full bg-white transition-all flex items-center justify-center duration-500 ease-in-out ${open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10"}`}>
-                            <input type="text" placeholder="Search..." className="max-w-[998px] w-[90%] px-4 py-2 rounded-lg border shadow focus:outline-none" />
-                        </div>
-                    )}
-                    <div onClick={() => setOpenSearch(!openSearch)} className="cursor-pointer max-[400px]:">
+                    <div onClick={() => navigate('/shop')} className="cursor-pointer max-[400px]:">
                         <Search size={24} />
                     </div>
 
@@ -118,6 +112,13 @@ export default function Header() {
                     </Link>
 
 
+                    {user?.user?.role === 'admin' ? (
+                        <Link to={'/profile/addproduct'} className="flex flex-col items-center">
+                            <Plus size={23} className="text-[#505054]" />
+                        </Link>
+                    ) : null}
+
+
                     <Link to={'/cart'} className="flex flex-col items-center relative">
                         <ShoppingBasket size={23} className="text-[#505054]" />
                         <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
@@ -126,13 +127,14 @@ export default function Header() {
                     </Link>
 
 
-
-                    <Link to={'/wishlist'} className="flex flex-col items-center relative">
-                        <Heart size={23} className="text-[#505054]" />
-                        <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
-                            {wishlist?.length || 0}
-                        </span>
-                    </Link>
+                    {user?.user?.role !== 'admin' ? (
+                        <Link to={'/wishlist'} className="flex flex-col items-center relative">
+                            <Heart size={23} className="text-[#505054]" />
+                            <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
+                                {wishlist?.length || 0}
+                            </span>
+                        </Link>
+                    ) : null}
 
 
                     <Link to={'/profile'} className="flex flex-col items-center">

@@ -88,7 +88,7 @@ export default function AddProduct() {
             if (res.data.success) {
                 setTimeout(() => {
                     setLoading(false)
-                    navigate('/');
+                    navigate('/shop');
                     window.location.reload();
                 }, 2500);
             } else {

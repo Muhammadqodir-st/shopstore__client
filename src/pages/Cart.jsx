@@ -16,7 +16,6 @@ import { useSelector, useDispatch } from "react-redux";
 import { setOrder } from '../store/feature/orderSlice'
 import { clearCart } from '../store/feature/cartSlice'
 
-// gif animation    const { order } = useSelector((state) => state.order);
 
 import empty from '../assets/empty.gif'
 import toast from "react-hot-toast";
