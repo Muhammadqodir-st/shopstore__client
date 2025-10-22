@@ -27,6 +27,9 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
     const token = localStorage.getItem('token')
 
+    if(token){
+        navigate('/');
+    }
 
     // register
     const handleRegister = async (e) => {
@@ -36,23 +39,16 @@ export default function Register() {
 
         // xatolarni tutub olish 
         try {
-            const res = await axios.post('https://shopstore-server.onrender.com/register', {
+            const { data } = await axios.post('https://shopstore-server.onrender.com/register', {
                 name: name,
                 email: email,
                 password: password,
                 role: role
-            }, { headers: { Authorization: `Bearer ${token}` } });
-
-            if (res.data.success) {
-                setTimeout(() => {
-                    setLoading(false)
-                    toast.success(res.data.message);
-                    navigate('/');
-                    window.location.reload();
-                }, 2500);
-            } else {
-                setLoading(false);
-            }
+            });
+            localStorage.setItem('token', data.token);
+            toast.success('user login successfully');
+            navigate('/');
+            window.location.reload();
         } catch (error) {
             console.log(error)
             if (error.response && error.response.data) {
@@ -60,15 +56,9 @@ export default function Register() {
             } else {
                 toast.error("Server error!");
             }
-            setLoading(false);
-        }
-    }
 
-
-
-
-
-
+        } finally { setLoading(false) };
+    };
 
     return (
         <div className="max-w-[998px] w-[90%] h-190 mx-auto flex items-center justify-center">

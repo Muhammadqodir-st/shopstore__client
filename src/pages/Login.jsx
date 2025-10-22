@@ -23,6 +23,9 @@ export default function Login() {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const token = localStorage.getItem('token')
+    if (token) {
+        navigate('/');
+    }
 
     // login
     const handleLogin = async (e) => {
@@ -32,22 +35,14 @@ export default function Login() {
 
         // xatoni tutib olish
         try {
-            const res = await axios.post('https://shopstore-server.onrender.com/login', {
+            const { data } = await axios.post('https://shopstore-server.onrender.com/login', {
                 email: email,
                 password: password
-            }, { headers: { Authorization: `Bearer ${token}` } });
-            toast.success(res.data.message)
-
-            if (res.data.success) {
-                localStorage.setItem('token', res.data.token)
-                setTimeout(() => {
-                    setLoading(false)
-                    navigate('/');
-                    window.location.reload()
-                }, 2500)
-            } else {
-                setLoading(false)
-            }
+            });
+            localStorage.setItem('token', data.token);
+            toast.success('user login successfully');
+            navigate('/');
+            window.location.reload();
         } catch (error) {
             console.log(error);
             if (error.response && error.response.data) {
@@ -56,7 +51,7 @@ export default function Login() {
                 toast.error("Server error!")
             }
             setLoading(false);
-        }
+        } finally { setLoading(false) };
     }
 
     return (
