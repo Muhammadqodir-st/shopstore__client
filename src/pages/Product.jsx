@@ -27,7 +27,6 @@ import { setWishlist } from '../store/feature/wishlistSlice'
 import toast from "react-hot-toast";
 
 export default function Product() {
-    window.scrollTo(0, 0)
 
     // user
     const { user } = useSelector((state) => state.user)
@@ -66,7 +65,8 @@ export default function Product() {
                 console.log(error);
             }
         }
-        getProduct()
+        getProduct();
+        window.scrollTo(0, 0)
     }, [id]);
 
 
