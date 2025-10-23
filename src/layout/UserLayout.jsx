@@ -66,7 +66,7 @@ export default function UserLayout() {
                             <MapPinHouse size={20} />
                             Addresses
                         </Link>
-                        {user?.user?.role === "admin" && (
+                        {user?.user?.role === "vendor" && (
                             <Link to={'addproduct'} className={`w-full p-3 border-b border-[#E5E7EB] flex items-center gap-2 shrink-0 max-[850px]:w-fit ${location.pathname === '/profile/addproduct' ? 'text-indigo-600' : ''}`}>
                                 <Plus size={20} />
                                 Add product

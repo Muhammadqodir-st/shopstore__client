@@ -46,7 +46,7 @@ export default function Header() {
                     <Link to={'/shop'} className={location.pathname === '/shop' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Shop</Link>
                     <Link to={'/blog'} className={location.pathname === '/blog' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Blog</Link>
                     <Link to={'/contact'} className={location.pathname === '/contact' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>Contact</Link>
-                    {user?.user?.role === 'admin' ? (
+                    {user?.user?.role === 'vendor' ? (
                         <Link to={'/profile/addproduct'} className={location.pathname === '/profile/addproduct' ? 'text-lg text-indigo-700 after:content-[\'\'] after:block after:h-[2px] after:bg-indigo-500' : 'text-lg text-[#030712] hover:text-indigo-500'}>new</Link>
                     ) : null}
                 </ul>
@@ -112,7 +112,7 @@ export default function Header() {
                     </Link>
 
 
-                    {user?.user?.role === 'admin' ? (
+                    {user?.user?.role === 'vendor' ? (
                         <Link to={'/profile/addproduct'} className="flex flex-col items-center">
                             <Plus size={23} className="text-[#505054]" />
                         </Link>
@@ -127,7 +127,7 @@ export default function Header() {
                     </Link>
 
 
-                    {user?.user?.role !== 'admin' ? (
+                    {user?.user?.role !== 'vendor' ? (
                         <Link to={'/wishlist'} className="flex flex-col items-center relative">
                             <Heart size={23} className="text-[#505054]" />
                             <span className="text-white w-4 h-4 bg-red-500 rounded-full flex items-center justify-center absolute -top-1 -right-1 text-[13px]">
