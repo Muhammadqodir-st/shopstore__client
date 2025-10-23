@@ -26,7 +26,7 @@ export default function Footer() {
     }
 
     return (
-        <footer className="w-full bg-[#f3f4f6] py-10 mt-7">
+        <footer className="w-full bg-[#f3f4f6] py-10 mt-7 mb-10">
             <div className="max-w-[998px] w-[90%] mx-auto">
 
                 {/* top  */}

@@ -61,7 +61,7 @@ export default function Register() {
     };
 
     return (
-        <div className="max-w-[998px] w-[90%] h-190 mx-auto flex items-center justify-center">
+        <div className="max-w-[998px] w-[90%] h-190 mx-auto flex items-center justify-center max-[400px]:h-175">
             <div className="flex flex-col items-center justify-center gap-8 w-full">
                 {/* top navogation */}
                 <div className="flex items-center justify-center gap-5">
@@ -74,7 +74,7 @@ export default function Register() {
                     <p className=" text-[#030712] text-center py-2 max-[850px]:text-sm">There are many advantages to creating an account: the payment process is faster, shipment tracking is possible and much more.</p>
                     {/* username */}
                     <label className="flex flex-col gap-1">
-                        <p className="max-[850px]:text-sm">Username *</p>
+                        <p className="max-[850px]:text-sm">Name</p>
                         <input onChange={(e) => setName(e.target.value)} className="w-full rounded-lg border border-[#D1D5DB] p-2 outline-0" type="text" autoFocus required />
                     </label>
                     {/* email */}

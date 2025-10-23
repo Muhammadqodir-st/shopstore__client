@@ -55,7 +55,7 @@ export default function Login() {
     }
 
     return (
-        <div className="max-w-[998px] w-[90%] h-170 mx-auto flex items-center justify-center">
+        <div className="max-w-[998px] w-[90%] h-170 mx-auto flex items-center justify-center max-[400px]:h-140">
             <div className="flex flex-col items-center justify-center gap-8 w-full">
                 {/* top navogation */}
                 <div className="flex items-center justify-center gap-5">
