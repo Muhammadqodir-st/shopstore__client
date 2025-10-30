@@ -25,7 +25,7 @@ export default function Orders() {
                             {/* header */}
                             <div className='flex items-center justify-between '>
                                 <p className='text-lg font-semibold text-gray-800'>Order #{i?._id?.slice(0, 6)}</p>
-                                <button className='py-1 px-3 cursor-pointer text-green-700 font-medium bg-green-100 rounded-full'>Delivered</button>
+                                <button className='py-1 px-3 cursor-pointer text-green-700 font-medium bg-green-100 rounded-full'>Padding</button>
                             </div>
 
                             {/* body */}

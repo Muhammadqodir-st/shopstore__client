@@ -10,7 +10,14 @@ import axios from "axios";
 // loader or message
 import toast from "react-hot-toast";
 
+// redux
+import { useSelector } from 'react-redux';
+
+
 export default function Register() {
+
+    // user
+    const { user } = useSelector((state) => state.user)
 
     // location
     const location = useLocation();
@@ -27,9 +34,10 @@ export default function Register() {
     const [loading, setLoading] = useState(false);
     const token = localStorage.getItem('token')
 
-    if(token){
+    if (user && token) {
         navigate('/');
     }
+
 
     // register
     const handleRegister = async (e) => {

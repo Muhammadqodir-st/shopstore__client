@@ -10,7 +10,13 @@ import { useEffect, useState, } from "react";
 // loader or message
 import toast from "react-hot-toast";
 
+// redux
+import { useSelector } from "react-redux";
+
 export default function Login() {
+
+    // user
+    const { user } = useSelector((state) => state.user)
 
     // navigate
     const navigate = useNavigate();
@@ -22,8 +28,9 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
-    const token = localStorage.getItem('token')
-    if (token) {
+    const token = localStorage.getItem('token');
+
+    if (user && token) {
         navigate('/');
     }
 

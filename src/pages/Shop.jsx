@@ -146,7 +146,7 @@ export default function Shop() {
 
                     {/* search */}
                     <label className="w-full py-[7px] px-3 rounded-xl border border-indigo-700 flex items-center justify-between gap-3">
-                        <input value={search} onChange={(e) => setSerach(e.target.value)} className="flex-1 outline-0" type="text" autoFocus />
+                        <input value={search} onChange={(e) => setSerach(e.target.value)} className="flex-1 outline-0" type="text" placeholder="Search . . ." autoFocus />
                         <Search className="text-indigo-700 cursor-pointer" strokeWidth={1.55} size={22} />
                     </label>
 

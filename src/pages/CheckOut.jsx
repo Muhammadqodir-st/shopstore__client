@@ -36,11 +36,11 @@ export default function CheckOut({ onSubmit }) {
             <div className="flex items-center justify-between gap-5">
                 <label className="flex-1 flex flex-col gap-1">
                     <p className="text-sm cursor-pointer">First name *</p>
-                    <input name="firstName" className="w-full border border-[#D1D5DB] rounded-lg outline-0 p-2" type="text" required />
+                    <input name="firstName" className="w-full border border-[#D1D5DB] rounded-lg outline-0 p-2" type="text" placeholder="Jack" required />
                 </label>
                 <label className="flex-1 flex flex-col gap-1">
                     <p className="text-sm cursor-pointer">Last name *</p>
-                    <input name="lastName" className="w-full border border-[#D1D5DB] rounded-lg outline-0 p-2" type="text" required />
+                    <input name="lastName" className="w-full border border-[#D1D5DB] rounded-lg outline-0 p-2" type="text" placeholder="Wilson" required />
                 </label>
             </div>
             <label className="w-full flex flex-col gap-1">
@@ -53,7 +53,7 @@ export default function CheckOut({ onSubmit }) {
             </label>
             <label className="w-full flex flex-col gap-1">
                 <p className="text-sm cursor-pointer">Town / City *</p>
-                <input name="city" className="w-full border border-[#D1D5DB] rounded-lg outline-0  p-2" type="text" required />
+                <input name="city" className="w-full border border-[#D1D5DB] rounded-lg outline-0  p-2" type="text" placeholder="London" required />
             </label>
             <label className="w-full flex flex-col gap-1">
                 <p className="text-sm cursor-pointer">Street address *</p>
@@ -61,11 +61,11 @@ export default function CheckOut({ onSubmit }) {
             </label>
             <label className="w-full flex flex-col gap-1">
                 <p className="text-sm cursor-pointer">Phone *</p>
-                <input name="phone" className="w-full border border-[#D1D5DB] rounded-lg outline-0  p-2" type="number" required />
+                <input name="phone" className="w-full border border-[#D1D5DB] rounded-lg outline-0  p-2" type="number" placeholder="992023020" required />
             </label>
             <label className="w-full flex flex-col gap-1">
                 <p className="text-sm cursor-pointer">Email address *</p>
-                <input name="email" className="w-full border border-[#D1D5DB] rounded-lg outline-0  p-2" type="email" required />
+                <input name="email" className="w-full border border-[#D1D5DB] rounded-lg outline-0  p-2" type="email" placeholder="email . . ." required />
             </label>
             <button type="submit" id="order" className="hidden"></button>
         </form>

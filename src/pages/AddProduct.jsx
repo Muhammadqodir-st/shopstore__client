@@ -143,13 +143,13 @@ export default function AddProduct() {
                     {/* tite */}
                     <label>
                         <p className="text-sm font-semibold text-gray-700">Title</p>
-                        <input onChange={(e) => setTitle(e.target.value)} className="w-full py-3 px-2 border border-[#bababa] rounded-lg outline-indigo-500" type="text" required />
+                        <input onChange={(e) => setTitle(e.target.value)} className="w-full py-3 px-2 border border-[#bababa] rounded-lg outline-indigo-500" type="text" placeholder="Simply Orange Pulp Free . . . " required />
                     </label>
 
                     {/* description */}
                     <label>
                         <p className="text-sm font-semibold text-gray-700">Description</p>
-                        <textarea onChange={(e) => setDescription(e.target.value)} className="w-full h-30 py-1 px-2 border border-[#bababa] rounded-lg outline-indigo-500" required></textarea>
+                        <textarea onChange={(e) => setDescription(e.target.value)} className="w-full h-30 py-1 px-2 border border-[#bababa] rounded-lg outline-indigo-500" placeholder="Quisque varius diam . . ." required></textarea>
                     </label>
 
 
@@ -157,20 +157,20 @@ export default function AddProduct() {
                         {/* price */}
                         <label>
                             <p className="text-sm font-semibold text-gray-700">Price</p>
-                            <input onChange={(e) => setPrice(e.target.value)} className="w-full py-3 px-2 border border-[#bababa] rounded-lg outline-indigo-500" type="number" required />
+                            <input onChange={(e) => setPrice(e.target.value)} className="w-full py-3 px-2 border border-[#bababa] rounded-lg outline-indigo-500" type="number" placeholder="1000" required />
                         </label>
 
                         {/* stock */}
                         <label>
                             <p className="text-sm font-semibold text-gray-700">Stock</p>
-                            <input onChange={(e) => setStock(e.target.value)} className="w-full py-3 px-2 border border-[#bababa] rounded-lg outline-indigo-500" type="number" required />
+                            <input onChange={(e) => setStock(e.target.value)} className="w-full py-3 px-2 border border-[#bababa] rounded-lg outline-indigo-500" type="number" placeholder="5" required />
                         </label>
                     </div>
 
                     {/* discount */}
                     <label>
                         <p className="text-sm font-semibold text-gray-700">Discount %</p>
-                        <input onChange={(e) => setDiscount(e.target.value)} className="w-full py-3 px-2 border border-[#bababa] rounded-lg outline-indigo-500" type="number" required />
+                        <input onChange={(e) => setDiscount(e.target.value)} className="w-full py-3 px-2 border border-[#bababa] rounded-lg outline-indigo-500" type="number" placeholder="5" required />
                     </label>
 
                     {/* category */}
