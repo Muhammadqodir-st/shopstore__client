@@ -52,12 +52,12 @@ function App() {
       <Route>
         <Route path="/" element={<MainLayout />}>
           {/* ochiq routerlar */}
+          <Route index={true} element={<Home />} />
           <Route path="/auth/login" element={<Login />} />
           <Route path="/auth/register" element={<Register />} />
           <Route path="*" element={<NotFound />} />
 
           {/* yopiq routerlar */}
-          <Route index={true} element={<ProtectedRoute><Home /></ProtectedRoute>} />
           <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
           <Route path="/product/:id" element={<ProtectedRoute><Product /></ProtectedRoute>} />
           <Route path="/shop/:categoryId?" element={<ProtectedRoute> <Shop /> </ProtectedRoute>} />
