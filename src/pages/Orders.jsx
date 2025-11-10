@@ -50,7 +50,7 @@ export default function Orders() {
                                 </div>
                                 <div className="flex justify-between text-gray-600 text-sm">
                                     <p>User email:</p>
-                                    <p className="font-medium">muhammadqodirov3609@gmail.com</p>
+                                    <p className="font-medium">{i?.email}</p>
                                 </div>
                                 <div className="flex justify-between text-gray-600 text-sm">
                                     <p>Order delivery date:</p>
