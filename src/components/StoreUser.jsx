@@ -4,6 +4,10 @@ import axios from 'axios'
 // useEffect
 import { useEffect, useState } from 'react'
 
+// image
+import LogoImage from '../assets/g10.svg'
+
+
 // react redux
 import { useDispatch } from 'react-redux'
 import { setUser, logOut } from '../store/feature/userSlice'
@@ -39,7 +43,11 @@ export default function StoreUser() {
     // loading 
     if (loading) {
         return (
-            <p></p>
+            <div className="fixed inset-0 flex flex-col items-center justify-between bg-white z-50 py-5">
+                <span />
+                <img src={LogoImage} alt="logo" className="w-25 h-25 rounded-full" />
+                <p className="text-black">Loading your account...</p>
+            </div>
         )
     }
 
