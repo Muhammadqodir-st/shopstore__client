@@ -42,13 +42,7 @@ export default function StoreUser() {
 
     // loading 
     if (loading) {
-        return (
-            <div className="fixed inset-0 flex flex-col items-center justify-between bg-white z-50 py-5">
-                <span />
-                <img src={LogoImage} alt="logo" className="w-25 h-25 rounded-full" />
-                <p className="text-black">Loading your account...</p>
-            </div>
-        )
+        return null
     }
 
     return null;
