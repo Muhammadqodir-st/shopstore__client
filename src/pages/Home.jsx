@@ -40,7 +40,6 @@ import { setCart } from '../store/feature/cartSlice'
 
 // loading and toaster 
 import toast from "react-hot-toast";
-import ProductsLoader from "../components/loaders/ProductLoader"
 import CategoriesLoader from "../components/loaders/CategoryLoader"
 
 
