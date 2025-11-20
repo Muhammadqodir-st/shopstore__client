@@ -40,6 +40,8 @@ import { setCart } from '../store/feature/cartSlice'
 
 // loading and toaster 
 import toast from "react-hot-toast";
+import ProductsLoader from "../components/loaders/ProductLoader"
+import CategoriesLoader from "../components/loaders/CategoryLoader"
 
 
 export default function Home() {
@@ -212,12 +214,14 @@ export default function Home() {
 
                 {/* categories */}
                 <div className="flex items-center justify-between border border-[#E5E7EB] rounded-lg max-[1100px]:overflow-x-auto">
-                    {category.slice(0, 7).map((i) => (
+                    {category.length !== 0 ? category.slice(0, 7).map((i) => (
                         <div onClick={() => handleFilter(i._id)} key={i._id} className="shrink-0 w-[140px] flex items-center justify-center flex-col gap-1 border-r border-[#E5E7EB] py-3 cursor-pointer">
                             <img className="w-30 h-30" src={i.image} alt="" />
                             <p className="text-sm font-semibold flex flex-nowrap">{i.name}</p>
                         </div>
-                    ))}
+                    )) : (
+                        <CategoriesLoader />
+                    )}
                 </div>
             </div>
 
